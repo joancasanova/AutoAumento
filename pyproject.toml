@@ -9,7 +9,6 @@ description = "Proyecto para generar y verificar frases sintécticas con IA."
 authors = [
     {name = "Joan Casanova", email = "juancasanovaferrer@gmail.com"}
 ]
-readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.7"
 dependencies = [
