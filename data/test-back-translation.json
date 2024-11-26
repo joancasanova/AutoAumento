@@ -1,0 +1,1238 @@
+[
+  {
+      "input": "Subir para arriba es una expresión común pero redundante.",
+      "output": "Subir es una expresión común pero redundante.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Ella entró adentro de la casa sin decir palabra.",
+      "output": "Ella entró en la casa sin decir palabra.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El problema principal y fundamental es la falta de comunicación.",
+      "output": "El problema fundamental es la falta de comunicación.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Lo vi con mis propios ojos en persona.",
+      "output": "Lo vi en persona.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Regresó de nuevo al punto de partida.",
+      "output": "Regresó al punto de partida.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El libro está lleno de ilustraciones y dibujos.",
+      "output": "El libro está lleno de ilustraciones.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Necesitamos una colaboración conjunta para lograr el objetivo.",
+      "output": "Necesitamos una colaboración para lograr el objetivo.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es un hecho real que ocurrió el año pasado.",
+      "output": "Es un hecho que ocurrió el año pasado.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Hizo acto de presencia en persona en la reunión.",
+      "output": "Hizo acto de presencia en la reunión.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Se reunieron todos juntos para celebrar.",
+      "output": "Se reunieron para celebrar.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Lo repitió nuevamente sin darse cuenta.",
+      "output": "Lo repitió sin darse cuenta.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Avanzaron hacia adelante sin mirar atrás.",
+      "output": "Avanzaron sin mirar atrás.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El resultado final fue mejor de lo esperado.",
+      "output": "El resultado fue mejor de lo esperado.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El joven adolescente salió de casa temprano.",
+      "output": "El adolescente salió de casa temprano.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El plan previsto se llevó a cabo sin problemas.",
+      "output": "El plan se llevó a cabo sin problemas.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Entró adentro del cuarto y cerró la puerta.",
+      "output": "Entró en el cuarto y cerró la puerta.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La nieve blanca cubría todo el paisaje.",
+      "output": "La nieve cubría todo el paisaje.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Subió arriba para ver el horizonte.",
+      "output": "Subió para ver el horizonte.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Bajó abajo rápidamente para abrir la puerta.",
+      "output": "Bajó rápidamente para abrir la puerta.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es absolutamente necesario que vengas.",
+      "output": "Es necesario que vengas.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El anciano viejo caminaba lento.",
+      "output": "El anciano caminaba lento.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Tiene una breve y corta explicación.",
+      "output": "Tiene una breve explicación.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es un error erróneo común.",
+      "output": "Es un error común.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Se creó una nueva innovación tecnológica.",
+      "output": "Se creó una innovación tecnológica.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La autopsia del cadáver reveló la causa.",
+      "output": "La autopsia reveló la causa.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El protagonista principal de la historia es un héroe.",
+      "output": "El protagonista de la historia es un héroe.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El vuelo despegó hacia su destino final.",
+      "output": "El vuelo despegó hacia su destino.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El período de tiempo fue demasiado corto.",
+      "output": "El período fue demasiado corto.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Lo vi personalmente con mis propios ojos.",
+      "output": "Lo vi personalmente.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Añade una pequeña miniatura al documento.",
+      "output": "Añade una miniatura al documento.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La sorpresa inesperada nos tomó por sorpresa.",
+      "output": "La sorpresa nos tomó por sorpresa.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Se fusionaron juntos para formar una sola entidad.",
+      "output": "Se fusionaron para formar una sola entidad.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Necesitamos planificar anticipadamente.",
+      "output": "Necesitamos planificar.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La lluvia de agua empapó las calles.",
+      "output": "La lluvia empapó las calles.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Fue un regalo gratis para todos.",
+      "output": "Fue un regalo para todos.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Subieron arriba del todo para ver mejor.",
+      "output": "Subieron al todo para ver mejor.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El pájaro voló por el aire.",
+      "output": "El pájaro voló.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Lo explicó con palabras verbales.",
+      "output": "Lo explicó con palabras.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es un hecho real y verdadero.",
+      "output": "Es un hecho verdadero.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Se encontraron mutuamente en el parque.",
+      "output": "Se encontraron en el parque.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La gran mayoría de la gente estuvo de acuerdo.",
+      "output": "La mayoría de la gente estuvo de acuerdo.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Lo dividieron en dos mitades iguales.",
+      "output": "Lo dividieron en dos mitades.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El mes de enero es frío.",
+      "output": "Enero es frío.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Sube arriba y baja abajo.",
+      "output": "Sube y baja.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El verdadero y auténtico sabor de la comida.",
+      "output": "El auténtico sabor de la comida.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es un elemento básico y fundamental.",
+      "output": "Es un elemento fundamental.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "La sorpresa inesperada nos alegró.",
+      "output": "La sorpresa nos alegró.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El pequeño diminuto insecto se movía rápido.",
+      "output": "El diminuto insecto se movía rápido.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El plan futuro es prometedor.",
+      "output": "El plan es prometedor.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Necesitamos una nueva innovación.",
+      "output": "Necesitamos una innovación.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Es un error erróneo que debemos evitar.",
+      "output": "Es un error que debemos evitar.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "Ella dijo una mentira falsa.",
+      "output": "Ella dijo una mentira.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El río fluye hacia abajo.",
+      "output": "El río fluye.",
+      "etiqueta": "redundante"
+  },
+  {
+      "input": "El sol brilla durante el día.",
+      "output": "El sol brilla.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella canta con alegría en su voz.",
+      "output": "Ella canta con alegría en su voz.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El gato duerme sobre el sofá.",
+      "output": "El gato duerme sobre el sofá.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Estudiamos para aprender cosas nuevas.",
+      "output": "Estudiamos para aprender cosas nuevas.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El agua es esencial para la vida.",
+      "output": "El agua es esencial para la vida.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ayer llovió durante toda la tarde.",
+      "output": "Ayer llovió durante toda la tarde.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El libro que leí es muy interesante.",
+      "output": "El libro que leí es muy interesante.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella corre todos los días por la mañana.",
+      "output": "Ella corre todos los días por la mañana.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El auto necesita una reparación urgente.",
+      "output": "El auto necesita una reparación urgente.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Nos encontramos en el parque a las cinco.",
+      "output": "Nos encontramos en el parque a las cinco.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Compré frutas y verduras en el mercado.",
+      "output": "Compré frutas y verduras en el mercado.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La música clásica me relaja.",
+      "output": "La música clásica me relaja.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Él trabaja duro para alcanzar sus metas.",
+      "output": "Él trabaja duro para alcanzar sus metas.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La película fue emocionante de principio a fin.",
+      "output": "La película fue emocionante de principio a fin.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Necesitamos ahorrar energía para proteger el planeta.",
+      "output": "Necesitamos ahorrar energía para proteger el planeta.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El niño juega con sus amigos en el parque.",
+      "output": "El niño juega con sus amigos en el parque.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella aprendió a cocinar comida italiana.",
+      "output": "Ella aprendió a cocinar comida italiana.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El profesor explicó el tema con claridad.",
+      "output": "El profesor explicó el tema con claridad.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Visité varios países durante mis vacaciones.",
+      "output": "Visité varios países durante mis vacaciones.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La montaña es alta y desafiante.",
+      "output": "La montaña es alta y desafiante.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella escribe poesía en su tiempo libre.",
+      "output": "Ella escribe poesía en su tiempo libre.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El avión aterrizó sin problemas.",
+      "output": "El avión aterrizó sin problemas.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Compré un regalo para su cumpleaños.",
+      "output": "Compré un regalo para su cumpleaños.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La tecnología avanza rápidamente.",
+      "output": "La tecnología avanza rápidamente.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El teatro estaba lleno de espectadores.",
+      "output": "El teatro estaba lleno de espectadores.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Disfrutamos de una cena deliciosa.",
+      "output": "Disfrutamos de una cena deliciosa.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El jardín tiene flores de muchos colores.",
+      "output": "El jardín tiene flores de muchos colores.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella toca el piano con maestría.",
+      "output": "Ella toca el piano con maestría.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El sol se oculta en el horizonte.",
+      "output": "El sol se oculta en el horizonte.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Aprender idiomas es enriquecedor.",
+      "output": "Aprender idiomas es enriquecedor.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El café está caliente y listo para beber.",
+      "output": "El café está caliente y listo para beber.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella pinta paisajes impresionantes.",
+      "output": "Ella pinta paisajes impresionantes.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El perro ladra cuando alguien llega.",
+      "output": "El perro ladra cuando alguien llega.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La ciudad está llena de vida por la noche.",
+      "output": "La ciudad está llena de vida por la noche.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Estamos preparando un viaje al campo.",
+      "output": "Estamos preparando un viaje al campo.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El océano es vasto y misterioso.",
+      "output": "El océano es vasto y misterioso.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella es una talentosa bailarina.",
+      "output": "Ella es una talentosa bailarina.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El científico hizo un descubrimiento importante.",
+      "output": "El científico hizo un descubrimiento importante.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La biblioteca tiene miles de libros.",
+      "output": "La biblioteca tiene miles de libros.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Celebramos su logro con una fiesta.",
+      "output": "Celebramos su logro con una fiesta.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El médico recomendó hacer más ejercicio.",
+      "output": "El médico recomendó hacer más ejercicio.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El festival anual atrae a muchos turistas.",
+      "output": "El festival anual atrae a muchos turistas.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella siempre ayuda a los demás.",
+      "output": "Ella siempre ayuda a los demás.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La montaña rusa es emocionante.",
+      "output": "La montaña rusa es emocionante.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "El cielo está despejado hoy.",
+      "output": "El cielo está despejado hoy.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Él está aprendiendo a tocar la guitarra.",
+      "output": "Él está aprendiendo a tocar la guitarra.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "La película fue aburrida y larga.",
+      "output": "La película fue aburrida y larga.",
+      "etiqueta": "no-redundante"
+  },
+  {
+      "input": "Ella lee un libro cada semana.",
+      "output": "Ella lee un libro cada semana.",
+      "etiqueta": "no-redundante"
+  },
+    {
+        "input": "El resultado final definitivo fue sorprendente.",
+        "output": "El resultado fue sorprendente.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El círculo redondo giraba sin parar.",
+        "output": "El círculo giraba sin parar.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La calle estaba completamente vacía de gente.",
+        "output": "La calle estaba vacía de gente.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Lo repitió otra vez nuevamente sin pensarlo.",
+        "output": "Lo repitió sin pensarlo.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El motivo o razón de su partida es desconocido.",
+        "output": "El motivo de su partida es desconocido.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El joven adolescente estaba entusiasmado.",
+        "output": "El adolescente estaba entusiasmado.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La pastelería vende panes de pan caliente.",
+        "output": "La pastelería vende pan caliente.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Es un requisito necesario para aplicar.",
+        "output": "Es un requisito para aplicar.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La colaboración conjunta entre ambos fue clave.",
+        "output": "La colaboración entre ambos fue clave.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La nieve blanca y pura cubría el suelo.",
+        "output": "La nieve cubría el suelo.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El anciano de edad avanzada contó historias.",
+        "output": "El anciano contó historias.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Sube arriba al segundo piso, por favor.",
+        "output": "Sube al segundo piso, por favor.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El futuro porvenir es incierto.",
+        "output": "El futuro es incierto.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Ella gritó en voz alta para ser escuchada.",
+        "output": "Ella gritó para ser escuchada.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La conexión entre ambos está interconectada.",
+        "output": "La conexión entre ambos existe.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Lo vi con mis propios ojos personalmente.",
+        "output": "Lo vi personalmente.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El edificio alto rascacielos domina la ciudad.",
+        "output": "El rascacielos domina la ciudad.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El discurso fue breve y corto.",
+        "output": "El discurso fue breve.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El plan secreto confidencial fue revelado.",
+        "output": "El plan confidencial fue revelado.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Ella sonrió felizmente al verlo.",
+        "output": "Ella sonrió al verlo.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El perro canino ladró toda la noche.",
+        "output": "El perro ladró toda la noche.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Es un lugar único e inigualable.",
+        "output": "Es un lugar único.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La razón por la cual no vino es desconocida.",
+        "output": "La razón por la que no vino es desconocida.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El problema actual de ahora es complejo.",
+        "output": "El problema actual es complejo.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La pequeña miniatura fue detallada.",
+        "output": "La miniatura fue detallada.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El bebé recién nacido lloraba mucho.",
+        "output": "El recién nacido lloraba mucho.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La historia pasada es fascinante.",
+        "output": "La historia es fascinante.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La sesión de fotos fotográficas fue exitosa.",
+        "output": "La sesión fotográfica fue exitosa.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El jardín exterior al aire libre es hermoso.",
+        "output": "El jardín al aire libre es hermoso.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Es un requisito indispensable necesario.",
+        "output": "Es un requisito indispensable.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La melodía musical suena agradable.",
+        "output": "La melodía suena agradable.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El documento escrito debe ser firmado.",
+        "output": "El documento debe ser firmado.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Ella baila danza clásica.",
+        "output": "Ella baila clásica.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El atleta corredor ganó la carrera.",
+        "output": "El atleta ganó la carrera.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La obra teatral fue aplaudida por todos.",
+        "output": "La obra fue aplaudida por todos.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Es un punto importante y relevante.",
+        "output": "Es un punto importante.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La máquina automática funciona bien.",
+        "output": "La máquina funciona bien.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La luz brillante iluminaba el camino.",
+        "output": "La luz iluminaba el camino.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El mar océano es vasto.",
+        "output": "El océano es vasto.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El panadero hornea pan.",
+        "output": "El panadero hornea.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El árbol de madera es alto.",
+        "output": "El árbol es alto.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Es un secreto confidencial que no debes contar.",
+        "output": "Es un secreto que no debes contar.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "La tienda comercial abre temprano.",
+        "output": "La tienda abre temprano.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "El frío helado congelaba el agua.",
+        "output": "El frío congelaba el agua.",
+        "etiqueta": "redundante"
+    },
+    {
+        "input": "Ella caminó lentamente por el parque.",
+        "output": "Ella caminó lentamente por el parque.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El escritor publicó su nuevo libro.",
+        "output": "El escritor publicó su nuevo libro.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La comida estaba deliciosa y bien presentada.",
+        "output": "La comida estaba deliciosa y bien presentada.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Estudiamos para aprobar el examen final.",
+        "output": "Estudiamos para aprobar el examen final.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El gato negro cruzó la calle.",
+        "output": "El gato negro cruzó la calle.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella compró un vestido elegante para la fiesta.",
+        "output": "Ella compró un vestido elegante para la fiesta.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El avión despegó a las seis de la mañana.",
+        "output": "El avión despegó a las seis de la mañana.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Visité el museo durante mis vacaciones.",
+        "output": "Visité el museo durante mis vacaciones.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El chef prepara platos exquisitos.",
+        "output": "El chef prepara platos exquisitos.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La conferencia fue interesante y educativa.",
+        "output": "La conferencia fue interesante y educativa.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Compré entradas para el concierto de esta noche.",
+        "output": "Compré entradas para el concierto de esta noche.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El niño aprendió a montar en bicicleta.",
+        "output": "El niño aprendió a montar en bicicleta.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La medicina ayudó a aliviar el dolor.",
+        "output": "La medicina ayudó a aliviar el dolor.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella decoró la casa para la fiesta.",
+        "output": "Ella decoró la casa para la fiesta.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El atleta entrenó duro para la competencia.",
+        "output": "El atleta entrenó duro para la competencia.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La novela que leí me emocionó mucho.",
+        "output": "La novela que leí me emocionó mucho.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El bosque es denso y misterioso.",
+        "output": "El bosque es denso y misterioso.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La profesora corrigió los exámenes rápidamente.",
+        "output": "La profesora corrigió los exámenes rápidamente.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El mercado ofrece productos frescos cada día.",
+        "output": "El mercado ofrece productos frescos cada día.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Aprendimos mucho en el taller de escritura.",
+        "output": "Aprendimos mucho en el taller de escritura.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El artista pintó un mural impresionante.",
+        "output": "El artista pintó un mural impresionante.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Los estudiantes organizaron un evento benéfico.",
+        "output": "Los estudiantes organizaron un evento benéfico.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella escuchó música mientras trabajaba.",
+        "output": "Ella escuchó música mientras trabajaba.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El reloj marca las horas con precisión.",
+        "output": "El reloj marca las horas con precisión.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La ciudad es famosa por su arquitectura.",
+        "output": "La ciudad es famosa por su arquitectura.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Él aprendió a tocar el violín desde niño.",
+        "output": "Él aprendió a tocar el violín desde niño.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Disfrutamos de un paseo en barco por el río.",
+        "output": "Disfrutamos de un paseo en barco por el río.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La tecnología ha avanzado mucho en esta década.",
+        "output": "La tecnología ha avanzado mucho en esta década.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El sol se refleja en el mar al atardecer.",
+        "output": "El sol se refleja en el mar al atardecer.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella estudia medicina en la universidad.",
+        "output": "Ella estudia medicina en la universidad.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El poeta recitó sus versos con pasión.",
+        "output": "El poeta recitó sus versos con pasión.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La flor crece en el jardín trasero.",
+        "output": "La flor crece en el jardín trasero.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Los niños jugaron en la nieve todo el día.",
+        "output": "Los niños jugaron en la nieve todo el día.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El investigador hizo un descubrimiento crucial.",
+        "output": "El investigador hizo un descubrimiento crucial.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella tomó fotografías durante su viaje.",
+        "output": "Ella tomó fotografías durante su viaje.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El teatro presentó una obra clásica.",
+        "output": "El teatro presentó una obra clásica.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Aprendimos sobre la historia antigua en clase.",
+        "output": "Aprendimos sobre la historia antigua en clase.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La economía global está cambiando rápidamente.",
+        "output": "La economía global está cambiando rápidamente.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El festival cultural atrae a muchos visitantes.",
+        "output": "El festival cultural atrae a muchos visitantes.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella practica yoga para relajarse.",
+        "output": "Ella practica yoga para relajarse.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El científico publicó sus hallazgos en una revista.",
+        "output": "El científico publicó sus hallazgos en una revista.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La lluvia alimenta los campos y bosques.",
+        "output": "La lluvia alimenta los campos y bosques.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Él viajó por varios países de Asia.",
+        "output": "Él viajó por varios países de Asia.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La escultura está hecha de mármol blanco.",
+        "output": "La escultura está hecha de mármol blanco.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El ingeniero diseñó un puente innovador.",
+        "output": "El ingeniero diseñó un puente innovador.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella enseña idiomas en una academia.",
+        "output": "Ella enseña idiomas en una academia.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El pintor mezcla colores para crear tonos nuevos.",
+        "output": "El pintor mezcla colores para crear tonos nuevos.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Los actores ensayan antes del estreno.",
+        "output": "Los actores ensayan antes del estreno.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella plantó árboles en el parque comunitario.",
+        "output": "Ella plantó árboles en el parque comunitario.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El médico investiga nuevas terapias.",
+        "output": "El médico investiga nuevas terapias.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "La familia se reunió para celebrar las fiestas.",
+        "output": "La familia se reunió para celebrar las fiestas.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El volcán entró en erupción después de décadas.",
+        "output": "El volcán entró en erupción después de décadas.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "Ella ganó el premio por su investigación.",
+        "output": "Ella ganó el premio por su investigación.",
+        "etiqueta": "no-redundante"
+    },
+    {
+        "input": "El arquitecto presentó los planos del edificio.",
+        "output": "El arquitecto presentó los planos del edificio.",
+        "etiqueta": "no-redundante"
+    },
+      {
+          "input": "Sube para arriba al segundo piso, por favor.",
+          "output": "Sube al segundo piso, por favor.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Ella volvió a repetir la misma historia otra vez.",
+          "output": "Ella repitió la misma historia.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El anciano viejo contaba historias interesantes.",
+          "output": "El anciano contaba historias interesantes.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El hielo frío enfriaba la bebida.",
+          "output": "El hielo enfriaba la bebida.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Ella entró adentro de la casa sin hacer ruido.",
+          "output": "Ella entró en la casa sin hacer ruido.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Baja para abajo al primer piso rápidamente.",
+          "output": "Baja al primer piso rápidamente.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Es absolutamente necesario que completes esto.",
+          "output": "Es necesario que completes esto.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El mar océano es vasto y misterioso.",
+          "output": "El océano es vasto y misterioso.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La nieve blanca y pura cubría el suelo.",
+          "output": "La nieve cubría el suelo.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El pájaro voló por el aire libremente.",
+          "output": "El pájaro voló libremente.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El mes de enero es el primer mes del año.",
+          "output": "Enero es el primer mes del año.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El resultado final fue mejor de lo esperado.",
+          "output": "El resultado fue mejor de lo esperado.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La pequeña miniatura fue detallada.",
+          "output": "La miniatura fue detallada.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Lo vi con mis propios ojos en persona.",
+          "output": "Lo vi en persona.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El frío helado congelaba el lago.",
+          "output": "El frío congelaba el lago.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Se encontraron juntos en el mismo lugar.",
+          "output": "Se encontraron en el mismo lugar.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "El joven adolescente estaba entusiasmado.",
+          "output": "El adolescente estaba entusiasmado.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La autopsia del cadáver reveló la causa.",
+          "output": "La autopsia reveló la causa.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Es un requisito necesario para aplicar.",
+          "output": "Es un requisito para aplicar.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La colaboración conjunta fue exitosa.",
+          "output": "La colaboración fue exitosa.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La sorpresa inesperada nos tomó por sorpresa.",
+          "output": "La sorpresa nos tomó por sorpresa.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "La luz brillante iluminaba el camino.",
+          "output": "La luz iluminaba el camino.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Sube arriba y baja abajo con cuidado.",
+          "output": "Sube y baja con cuidado.",
+          "etiqueta": "redundante"
+      },
+      {
+          "input": "Ella tocó el piano con maestría.",
+          "output": "Ella tocó el piano con maestría.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El atleta corrió la maratón en tiempo récord.",
+          "output": "El atleta corrió la maratón en tiempo récord.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La flor floreció en primavera.",
+          "output": "La flor floreció en primavera.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El científico presentó su investigación.",
+          "output": "El científico presentó su investigación.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Ella bailó bajo la lluvia.",
+          "output": "Ella bailó bajo la lluvia.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El escritor terminó su novela.",
+          "output": "El escritor terminó su novela.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La música llenó el auditorio.",
+          "output": "La música llenó el auditorio.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Los exploradores descubrieron una cueva.",
+          "output": "Los exploradores descubrieron una cueva.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El perro ladró al extraño.",
+          "output": "El perro ladró al extraño.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La lluvia refrescó el ambiente.",
+          "output": "La lluvia refrescó el ambiente.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Ella aprendió a tocar el violín.",
+          "output": "Ella aprendió a tocar el violín.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El gato duerme junto a la ventana.",
+          "output": "El gato duerme junto a la ventana.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El arquitecto diseñó un puente.",
+          "output": "El arquitecto diseñó un puente.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La maestra explicó la lección con paciencia.",
+          "output": "La maestra explicó la lección con paciencia.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El niño construyó una torre con bloques.",
+          "output": "El niño construyó una torre con bloques.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El chef creó un nuevo plato.",
+          "output": "El chef creó un nuevo plato.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La luna iluminó el camino.",
+          "output": "La luna iluminó el camino.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Ella escribió una carta a su amigo.",
+          "output": "Ella escribió una carta a su amigo.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El pintor capturó el paisaje en su lienzo.",
+          "output": "El pintor capturó el paisaje en su lienzo.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "La biblioteca tiene una gran colección de libros.",
+          "output": "La biblioteca tiene una gran colección de libros.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Los pájaros cantan al amanecer.",
+          "output": "Los pájaros cantan al amanecer.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El festival celebra la cultura local.",
+          "output": "El festival celebra la cultura local.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "Ella compró flores en el mercado.",
+          "output": "Ella compró flores en el mercado.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El equipo ganó el campeonato.",
+          "output": "El equipo ganó el campeonato.",
+          "etiqueta": "no-redundante"
+      },
+      {
+          "input": "El autobús llegó a tiempo.",
+          "output": "El autobús llegó a tiempo.",
+          "etiqueta": "no-redundante"
+      }
+  ]
+  

@@ -1,0 +1,2553 @@
+[
+  {
+      "input": "Subir para arriba es una expresión común pero redundante.",
+      "output": "Subir es una expresión común pero redundante.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella entró adentro de la casa sin decir palabra.",
+      "output": "Ella entró en la casa sin decir palabra.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El problema principal y fundamental es la falta de comunicación.",
+      "output": "El problema fundamental es la falta de comunicación.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Lo vi con mis propios ojos en persona.",
+      "output": "Lo vi en persona.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Regresó de nuevo al punto de partida.",
+      "output": "Regresó al punto de partida.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El libro está lleno de ilustraciones y dibujos.",
+      "output": "El libro está lleno de ilustraciones.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Necesitamos una colaboración conjunta para lograr el objetivo.",
+      "output": "Necesitamos una colaboración para lograr el objetivo.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es un hecho real que ocurrió el año pasado.",
+      "output": "Es un hecho que ocurrió el año pasado.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Hizo acto de presencia en persona en la reunión.",
+      "output": "Hizo acto de presencia en la reunión.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Se reunieron todos juntos para celebrar.",
+      "output": "Se reunieron para celebrar.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La razón principal y fundamental de su ausencia es desconocida.",
+      "output": "La razón de su ausencia es desconocida.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Lo repitió nuevamente sin darse cuenta.",
+      "output": "Lo repitió sin darse cuenta.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Avanzaron hacia adelante sin mirar atrás.",
+      "output": "Avanzaron sin mirar atrás.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El resultado final fue mejor de lo esperado.",
+      "output": "El resultado fue mejor de lo esperado.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El joven adolescente salió de casa temprano.",
+      "output": "El adolescente salió de casa temprano.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El plan previsto se llevó a cabo sin problemas.",
+      "output": "El plan se llevó a cabo sin problemas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Entró adentro del cuarto y cerró la puerta.",
+      "output": "Entró en el cuarto y cerró la puerta.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La nieve blanca cubría todo el paisaje.",
+      "output": "La nieve cubría todo el paisaje.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Subió arriba para ver el horizonte.",
+      "output": "Subió para ver el horizonte.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Bajó abajo rápidamente para abrir la puerta.",
+      "output": "Bajó rápidamente para abrir la puerta.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es absolutamente necesario que vengas.",
+      "output": "Es necesario que vengas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El anciano viejo caminaba lento.",
+      "output": "El anciano caminaba lento.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Tiene una breve y corta explicación.",
+      "output": "Tiene una breve explicación.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es un error erróneo común.",
+      "output": "Es un error común.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Se creó una nueva innovación tecnológica.",
+      "output": "Se creó una innovación tecnológica.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La autopsia del cadáver reveló la causa.",
+      "output": "La autopsia reveló la causa.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El protagonista principal de la historia es un héroe.",
+      "output": "El protagonista de la historia es un héroe.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El vuelo despegó hacia su destino final.",
+      "output": "El vuelo despegó hacia su destino.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El período de tiempo fue demasiado corto.",
+      "output": "El período fue demasiado corto.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Lo vi personalmente con mis propios ojos.",
+      "output": "Lo vi personalmente.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Añade una pequeña miniatura al documento.",
+      "output": "Añade una miniatura al documento.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La sorpresa inesperada nos tomó por sorpresa.",
+      "output": "La sorpresa nos tomó por sorpresa.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Se fusionaron juntos para formar una sola entidad.",
+      "output": "Se fusionaron para formar una sola entidad.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Necesitamos planificar anticipadamente.",
+      "output": "Necesitamos planificar.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La lluvia de agua empapó las calles.",
+      "output": "La lluvia empapó las calles.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Fue un regalo gratis para todos.",
+      "output": "Fue un regalo para todos.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Subieron arriba del todo para ver mejor.",
+      "output": "Subieron al todo para ver mejor.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El pájaro voló por el aire.",
+      "output": "El pájaro voló.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Lo explicó con palabras verbales.",
+      "output": "Lo explicó con palabras.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es un hecho real y verdadero.",
+      "output": "Es un hecho verdadero.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Se encontraron mutuamente en el parque.",
+      "output": "Se encontraron en el parque.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La gran mayoría de la gente estuvo de acuerdo.",
+      "output": "La mayoría de la gente estuvo de acuerdo.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Lo dividieron en dos mitades iguales.",
+      "output": "Lo dividieron en dos mitades.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El mes de enero es frío.",
+      "output": "Enero es frío.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Sube arriba y baja abajo.",
+      "output": "Sube y baja.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El verdadero y auténtico sabor de la comida.",
+      "output": "El auténtico sabor de la comida.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es un elemento básico y fundamental.",
+      "output": "Es un elemento fundamental.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La sorpresa inesperada nos alegró.",
+      "output": "La sorpresa nos alegró.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El pequeño diminuto insecto se movía rápido.",
+      "output": "El diminuto insecto se movía rápido.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El plan futuro es prometedor.",
+      "output": "El plan es prometedor.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Necesitamos una nueva innovación.",
+      "output": "Necesitamos una innovación.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Es un error erróneo que debemos evitar.",
+      "output": "Es un error que debemos evitar.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella dijo una mentira falsa.",
+      "output": "Ella dijo una mentira.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El río fluye hacia abajo.",
+      "output": "El río fluye.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El sol brilla durante el día.",
+      "output": "El sol brilla.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella canta con alegría en su voz.",
+      "output": "Ella canta con alegría en su voz.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El gato duerme sobre el sofá.",
+      "output": "El gato duerme sobre el sofá.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Estudiamos para aprender cosas nuevas.",
+      "output": "Estudiamos para aprender cosas nuevas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El agua es esencial para la vida.",
+      "output": "El agua es esencial para la vida.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ayer llovió durante toda la tarde.",
+      "output": "Ayer llovió durante toda la tarde.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El libro que leí es muy interesante.",
+      "output": "El libro que leí es muy interesante.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella corre todos los días por la mañana.",
+      "output": "Ella corre todos los días por la mañana.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El auto necesita una reparación urgente.",
+      "output": "El auto necesita una reparación urgente.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Nos encontramos en el parque a las cinco.",
+      "output": "Nos encontramos en el parque a las cinco.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Compré frutas y verduras en el mercado.",
+      "output": "Compré frutas y verduras en el mercado.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La música clásica me relaja.",
+      "output": "La música clásica me relaja.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Él trabaja duro para alcanzar sus metas.",
+      "output": "Él trabaja duro para alcanzar sus metas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La película fue emocionante de principio a fin.",
+      "output": "La película fue emocionante de principio a fin.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Necesitamos ahorrar energía para proteger el planeta.",
+      "output": "Necesitamos ahorrar energía para proteger el planeta.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El niño juega con sus amigos en el parque.",
+      "output": "El niño juega con sus amigos en el parque.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella aprendió a cocinar comida italiana.",
+      "output": "Ella aprendió a cocinar comida italiana.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El profesor explicó el tema con claridad.",
+      "output": "El profesor explicó el tema con claridad.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Visité varios países durante mis vacaciones.",
+      "output": "Visité varios países durante mis vacaciones.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La montaña es alta y desafiante.",
+      "output": "La montaña es alta y desafiante.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella escribe poesía en su tiempo libre.",
+      "output": "Ella escribe poesía en su tiempo libre.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El avión aterrizó sin problemas.",
+      "output": "El avión aterrizó sin problemas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Compré un regalo para su cumpleaños.",
+      "output": "Compré un regalo para su cumpleaños.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La tecnología avanza rápidamente.",
+      "output": "La tecnología avanza rápidamente.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El teatro estaba lleno de espectadores.",
+      "output": "El teatro estaba lleno de espectadores.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Disfrutamos de una cena deliciosa.",
+      "output": "Disfrutamos de una cena deliciosa.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El jardín tiene flores de muchos colores.",
+      "output": "El jardín tiene flores de muchos colores.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella toca el piano con maestría.",
+      "output": "Ella toca el piano con maestría.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El sol se oculta en el horizonte.",
+      "output": "El sol se oculta en el horizonte.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Aprender idiomas es enriquecedor.",
+      "output": "Aprender idiomas es enriquecedor.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El café está caliente y listo para beber.",
+      "output": "El café está caliente y listo para beber.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella pinta paisajes impresionantes.",
+      "output": "Ella pinta paisajes impresionantes.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El perro ladra cuando alguien llega.",
+      "output": "El perro ladra cuando alguien llega.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La ciudad está llena de vida por la noche.",
+      "output": "La ciudad está llena de vida por la noche.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Estamos preparando un viaje al campo.",
+      "output": "Estamos preparando un viaje al campo.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El océano es vasto y misterioso.",
+      "output": "El océano es vasto y misterioso.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella es una talentosa bailarina.",
+      "output": "Ella es una talentosa bailarina.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El científico hizo un descubrimiento importante.",
+      "output": "El científico hizo un descubrimiento importante.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La biblioteca tiene miles de libros.",
+      "output": "La biblioteca tiene miles de libros.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Celebramos su logro con una fiesta.",
+      "output": "Celebramos su logro con una fiesta.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El médico recomendó hacer más ejercicio.",
+      "output": "El médico recomendó hacer más ejercicio.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El festival anual atrae a muchos turistas.",
+      "output": "El festival anual atrae a muchos turistas.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella siempre ayuda a los demás.",
+      "output": "Ella siempre ayuda a los demás.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La montaña rusa es emocionante.",
+      "output": "La montaña rusa es emocionante.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "El cielo está despejado hoy.",
+      "output": "El cielo está despejado hoy.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Él está aprendiendo a tocar la guitarra.",
+      "output": "Él está aprendiendo a tocar la guitarra.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "La película fue aburrida y larga.",
+      "output": "La película fue aburrida y larga.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Ella lee un libro cada semana.",
+      "output": "Ella lee un libro cada semana.",
+      "etiqueta": "correcto"
+  },
+  {
+      "input": "Subir para arriba es una expresión común.",
+      "output": "Es una expresión común.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Entró adentro sin decir palabra.",
+      "output": "Salió afuera sin decir palabra.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Regresó de nuevo al punto de partida.",
+      "output": "Avanzó al punto final.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El problema principal y fundamental es la falta de comunicación.",
+      "output": "No hay problema de comunicación.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Lo vi con mis propios ojos en persona.",
+      "output": "Me lo contaron.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Se reunieron todos juntos para celebrar.",
+      "output": "No se reunieron para celebrar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Lo repitió nuevamente sin darse cuenta.",
+      "output": "Lo dijo una vez.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El resultado final fue mejor de lo esperado.",
+      "output": "El resultado fue peor de lo esperado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El plan previsto se llevó a cabo sin problemas.",
+      "output": "El plan falló.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Subió arriba para ver el horizonte.",
+      "output": "Bajó abajo para ver el horizonte.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El libro está lleno de ilustraciones y dibujos.",
+      "output": "El libro no tiene ilustraciones.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Necesitamos una colaboración conjunta para lograr el objetivo.",
+      "output": "No necesitamos colaboración.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Es un hecho real que ocurrió el año pasado.",
+      "output": "Es ficción del año pasado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Hizo acto de presencia en persona en la reunión.",
+      "output": "No asistió a la reunión.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Se reunieron todos juntos para celebrar.",
+      "output": "Celebraron por separado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La razón principal y fundamental de su ausencia es desconocida.",
+      "output": "Sabemos por qué no vino.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Avanzaron hacia adelante sin mirar atrás.",
+      "output": "Retrocedieron mirando atrás.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El joven adolescente salió de casa temprano.",
+      "output": "El adulto salió tarde.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La nieve blanca cubría todo el paisaje.",
+      "output": "La nieve negra cubría el paisaje.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Es absolutamente necesario que vengas.",
+      "output": "No es necesario que vengas.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El anciano viejo caminaba lento.",
+      "output": "El joven corría rápido.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Tiene una breve y corta explicación.",
+      "output": "No tiene explicación.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Se creó una nueva innovación tecnológica.",
+      "output": "No hay innovación tecnológica.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La autopsia del cadáver reveló la causa.",
+      "output": "La autopsia no reveló nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El protagonista principal de la historia es un héroe.",
+      "output": "No hay protagonista en la historia.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El vuelo despegó hacia su destino final.",
+      "output": "El vuelo fue cancelado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Lo vi personalmente con mis propios ojos.",
+      "output": "No lo vi.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La sorpresa inesperada nos tomó por sorpresa.",
+      "output": "Esperábamos la sorpresa.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Necesitamos planificar anticipadamente.",
+      "output": "No necesitamos planificar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Fue un regalo gratis para todos.",
+      "output": "No hubo regalo.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El pájaro voló por el aire.",
+      "output": "El pájaro caminó por tierra.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Es un hecho real y verdadero.",
+      "output": "Es una mentira.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Se encontraron mutuamente en el parque.",
+      "output": "No se encontraron.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La gran mayoría de la gente estuvo de acuerdo.",
+      "output": "Nadie estuvo de acuerdo.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Lo dividieron en dos mitades iguales.",
+      "output": "Lo dejaron entero.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Sube arriba y baja abajo.",
+      "output": "Permanece en el mismo lugar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El verdadero y auténtico sabor de la comida.",
+      "output": "El sabor falso de la comida.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La sorpresa inesperada nos alegró.",
+      "output": "La sorpresa nos entristeció.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El plan futuro es prometedor.",
+      "output": "No hay plan.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Necesitamos una nueva innovación.",
+      "output": "No necesitamos innovación.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella dijo una mentira falsa.",
+      "output": "Ella dijo la verdad.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El río fluye hacia abajo.",
+      "output": "El río está seco.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Es un error erróneo que debemos evitar.",
+      "output": "Es correcto.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Subió arriba para ver el horizonte.",
+      "output": "No subió a ningún lado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El mes de enero es frío.",
+      "output": "Enero es cálido.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Añade una pequeña miniatura al documento.",
+      "output": "No añadas nada al documento.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Lo dividieron en dos mitades iguales.",
+      "output": "Lo dividieron en tres partes.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Avanzaron hacia adelante sin mirar atrás.",
+      "output": "Se quedaron en el mismo lugar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El resultado final fue mejor de lo esperado.",
+      "output": "El resultado fue exactamente como se esperaba.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La nieve blanca cubría todo el paisaje.",
+      "output": "La lluvia cubría el paisaje.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El sol brilla durante el día.",
+      "output": "El sol no brilla nunca.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella canta con alegría en su voz.",
+      "output": "Ella nunca canta.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El gato duerme sobre el sofá.",
+      "output": "El perro corre en el jardín.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Estudiamos para aprender cosas nuevas.",
+      "output": "No estudiamos para aprender.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El agua es esencial para la vida.",
+      "output": "El agua no es necesaria.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ayer llovió durante toda la tarde.",
+      "output": "Ayer hizo sol todo el día.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El libro que leí es muy interesante.",
+      "output": "El libro es aburrido.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella corre todos los días por la mañana.",
+      "output": "Ella nunca corre.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El auto necesita una reparación urgente.",
+      "output": "El auto está en perfectas condiciones.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Nos encontramos en el parque a las cinco.",
+      "output": "No nos encontramos en absoluto.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Compré frutas y verduras en el mercado.",
+      "output": "No compré nada en el mercado.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La música clásica me relaja.",
+      "output": "La música clásica me estresa.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Él trabaja duro para alcanzar sus metas.",
+      "output": "Él no tiene metas.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La película fue emocionante de principio a fin.",
+      "output": "La película fue aburrida todo el tiempo.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Necesitamos ahorrar energía para proteger el planeta.",
+      "output": "No es necesario ahorrar energía.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El niño juega con sus amigos en el parque.",
+      "output": "El niño está solo en casa.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella aprendió a cocinar comida italiana.",
+      "output": "Ella no sabe cocinar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El profesor explicó el tema con claridad.",
+      "output": "El profesor no explicó nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Visité varios países durante mis vacaciones.",
+      "output": "No viajé en mis vacaciones.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La montaña es alta y desafiante.",
+      "output": "La montaña es pequeña y fácil.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella escribe poesía en su tiempo libre.",
+      "output": "Ella no tiene tiempo libre.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El avión aterrizó sin problemas.",
+      "output": "El avión tuvo un accidente.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Compré un regalo para su cumpleaños.",
+      "output": "Olvidé su cumpleaños.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La tecnología avanza rápidamente.",
+      "output": "La tecnología está estancada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El teatro estaba lleno de espectadores.",
+      "output": "El teatro estaba vacío.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Disfrutamos de una cena deliciosa.",
+      "output": "La cena fue terrible.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El jardín tiene flores de muchos colores.",
+      "output": "El jardín está marchito.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella toca el piano con maestría.",
+      "output": "Ella no sabe tocar el piano.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El sol se oculta en el horizonte.",
+      "output": "El sol nunca se oculta.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Aprender idiomas es enriquecedor.",
+      "output": "Aprender idiomas es inútil.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El café está caliente y listo para beber.",
+      "output": "El café está frío y no se puede beber.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella pinta paisajes impresionantes.",
+      "output": "Ella no pinta nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El perro ladra cuando alguien llega.",
+      "output": "El perro nunca ladra.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La ciudad está llena de vida por la noche.",
+      "output": "La ciudad está desierta por la noche.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Estamos preparando un viaje al campo.",
+      "output": "No vamos a viajar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El océano es vasto y misterioso.",
+      "output": "El océano es pequeño y conocido.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella es una talentosa bailarina.",
+      "output": "Ella no sabe bailar.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El científico hizo un descubrimiento importante.",
+      "output": "No hubo ningún descubrimiento.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La biblioteca tiene miles de libros.",
+      "output": "La biblioteca está vacía.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Celebramos su logro con una fiesta.",
+      "output": "No celebramos nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El médico recomendó hacer más ejercicio.",
+      "output": "El médico no recomendó nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El festival anual atrae a muchos turistas.",
+      "output": "Nadie asiste al festival.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella siempre ayuda a los demás.",
+      "output": "Ella nunca ayuda a nadie.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La montaña rusa es emocionante.",
+      "output": "La montaña rusa es aburrida.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "El cielo está despejado hoy.",
+      "output": "El cielo está nublado y lluvioso.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Él está aprendiendo a tocar la guitarra.",
+      "output": "Él no está aprendiendo nada.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "La película fue aburrida y larga.",
+      "output": "La película fue emocionante y corta.",
+      "etiqueta": "incorrecto"
+  },
+  {
+      "input": "Ella lee un libro cada semana.",
+      "output": "Ella no sabe leer.",
+      "etiqueta": "incorrecto"
+  },
+    {
+        "input": "El hombre subió para arriba a la cima de la montaña.",
+        "output": "El hombre subió a la cima de la montaña.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella bajó para abajo al sótano para buscar algo.",
+        "output": "Ella bajó al sótano para buscar algo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El lago estaba completamente lleno de agua.",
+        "output": "El lago estaba lleno de agua.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El verdadero y auténtico objetivo es ayudar.",
+        "output": "El objetivo es ayudar.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El resultado final definitivo fue sorprendente.",
+        "output": "El resultado fue sorprendente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El círculo redondo giraba sin parar.",
+        "output": "El círculo giraba sin parar.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La calle estaba completamente vacía de gente.",
+        "output": "La calle estaba vacía de gente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Lo repitió otra vez nuevamente sin pensarlo.",
+        "output": "Lo repitió sin pensarlo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El motivo o razón de su partida es desconocido.",
+        "output": "El motivo de su partida es desconocido.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El joven adolescente estaba entusiasmado.",
+        "output": "El adolescente estaba entusiasmado.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La pastelería vende panes de pan caliente.",
+        "output": "La pastelería vende pan caliente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Es un requisito necesario para aplicar.",
+        "output": "Es un requisito para aplicar.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El regalo sorpresa inesperado nos alegró el día.",
+        "output": "El regalo nos alegró el día.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La colaboración conjunta entre ambos fue clave.",
+        "output": "La colaboración entre ambos fue clave.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La nieve blanca y pura cubría el suelo.",
+        "output": "La nieve cubría el suelo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El anciano de edad avanzada contó historias.",
+        "output": "El anciano contó historias.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Sube arriba al segundo piso, por favor.",
+        "output": "Sube al segundo piso, por favor.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El futuro porvenir es incierto.",
+        "output": "El futuro es incierto.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella gritó en voz alta para ser escuchada.",
+        "output": "Ella gritó para ser escuchada.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La conexión entre ambos está interconectada.",
+        "output": "La conexión entre ambos existe.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Lo vi con mis propios ojos personalmente.",
+        "output": "Lo vi personalmente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El edificio alto rascacielos domina la ciudad.",
+        "output": "El rascacielos domina la ciudad.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El discurso fue breve y corto.",
+        "output": "El discurso fue breve.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El plan secreto confidencial fue revelado.",
+        "output": "El plan confidencial fue revelado.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella sonrió felizmente al verlo.",
+        "output": "Ella sonrió al verlo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El perro canino ladró toda la noche.",
+        "output": "El perro ladró toda la noche.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Es un lugar único e inigualable.",
+        "output": "Es un lugar único.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La razón por la cual no vino es desconocida.",
+        "output": "La razón por la que no vino es desconocida.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El problema actual de ahora es complejo.",
+        "output": "El problema actual es complejo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La pequeña miniatura fue detallada.",
+        "output": "La miniatura fue detallada.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El bebé recién nacido lloraba mucho.",
+        "output": "El recién nacido lloraba mucho.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La historia pasada es fascinante.",
+        "output": "La historia es fascinante.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La sesión de fotos fotográficas fue exitosa.",
+        "output": "La sesión fotográfica fue exitosa.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El jardín exterior al aire libre es hermoso.",
+        "output": "El jardín al aire libre es hermoso.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Es un requisito indispensable necesario.",
+        "output": "Es un requisito indispensable.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El lago grande y enorme es profundo.",
+        "output": "El lago es profundo.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La melodía musical suena agradable.",
+        "output": "La melodía suena agradable.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El documento escrito debe ser firmado.",
+        "output": "El documento debe ser firmado.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella baila danza clásica.",
+        "output": "Ella baila clásica.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El atleta corredor ganó la carrera.",
+        "output": "El atleta ganó la carrera.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La obra teatral fue aplaudida por todos.",
+        "output": "La obra fue aplaudida por todos.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Es un punto importante y relevante.",
+        "output": "Es un punto importante.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La máquina automática funciona bien.",
+        "output": "La máquina funciona bien.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La luz brillante iluminaba el camino.",
+        "output": "La luz iluminaba el camino.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El mar océano es vasto.",
+        "output": "El océano es vasto.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El panadero hornea pan.",
+        "output": "El panadero hornea.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El árbol de madera es alto.",
+        "output": "El árbol es alto.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La fecha y el día de la reunión es mañana.",
+        "output": "La reunión es mañana.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Es un secreto confidencial que no debes contar.",
+        "output": "Es un secreto que no debes contar.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La tienda comercial abre temprano.",
+        "output": "La tienda abre temprano.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El frío helado congelaba el agua.",
+        "output": "El frío congelaba el agua.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella caminó lentamente por el parque.",
+        "output": "Ella caminó lentamente por el parque.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El escritor publicó su nuevo libro.",
+        "output": "El escritor publicó su nuevo libro.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La comida estaba deliciosa y bien presentada.",
+        "output": "La comida estaba deliciosa y bien presentada.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Estudiamos para aprobar el examen final.",
+        "output": "Estudiamos para aprobar el examen final.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El gato negro cruzó la calle.",
+        "output": "El gato negro cruzó la calle.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella compró un vestido elegante para la fiesta.",
+        "output": "Ella compró un vestido elegante para la fiesta.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El avión despegó a las seis de la mañana.",
+        "output": "El avión despegó a las seis de la mañana.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Visité el museo durante mis vacaciones.",
+        "output": "Visité el museo durante mis vacaciones.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El chef prepara platos exquisitos.",
+        "output": "El chef prepara platos exquisitos.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La conferencia fue interesante y educativa.",
+        "output": "La conferencia fue interesante y educativa.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Compré entradas para el concierto de esta noche.",
+        "output": "Compré entradas para el concierto de esta noche.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El niño aprendió a montar en bicicleta.",
+        "output": "El niño aprendió a montar en bicicleta.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La medicina ayudó a aliviar el dolor.",
+        "output": "La medicina ayudó a aliviar el dolor.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella decoró la casa para la fiesta.",
+        "output": "Ella decoró la casa para la fiesta.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El atleta entrenó duro para la competencia.",
+        "output": "El atleta entrenó duro para la competencia.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La novela que leí me emocionó mucho.",
+        "output": "La novela que leí me emocionó mucho.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El bosque es denso y misterioso.",
+        "output": "El bosque es denso y misterioso.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La profesora corrigió los exámenes rápidamente.",
+        "output": "La profesora corrigió los exámenes rápidamente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El mercado ofrece productos frescos cada día.",
+        "output": "El mercado ofrece productos frescos cada día.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Aprendimos mucho en el taller de escritura.",
+        "output": "Aprendimos mucho en el taller de escritura.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El artista pintó un mural impresionante.",
+        "output": "El artista pintó un mural impresionante.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Los estudiantes organizaron un evento benéfico.",
+        "output": "Los estudiantes organizaron un evento benéfico.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella escuchó música mientras trabajaba.",
+        "output": "Ella escuchó música mientras trabajaba.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El reloj marca las horas con precisión.",
+        "output": "El reloj marca las horas con precisión.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La ciudad es famosa por su arquitectura.",
+        "output": "La ciudad es famosa por su arquitectura.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Él aprendió a tocar el violín desde niño.",
+        "output": "Él aprendió a tocar el violín desde niño.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Disfrutamos de un paseo en barco por el río.",
+        "output": "Disfrutamos de un paseo en barco por el río.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La tecnología ha avanzado mucho en esta década.",
+        "output": "La tecnología ha avanzado mucho en esta década.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El sol se refleja en el mar al atardecer.",
+        "output": "El sol se refleja en el mar al atardecer.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella estudia medicina en la universidad.",
+        "output": "Ella estudia medicina en la universidad.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El poeta recitó sus versos con pasión.",
+        "output": "El poeta recitó sus versos con pasión.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La flor crece en el jardín trasero.",
+        "output": "La flor crece en el jardín trasero.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Los niños jugaron en la nieve todo el día.",
+        "output": "Los niños jugaron en la nieve todo el día.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El investigador hizo un descubrimiento crucial.",
+        "output": "El investigador hizo un descubrimiento crucial.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella tomó fotografías durante su viaje.",
+        "output": "Ella tomó fotografías durante su viaje.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El teatro presentó una obra clásica.",
+        "output": "El teatro presentó una obra clásica.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Aprendimos sobre la historia antigua en clase.",
+        "output": "Aprendimos sobre la historia antigua en clase.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La economía global está cambiando rápidamente.",
+        "output": "La economía global está cambiando rápidamente.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El festival cultural atrae a muchos visitantes.",
+        "output": "El festival cultural atrae a muchos visitantes.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella practica yoga para relajarse.",
+        "output": "Ella practica yoga para relajarse.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El científico publicó sus hallazgos en una revista.",
+        "output": "El científico publicó sus hallazgos en una revista.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La lluvia alimenta los campos y bosques.",
+        "output": "La lluvia alimenta los campos y bosques.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Él viajó por varios países de Asia.",
+        "output": "Él viajó por varios países de Asia.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La escultura está hecha de mármol blanco.",
+        "output": "La escultura está hecha de mármol blanco.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El ingeniero diseñó un puente innovador.",
+        "output": "El ingeniero diseñó un puente innovador.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella enseña idiomas en una academia.",
+        "output": "Ella enseña idiomas en una academia.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El pintor mezcla colores para crear tonos nuevos.",
+        "output": "El pintor mezcla colores para crear tonos nuevos.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Los actores ensayan antes del estreno.",
+        "output": "Los actores ensayan antes del estreno.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella plantó árboles en el parque comunitario.",
+        "output": "Ella plantó árboles en el parque comunitario.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El médico investiga nuevas terapias.",
+        "output": "El médico investiga nuevas terapias.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "La familia se reunió para celebrar las fiestas.",
+        "output": "La familia se reunió para celebrar las fiestas.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El volcán entró en erupción después de décadas.",
+        "output": "El volcán entró en erupción después de décadas.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "Ella ganó el premio por su investigación.",
+        "output": "Ella ganó el premio por su investigación.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El arquitecto presentó los planos del edificio.",
+        "output": "El arquitecto presentó los planos del edificio.",
+        "etiqueta": "correcto"
+    },
+    {
+        "input": "El hombre subió para arriba a la cima de la montaña.",
+        "output": "El hombre bajó a la cima de la montaña.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella bajó para abajo al sótano para buscar algo.",
+        "output": "Ella no fue al sótano.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El lago estaba completamente lleno de agua.",
+        "output": "El lago estaba vacío.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El verdadero y auténtico objetivo es ayudar.",
+        "output": "No queremos ayudar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El resultado final definitivo fue sorprendente.",
+        "output": "El resultado fue predecible.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El círculo redondo giraba sin parar.",
+        "output": "El cuadrado giraba sin parar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La calle estaba completamente vacía de gente.",
+        "output": "La calle estaba llena de gente.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Lo repitió otra vez nuevamente sin pensarlo.",
+        "output": "Lo hizo una sola vez.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El motivo o razón de su partida es desconocido.",
+        "output": "Sabemos por qué se fue.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El joven adolescente estaba entusiasmado.",
+        "output": "El adulto estaba aburrido.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La pastelería vende panes de pan caliente.",
+        "output": "La pastelería está cerrada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Es un requisito necesario para aplicar.",
+        "output": "No hay requisitos para aplicar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El regalo sorpresa inesperado nos alegró el día.",
+        "output": "El regalo nos entristeció.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La colaboración conjunta entre ambos fue clave.",
+        "output": "No colaboraron en absoluto.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La nieve blanca y pura cubría el suelo.",
+        "output": "El suelo estaba seco.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El anciano de edad avanzada contó historias.",
+        "output": "El niño no contó nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Sube arriba al segundo piso, por favor.",
+        "output": "Baja al sótano, por favor.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El futuro porvenir es incierto.",
+        "output": "El futuro es conocido.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella gritó en voz alta para ser escuchada.",
+        "output": "Ella susurró en silencio.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La conexión entre ambos está interconectada.",
+        "output": "No hay conexión entre ambos.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Lo vi con mis propios ojos personalmente.",
+        "output": "No lo vi.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El edificio alto rascacielos domina la ciudad.",
+        "output": "El edificio es pequeño.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El discurso fue breve y corto.",
+        "output": "El discurso fue largo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El plan secreto confidencial fue revelado.",
+        "output": "El plan sigue siendo secreto.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella sonrió felizmente al verlo.",
+        "output": "Ella lloró al verlo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El perro canino ladró toda la noche.",
+        "output": "El perro estuvo silencioso.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Es un lugar único e inigualable.",
+        "output": "Es un lugar común.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La razón por la cual no vino es desconocida.",
+        "output": "Sabemos por qué no vino.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El problema actual de ahora es complejo.",
+        "output": "No hay problema.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La pequeña miniatura fue detallada.",
+        "output": "No hay miniatura.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El bebé recién nacido lloraba mucho.",
+        "output": "El bebé estaba tranquilo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La historia pasada es fascinante.",
+        "output": "La historia es aburrida.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La sesión de fotos fotográficas fue exitosa.",
+        "output": "La sesión fue un fracaso.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El jardín exterior al aire libre es hermoso.",
+        "output": "El jardín está descuidado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Es un requisito indispensable necesario.",
+        "output": "No es necesario.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El lago grande y enorme es profundo.",
+        "output": "El lago es poco profundo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La melodía musical suena agradable.",
+        "output": "La melodía es desagradable.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El documento escrito debe ser firmado.",
+        "output": "No hay documento que firmar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella baila danza clásica.",
+        "output": "Ella no baila.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El atleta corredor ganó la carrera.",
+        "output": "El atleta perdió la carrera.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La obra teatral fue aplaudida por todos.",
+        "output": "La obra fue abucheada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Es un punto importante y relevante.",
+        "output": "El punto es irrelevante.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La máquina automática funciona bien.",
+        "output": "La máquina está averiada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La luz brillante iluminaba el camino.",
+        "output": "Estaba oscuro en el camino.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El mar océano es vasto.",
+        "output": "El océano es pequeño.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El panadero hornea pan.",
+        "output": "El panadero no hornea nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El árbol de madera es alto.",
+        "output": "El árbol es bajo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La fecha y el día de la reunión es mañana.",
+        "output": "La reunión fue ayer.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Es un secreto confidencial que no debes contar.",
+        "output": "Puedes contar el secreto.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La tienda comercial abre temprano.",
+        "output": "La tienda está cerrada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El frío helado congelaba el agua.",
+        "output": "El agua estaba caliente.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella caminó lentamente por el parque.",
+        "output": "Ella corrió rápidamente por el parque.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El escritor publicó su nuevo libro.",
+        "output": "El escritor no ha publicado nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La comida estaba deliciosa y bien presentada.",
+        "output": "La comida estaba horrible y mal presentada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Estudiamos para aprobar el examen final.",
+        "output": "No estudiamos para el examen.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El gato negro cruzó la calle.",
+        "output": "No había ningún gato.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella compró un vestido elegante para la fiesta.",
+        "output": "Ella no fue a la fiesta.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El avión despegó a las seis de la mañana.",
+        "output": "El avión no despegó.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Visité el museo durante mis vacaciones.",
+        "output": "No salí de casa en vacaciones.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El chef prepara platos exquisitos.",
+        "output": "El chef no sabe cocinar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La conferencia fue interesante y educativa.",
+        "output": "La conferencia fue aburrida.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Compré entradas para el concierto de esta noche.",
+        "output": "No pude comprar entradas.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El niño aprendió a montar en bicicleta.",
+        "output": "El niño no sabe montar en bicicleta.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La medicina ayudó a aliviar el dolor.",
+        "output": "La medicina no hizo efecto.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella decoró la casa para la fiesta.",
+        "output": "La casa no fue decorada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El atleta entrenó duro para la competencia.",
+        "output": "El atleta no entrenó.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La novela que leí me emocionó mucho.",
+        "output": "La novela fue decepcionante.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El bosque es denso y misterioso.",
+        "output": "El bosque es pequeño y conocido.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La profesora corrigió los exámenes rápidamente.",
+        "output": "La profesora no ha corregido los exámenes.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El mercado ofrece productos frescos cada día.",
+        "output": "El mercado está cerrado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Aprendimos mucho en el taller de escritura.",
+        "output": "El taller no fue útil.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El artista pintó un mural impresionante.",
+        "output": "El artista no pintó nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Los estudiantes organizaron un evento benéfico.",
+        "output": "No hubo ningún evento.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella escuchó música mientras trabajaba.",
+        "output": "Ella trabajó en silencio.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El reloj marca las horas con precisión.",
+        "output": "El reloj está descompuesto.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La ciudad es famosa por su arquitectura.",
+        "output": "La ciudad no tiene nada especial.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Él aprendió a tocar el violín desde niño.",
+        "output": "Él no sabe tocar ningún instrumento.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Disfrutamos de un paseo en barco por el río.",
+        "output": "No pudimos pasear en barco.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La tecnología ha avanzado mucho en esta década.",
+        "output": "La tecnología no ha avanzado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El sol se refleja en el mar al atardecer.",
+        "output": "El sol no se ve en el mar.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella estudia medicina en la universidad.",
+        "output": "Ella no estudia nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El poeta recitó sus versos con pasión.",
+        "output": "El poeta no recitó nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La flor crece en el jardín trasero.",
+        "output": "No hay flores en el jardín.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Los niños jugaron en la nieve todo el día.",
+        "output": "Los niños se quedaron en casa.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El investigador hizo un descubrimiento crucial.",
+        "output": "No hubo ningún descubrimiento.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella tomó fotografías durante su viaje.",
+        "output": "Ella no llevó cámara.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El teatro presentó una obra clásica.",
+        "output": "El teatro está cerrado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Aprendimos sobre la historia antigua en clase.",
+        "output": "No aprendimos nada nuevo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La economía global está cambiando rápidamente.",
+        "output": "La economía no cambia.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El festival cultural atrae a muchos visitantes.",
+        "output": "El festival fue cancelado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella practica yoga para relajarse.",
+        "output": "Ella no practica yoga.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El científico publicó sus hallazgos en una revista.",
+        "output": "El científico no publicó nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La lluvia alimenta los campos y bosques.",
+        "output": "No ha llovido en meses.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Él viajó por varios países de Asia.",
+        "output": "Él nunca ha viajado.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La escultura está hecha de mármol blanco.",
+        "output": "La escultura es de madera.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El ingeniero diseñó un puente innovador.",
+        "output": "El ingeniero no diseñó nada.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella enseña idiomas en una academia.",
+        "output": "Ella no trabaja en una academia.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El pintor mezcla colores para crear tonos nuevos.",
+        "output": "El pintor usa solo un color.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Los actores ensayan antes del estreno.",
+        "output": "No hubo ensayos para el estreno.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella plantó árboles en el parque comunitario.",
+        "output": "No se plantaron árboles.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El médico investiga nuevas terapias.",
+        "output": "El médico no investiga.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "La familia se reunió para celebrar las fiestas.",
+        "output": "La familia no se reunió.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El volcán entró en erupción después de décadas.",
+        "output": "El volcán está inactivo.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "Ella ganó el premio por su investigación.",
+        "output": "Ella no recibió ningún premio.",
+        "etiqueta": "incorrecto"
+    },
+    {
+        "input": "El arquitecto presentó los planos del edificio.",
+        "output": "No hay planos del edificio.",
+        "etiqueta": "incorrecto"
+    },
+      {
+          "input": "Sube para arriba al segundo piso, por favor.",
+          "output": "Sube al segundo piso, por favor.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella volvió a repetir la misma historia otra vez.",
+          "output": "Ella repitió la misma historia.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El anciano viejo contaba historias interesantes.",
+          "output": "El anciano contaba historias interesantes.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El hielo frío enfriaba la bebida.",
+          "output": "El hielo enfriaba la bebida.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El tema principal y fundamental es la educación.",
+          "output": "El tema es la educación.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella entró adentro de la casa sin hacer ruido.",
+          "output": "Ella entró en la casa sin hacer ruido.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Baja para abajo al primer piso rápidamente.",
+          "output": "Baja al primer piso rápidamente.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Es absolutamente necesario que completes esto.",
+          "output": "Es necesario que completes esto.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El mar océano es vasto y misterioso.",
+          "output": "El océano es vasto y misterioso.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La nieve blanca y pura cubría el suelo.",
+          "output": "La nieve cubría el suelo.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El pájaro voló por el aire libremente.",
+          "output": "El pájaro voló libremente.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El mes de enero es el primer mes del año.",
+          "output": "Enero es el primer mes del año.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La razón por la cual no vino es desconocida.",
+          "output": "La razón no es conocida.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El resultado final fue mejor de lo esperado.",
+          "output": "El resultado fue mejor de lo esperado.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La pequeña miniatura fue detallada.",
+          "output": "La miniatura fue detallada.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Lo vi con mis propios ojos en persona.",
+          "output": "Lo vi en persona.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El frío helado congelaba el lago.",
+          "output": "El frío congelaba el lago.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Se encontraron juntos en el mismo lugar.",
+          "output": "Se encontraron en el mismo lugar.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El joven adolescente estaba entusiasmado.",
+          "output": "El adolescente estaba entusiasmado.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La autopsia del cadáver reveló la causa.",
+          "output": "La autopsia reveló la causa.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Es un requisito necesario para aplicar.",
+          "output": "Es un requisito para aplicar.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La colaboración conjunta fue exitosa.",
+          "output": "La colaboración fue exitosa.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La sorpresa inesperada nos tomó por sorpresa.",
+          "output": "La sorpresa nos tomó por sorpresa.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La luz brillante iluminaba el camino.",
+          "output": "La luz iluminaba el camino.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Sube arriba y baja abajo con cuidado.",
+          "output": "Sube y baja con cuidado.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella tocó el piano con maestría.",
+          "output": "Ella tocó el piano con maestría.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El atleta corrió la maratón en tiempo récord.",
+          "output": "El atleta corrió la maratón en tiempo récord.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La flor floreció en primavera.",
+          "output": "La flor floreció en primavera.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El científico presentó su investigación.",
+          "output": "El científico presentó su investigación.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella bailó bajo la lluvia.",
+          "output": "Ella bailó bajo la lluvia.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El escritor terminó su novela.",
+          "output": "El escritor terminó su novela.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La música llenó el auditorio.",
+          "output": "La música llenó el auditorio.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Los exploradores descubrieron una cueva.",
+          "output": "Los exploradores descubrieron una cueva.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El perro ladró al extraño.",
+          "output": "El perro ladró al extraño.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La lluvia refrescó el ambiente.",
+          "output": "La lluvia refrescó el ambiente.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella aprendió a tocar el violín.",
+          "output": "Ella aprendió a tocar el violín.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El gato duerme junto a la ventana.",
+          "output": "El gato duerme junto a la ventana.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El arquitecto diseñó un puente.",
+          "output": "El arquitecto diseñó un puente.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La maestra explicó la lección con paciencia.",
+          "output": "La maestra explicó la lección con paciencia.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El niño construyó una torre con bloques.",
+          "output": "El niño construyó una torre con bloques.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El chef creó un nuevo plato.",
+          "output": "El chef creó un nuevo plato.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La luna iluminó el camino.",
+          "output": "La luna iluminó el camino.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella escribió una carta a su amigo.",
+          "output": "Ella escribió una carta a su amigo.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El pintor capturó el paisaje en su lienzo.",
+          "output": "El pintor capturó el paisaje en su lienzo.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "La biblioteca tiene una gran colección de libros.",
+          "output": "La biblioteca tiene una gran colección de libros.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Los pájaros cantan al amanecer.",
+          "output": "Los pájaros cantan al amanecer.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El festival celebra la cultura local.",
+          "output": "El festival celebra la cultura local.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella compró flores en el mercado.",
+          "output": "Ella compró flores en el mercado.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El equipo ganó el campeonato.",
+          "output": "El equipo ganó el campeonato.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "El autobús llegó a tiempo.",
+          "output": "El autobús llegó a tiempo.",
+          "etiqueta": "correcto"
+      },
+      {
+          "input": "Ella entró adentro de la habitación en silencio.",
+          "output": "Ella salió de la habitación en silencio.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El hombre subió para arriba al tercer piso.",
+          "output": "El hombre bajó al tercer piso.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Baja para abajo al sótano, por favor.",
+          "output": "Sube al sótano, por favor.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El hielo frío enfriaba la bebida.",
+          "output": "El hielo derretido enfriaba la bebida.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella volvió a repetir la canción.",
+          "output": "Ella olvidó repetir la canción.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El anciano viejo caminaba lentamente.",
+          "output": "El anciano joven caminaba lentamente.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Es absolutamente necesario que vengas.",
+          "output": "Es opcional que vengas.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La nieve blanca cubría el paisaje.",
+          "output": "La nieve negra cubría el paisaje.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El resultado final fue sorprendente.",
+          "output": "El resultado fue decepcionante.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La pequeña miniatura era detallada.",
+          "output": "La miniatura era simple.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Lo vi con mis propios ojos.",
+          "output": "Me contaron que sucedió.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El frío helado congelaba el río.",
+          "output": "El frío descongelaba el río.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Se reunieron juntos en el parque.",
+          "output": "Se separaron en el parque.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El joven adolescente estudia mucho.",
+          "output": "El joven no estudia mucho.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La autopsia del cadáver reveló la verdad.",
+          "output": "La autopsia no reveló nada.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Es un requisito necesario para inscribirse.",
+          "output": "No es un requisito inscribirse.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La colaboración conjunta fue exitosa.",
+          "output": "La colaboración fue un fracaso.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La sorpresa inesperada nos alegró.",
+          "output": "La sorpresa nos entristeció.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La luz brillante iluminaba el sendero.",
+          "output": "La luz tenue iluminaba el sendero.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Sube arriba y baja abajo con cuidado.",
+          "output": "Quédate en el mismo lugar.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El pájaro voló por el aire.",
+          "output": "El pájaro caminó por el suelo.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La razón por la cual no vino es desconocida.",
+          "output": "Sabemos por qué no vino.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El resultado final fue mejor de lo esperado.",
+          "output": "El resultado fue peor de lo esperado.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El mar océano es vasto y profundo.",
+          "output": "El mar es pequeño y poco profundo.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La sorpresa inesperada nos alegró el día.",
+          "output": "La sorpresa arruinó el día.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella tocó el piano con maestría.",
+          "output": "Ella tocó el piano sin entusiasmo.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El atleta corrió la maratón en tiempo récord.",
+          "output": "El atleta caminó la maratón en tiempo récord.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La flor floreció en primavera.",
+          "output": "La flor se marchitó en primavera.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El científico presentó su investigación.",
+          "output": "El científico ocultó su investigación.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella bailó bajo la lluvia.",
+          "output": "Ella corrió bajo la lluvia.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El escritor terminó su novela.",
+          "output": "El escritor abandonó su novela.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La música llenó el auditorio.",
+          "output": "El silencio llenó el auditorio.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Los exploradores descubrieron una cueva.",
+          "output": "Los exploradores no encontraron nada.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El perro ladró al extraño.",
+          "output": "El perro ignoró al extraño.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La lluvia refrescó el ambiente.",
+          "output": "La lluvia empeoró el ambiente.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella aprendió a tocar el violín.",
+          "output": "Ella olvidó cómo tocar el violín.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El gato duerme junto a la ventana.",
+          "output": "El gato juega junto a la ventana.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El arquitecto diseñó un puente.",
+          "output": "El arquitecto demolió un puente.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La maestra explicó la lección con paciencia.",
+          "output": "La maestra explicó la lección rápidamente.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El niño construyó una torre con bloques.",
+          "output": "El niño destruyó una torre con bloques.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El chef creó un nuevo plato.",
+          "output": "El chef sirvió un plato antiguo.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La luna iluminó el camino.",
+          "output": "La luna oscureció el camino.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella escribió una carta a su amigo.",
+          "output": "Ella recibió una carta de su amigo.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El pintor capturó el paisaje en su lienzo.",
+          "output": "El pintor olvidó capturar el paisaje.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "La biblioteca tiene una gran colección de libros.",
+          "output": "La biblioteca tiene pocos libros.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Los pájaros cantan al amanecer.",
+          "output": "Los pájaros duermen al amanecer.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El festival celebra la cultura local.",
+          "output": "El festival ignora la cultura local.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "Ella compró flores en el mercado.",
+          "output": "Ella vendió flores en el mercado.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El equipo ganó el campeonato.",
+          "output": "El equipo perdió el campeonato.",
+          "etiqueta": "incorrecto"
+      },
+      {
+          "input": "El autobús llegó a tiempo.",
+          "output": "El autobús llegó tarde.",
+          "etiqueta": "incorrecto"
+      }
+  ]
+  

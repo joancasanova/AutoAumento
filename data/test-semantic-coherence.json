@@ -1,0 +1,1502 @@
+[
+    {
+        "input": "",
+        "output": "La casa es grande y luminosa.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Comer el sol brillante.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella corre rápidamente hacia la meta.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El gato canta en la noche.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para el examen.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lluvia sonríe en el jardín.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "El libro está sobre la mesa.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Bailar la computadora.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Mañana iremos al parque.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El perro voló por el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara una deliciosa cena.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las ideas nadan en el océano.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estoy leyendo un libro interesante.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La silla canta una canción.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ellos viajan a España cada verano.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol duerme en el horizonte.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a ver una película esta noche.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las ideas corren en el jardín.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Mi hermano trabaja en una oficina.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La mesa canta bajo la lluvia.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia medicina en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila en la noche.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos encontramos en el café a las cinco.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré frutas frescas en el mercado.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas escuchan música.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "El profesor explica la lección claramente.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora canta una canción.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a caminar por el parque.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol nada en el lago.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella dibuja hermosos paisajes.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lluvia canta en el tejado.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio español todas las tardes.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche habla con el conductor.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros preparamos el desayuno juntos.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las ideas vuelan en el espacio.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él juega al fútbol los fines de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La silla lee un libro.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy al gimnasio cada mañana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol cocina en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella canta en el coro de la iglesia.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora nada en el océano.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compramos una nueva casa el año pasado.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las montañas bailan con el viento.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio ingeniería en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj canta cada hora.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar a nuestros abuelos este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes leen libros en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como diseñadora gráfica.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol canta en la primavera.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para los exámenes finales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara duerme en la mesa.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja frecuentemente por trabajo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores hablan con los pájaros.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a cocinar la cena esta noche.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche lee el periódico.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica yoga cada mañana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta melodías suaves.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en la plaza a las seis.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar escribe en la orilla.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudiamos historia en la escuela.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta en la calle.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella enseña matemáticas en el colegio.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas corren en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a nadar en la piscina este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono escribe cartas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca la guitarra en una banda.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna baila con las estrellas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos al trabajo cada día.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol escucha la música del mar.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella lee novelas de misterio.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila en el escritorio.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré un regalo para mi amiga.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan canciones dulces.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio biología en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj baila en la noche.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos al teatro a ver una obra.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las hojas hablan entre sí.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una empresa de tecnología.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol canta con el viento.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros preparamos una fiesta sorpresa.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara lee un libro.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él practica natación en el club.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra escribe canciones.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy al supermercado a comprar víveres.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores cantan en el jardín.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio física en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche canta mientras conduce.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara postres deliciosos.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta habla con el ciclista.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para discutir el proyecto.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar baila con las olas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia arquitectura en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe poemas en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a hacer una caminata en la montaña.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la noche.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como ingeniera civil.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee el periódico.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para las pruebas finales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta una melodía.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja a menudo por motivos laborales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan formas en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar el almuerzo para todos.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila sobre la mesa.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica pilates cada mañana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta una canción triste.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en el parque para jugar.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee un libro en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio química en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una agencia de publicidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan al ritmo del viento.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar el museo este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe en la pared.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca el piano en su tiempo libre.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las estrellas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por la playa al atardecer.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta una canción tranquila.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia literatura en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al ritmo de la música.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré un nuevo teléfono el mes pasado.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan melodías suaves.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio economía en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche escribe mensajes mientras conduce.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara el desayuno todas las mañanas.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta una canción alegre.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para planificar el evento.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol baila bajo la lluvia.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia medicina en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe en el cielo nocturno.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a hacer una barbacoa este sábado.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la oscuridad.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como arquitecta en una firma reconocida.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee historias a los pájaros.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para las competencias.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta cuando está encendida.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja a diferentes países cada año.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan figuras en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar una cena especial para mi familia.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila en la mesa de noche.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica danza contemporánea.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta notas armoniosas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en la cafetería a las diez.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee mensajes en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio filosofía en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una empresa de marketing.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan con la brisa.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar a nuestros amigos este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe el tiempo en la pared.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca el violín en una orquesta.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las olas del mar.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por el sendero del bosque.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta una canción relajante.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia artes plásticas en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al compás de la música.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré ropa nueva para la primavera.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan bajo la lluvia.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio derecho en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche escribe historias en el camino.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara té todas las tardes.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta canciones alegres.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para discutir los planes futuros.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol baila con las hojas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia informática en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe historias en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a organizar una fiesta de cumpleaños.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la galaxia.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como abogada en un bufete.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee poemas a los insectos.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para los exámenes finales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta una melodía suave.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja por el mundo por trabajo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan patrones en el cielo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar una sorpresa para mi amigo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila en la mesa de la sala.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica artes marciales regularmente.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta melodías tristes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en el salón para la reunión.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee poemas en el horizonte.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio psicología en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas cuesta arriba.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una startup tecnológica.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan al ritmo del viento.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar el zoológico mañana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe el tiempo en el muro.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca la batería en una banda de rock.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las estrellas brillantes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por el parque todas las mañanas.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta melodías profundas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia diseño de interiores en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al ritmo del código.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré un regalo para el cumpleaños de mi madre.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan canciones suaves.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio marketing en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche escribe historias mientras viaja.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara el almuerzo para su familia.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta melodías alegres.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para planificar el próximo proyecto.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol baila con las ramas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia biotecnología en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe versos en el cielo nocturno.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a organizar una excursión al campo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la vastedad del espacio.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como periodista en una revista.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee cuentos a los pájaros del bosque.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para las pruebas finales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta una canción de cuna.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja a diferentes ciudades por trabajo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan sombras en el suelo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar una cena especial para mis amigos.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila sobre la mesa del comedor.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica natación competitiva.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta melodías armoniosas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en la biblioteca para estudiar.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee historias en el cielo azul.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio medicina en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas en la cuesta.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una empresa de diseño gráfico.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan al compás del viento suave.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar a nuestros tíos este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe el tiempo en el tablero.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca el saxofón en una banda de jazz.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las estrellas titilantes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por el sendero del parque.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta melodías tranquilas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia biología marina en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al ritmo de los datos.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré un libro nuevo en la librería.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan sobre el valle.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio ingeniería mecánica en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche escribe poesía en el camino.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara postres para sus amigos.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas en la mañana.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para discutir las estrategias.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol baila con las ramas verdes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia física cuántica en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe en el cielo estrellado.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a organizar un picnic en el parque.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la inmensidad del espacio.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como desarrolladora de software.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee cuentos a las ardillas.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para los exámenes finales.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta una melodía nocturna.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja a diferentes continentes por trabajo.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan sombras en el atardecer.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar una sorpresa para mi hermana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila sobre la mesa del comedor.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica ballet en una academia local.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta melodías suaves.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en el auditorio para el evento.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee historias en el cielo despejado.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio medicina veterinaria en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas en el parque.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una empresa de consultoría.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan al compás de la brisa.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar el acuario este fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe el tiempo en el espejo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca el clarinete en una banda de música.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las estrellas brillantes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por el sendero del jardín.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta melodías profundas al anochecer.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia arte contemporáneo en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al ritmo de los bytes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Compré un nuevo par de zapatos ayer.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes cantan sobre los campos verdes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio derecho penal en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El coche escribe poesía mientras avanza.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella prepara el té para sus invitados.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta melodías al amanecer.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos para planificar la campaña publicitaria.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol baila con las hojas otoñales.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él estudia biología celular en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna escribe versos en el cielo estrellado.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a organizar una caminata por la montaña.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las estrellas cocinan en la inmensidad del universo.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja como ingeniera de software.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El árbol lee cuentos a los animales del bosque.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros estudiamos para los exámenes finales de semestre.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La lámpara canta una melodía de cuna.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él viaja a diferentes países por negocios.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las nubes dibujan sombras en el atardecer dorado.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Voy a preparar una sorpresa para mi mejor amiga.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El teléfono baila sobre la mesa del salón.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella practica artes escénicas en un teatro local.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La guitarra canta melodías alegres y vibrantes.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nos reuniremos en la sala de conferencias para la reunión.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El sol lee historias en el cielo despejado de verano.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Estudio ingeniería eléctrica en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La bicicleta canta mientras pedaleas por la ciudad.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella trabaja en una empresa de desarrollo web.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "Las flores bailan al ritmo del viento suave de primavera.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Vamos a visitar el acuario marino el próximo fin de semana.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El reloj escribe el tiempo en el espejo del baño.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Él toca el piano en una banda de música clásica.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La luna habla con las estrellas en la noche clara.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Nosotros caminamos por el sendero del parque natural.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "El mar canta melodías profundas al amanecer.",
+        "label": "incorrecto"
+    },
+    {
+        "input": "",
+        "output": "Ella estudia diseño industrial en la universidad.",
+        "label": "correcto"
+    },
+    {
+        "input": "",
+        "output": "La computadora baila al ritmo de los algoritmos.",
+        "label": "incorrecto"
+    }
+]

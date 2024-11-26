@@ -1,0 +1,550 @@
+[
+  {
+    "input": "protagonista principal",
+    "output": "protagonista"
+  },
+  {
+    "input": "anécdota auténtica",
+    "output": "anécdota"
+  },
+  {
+    "input": "esfuerzo común de todos",
+    "output": "esfuerzo común"
+  },
+  {
+    "input": "base fundamental",
+    "output": "base"
+  },
+  {
+    "input": "pared divisoria",
+    "output": "pared"
+  },
+  {
+    "input": "abstinencia total",
+    "output": "abstinencia"
+  },
+  {
+    "input": "periodo de tiempo",
+    "output": "periodo"
+  },
+  {
+    "input": "Lo vi con mis propios ojos",
+    "output": "Lo vi"
+  },
+  {
+    "input": "dar la vuelta en redondo",
+    "output": "dar la vuelta"
+  },
+  {
+    "input": "Parejas de a dos",
+    "output": "Parejas"
+  },
+  {
+    "input": "María sube las escaleras hacia arriba",
+    "output": "María sube las escaleras"
+  },
+  {
+    "input": "Salió volando por los aires",
+    "output": "Salió volando"
+  },
+  {
+    "input": "Breve resumen",
+    "output": "Resumen"
+  },
+  {
+    "input": "Cállate la boca",
+    "output": "Cállate"
+  },
+  {
+    "input": "Sube hacia arriba para poder ver mejor",
+    "output": "Sube para poder ver mejor"
+  },
+  {
+    "input": "Se dijo a sí mismo",
+    "output": "Se dijo"
+  },
+  {
+    "input": "Auto suicidio",
+    "output": "Suicidio"
+  },
+  {
+    "input": "Averiguar las causas que se desconocen",
+    "output": "Averiguar las causas"
+  },
+  {
+    "input": "Reiniciar desde el principio",
+    "output": "Reiniciar"
+  },
+  {
+    "input": "Constante continua",
+    "output": "Constante"
+  },
+  {
+    "input": "Retroceder hacia atrás",
+    "output": "Retroceder"
+  },
+  {
+    "input": "Círculo redondo",
+    "output": "Círculo"
+  },
+  {
+    "input": "Regalo gratis",
+    "output": "Regalo"
+  },
+  {
+    "input": "Oler con la nariz",
+    "output": "Oler"
+  },
+  {
+    "input": "Llorar con lágrimas",
+    "output": "Llorar"
+  },
+  {
+    "input": "Beber líquidos",
+    "output": "Beber"
+  },
+  {
+    "input": "Almorzar a mediodía",
+    "output": "Almorzar"
+  },
+  {
+    "input": "Personas humanas",
+    "output": "Personas"
+  },
+  {
+    "input": "Navegar en el agua",
+    "output": "Navegar"
+  },
+  {
+    "input": "Sal salada",
+    "output": "Sal"
+  },
+  {
+    "input": "Heces fecales",
+    "output": "Heces"
+  },
+  {
+    "input": "La autopsia realizada al cadáver",
+    "output": "La autopsia"
+  },
+  {
+    "input": "Subió por la subida hasta la cima de la montaña",
+    "output": "Subió hasta la cima de la montaña"
+  },
+  {
+    "input": "Hija mujer",
+    "output": "Hija"
+  },
+  {
+    "input": "Hijo hombre",
+    "output": "Hijo"
+  },
+  {
+    "input": "Agua mojada",
+    "output": "Agua"
+  },
+  {
+    "input": "Tijeras para cortar",
+    "output": "Tijeras"
+  },
+  {
+    "input": "Cita anticipada",
+    "output": "Cita"
+  },
+  {
+    "input": "Evidencia clara",
+    "output": "Evidencia"
+  },
+  {
+    "input": "Previsión anticipada",
+    "output": "Previsión"
+  },
+  {
+    "input": "Aumentar más",
+    "output": "Aumentar"
+  },
+  {
+    "input": "Accidente fortuito",
+    "output": "Accidente"
+  },
+  {
+    "input": "Mendrugo de pan",
+    "output": "Mendrugo"
+  },
+  {
+    "input": "Obsequio gratuito",
+    "output": "Obsequio"
+  },
+  {
+    "input": "Joven muchacho",
+    "output": "Joven"
+  },
+  {
+    "input": "Utopía inalcanzable",
+    "output": "Utopía"
+  },
+  {
+    "input": "Sacar del interior",
+    "output": "Sacar"
+  },
+  {
+    "input": "Joven muchacha",
+    "output": "Muchacha"
+  },
+  {
+    "input": "Pueblecito pequeño",
+    "output": "Pueblecito"
+  },
+  {
+    "input": "Me dije a mí mismo",
+    "output": "Me dije"
+  },
+  {
+    "input": "Hijo varón",
+    "output": "Hijo"
+  },
+  {
+    "input": "Funcionario público",
+    "output": "Funcionario"
+  },
+  {
+    "input": "Actividad gratuita sin gastos para ti",
+    "output": "Actividad gratuita para ti"
+  },
+  {
+    "input": "Vigente en la actualidad",
+    "output": "Vigente"
+  },
+  {
+    "input": "actualmente en vigor",
+    "output": "vigente"
+  },
+  {
+    "input": "frecuentar a menudo",
+    "output": "frecuentar"
+  },
+  {
+    "input": "divisas extranjeras",
+    "output": "divisas"
+  },
+  {
+    "input": "insistir reiteradamente",
+    "output": "insistir"
+  },
+  {
+    "input": "Buenas noches por la noche",
+    "output": "Buenas noches"
+  },
+  {
+    "input": "predecir con antelación",
+    "output": "predecir"
+  },
+  {
+    "input": "Rubén entra en el interior del edificio",
+    "output": "Rubén entra en el edificio"
+  },
+  {
+    "input": "¡Buenos días, por la mañana!",
+    "output": "¡Buenos días!"
+  },
+  {
+    "input": "Nosotros somos humanos, de carne y hueso",
+    "output": "Nosotros somos humanos"
+  },
+  {
+    "input": "Alberto sale fuera de casa a la calle",
+    "output": "Alberto sale de casa a la calle"
+  },
+  {
+    "input": "Debes girar para dar la vuelta en redondo",
+    "output": "Debes girar para dar la vuelta"
+  },
+  {
+    "input": "Juan mete la ropa en el interior del armario",
+    "output": "Juan mete la ropa en el armario"
+  },
+  {
+    "input": "Eli entrega los documentos de la documentación del empadronamiento",
+    "output": "Eli entrega la documentación del empadronamiento"
+  },
+  {
+    "input": "Tijeras para cortar",
+    "output": "Tijeras"
+  },
+  {
+    "input": "Está prohibido publicar la información de los datos personales",
+    "output": "Está prohibido publicar datos personales"
+  },
+  {
+    "input": "Pedro pisa el pedal del freno",
+    "output": "Pedro pisa el freno"
+  },
+  {
+    "input": "Bebió agua del vaso que tenía agua",
+    "output": "Bebió agua del vaso"
+  },
+  {
+    "input": "María Jesús ve con los ojos el partido",
+    "output": "María Jesús ve el partido"
+  },
+  {
+    "input": "Andrea circula rápido a gran velocidad con su coche",
+    "output": "Andrea circula rápido con su coche"
+  },
+  {
+    "input": "Cuando llueve me mojo con el agua",
+    "output": "Me mojo cuando llueve"
+  },
+  {
+    "input": "Debes circular recto de frente",
+    "output": "Debes circular de frente"
+  },
+  {
+    "input": "Durante el concierto, ella escucha la música con sus propios oídos.",
+    "output": "Ella escucha la música durante el concierto."
+  },
+  {
+    "input": "El forense realiza una autopsia detallada en el cadáver.",
+    "output": "El forense realiza una autopsia detallada"
+  },
+  {
+    "input": "Durante la investigación, el doctor decidió hacer una autopsia en el cadáver.",
+    "output": "Durante la investigación, el doctor decidió hacer una autopsia"
+  },
+  {
+    "input": "Tuvieron que sacar las cosas del interior del bolso.",
+    "output": "Tuvieron que sacar las cosas del bolso"
+  },
+  {
+    "input": "Llegaron al colofón final de la serie, y fue espectacular.",
+    "output": "Llegaron al final de la serie, y fue espectacular"
+  },
+  {
+    "input": "Es una persona humana que merece respeto.",
+    "output": "Es una persona que merece respeto"
+  },
+  {
+    "input": "Recomendaron entrar adentro del edificio antes de que comenzara la tormenta.",
+    "output": "Recomendaron entrar al edificio antes de que comenzara la tormenta"
+  },
+  {
+    "input": "Salieron afuera para disfrutar del aire fresco.",
+    "output": "Salieron para disfrutar del aire fresco"
+  },
+  {
+    "input": "El guía les pidió a todos salir afuera para comenzar la actividad.",
+    "output": "El guía les pidió a todos salir para comenzar la actividad"
+  },
+  {
+    "input": "La policía halló un cadáver sin vida en las inmediaciones.",
+    "output": "La policía halló un cadáver en las inmediaciones"
+  },
+  {
+    "input": "El vaso tenía hielo frío y condensación por fuera.",
+    "output": "El vaso tenía hielo y condensación por fuera"
+  },
+  {
+    "input": "El avión volaba por el aire",
+    "output": "El avión volaba"
+  },
+  {
+    "input": "Bajar abajo",
+    "output": "baja"
+  },
+  {
+    "input": "Pero mas sin embargo",
+    "output": "Pero"
+  },
+  {
+    "input": "Pero sin embargo",
+    "output": "Pero"
+  },
+  {
+    "input": "Mas sin embargo",
+    "output": "Sin embargo"
+  },
+  {
+    "input": "Cita previa",
+    "output": "Cita"
+  },
+  {
+    "input": "Descargar la carga",
+    "output": "Descargar"
+  },
+  {
+    "input": "Dentífrico para dientes",
+    "output": "Dentífrico"
+  },
+  {
+    "input": "Repetir de nuevo",
+    "output": "Repetir"
+  },
+  {
+    "input": "Repetir otra vez",
+    "output": "Repetir"
+  },
+  {
+    "input": "Mi opinión personal",
+    "output": "Mi opinión"
+  },
+  {
+    "input": "Personalmente, es mi opinión",
+    "output": "Es mi opinión"
+  },
+  {
+    "input": "Más mayor",
+    "output": "Mayor"
+  },
+  {
+    "input": "Volver a repetir",
+    "output": "Repetir"
+  },
+  {
+    "input": "Volver a reiterar",
+    "output": "Reiterar"
+  },
+  {
+    "input": "Volver a retomar",
+    "output": "Retomar"
+  },
+  {
+    "input": "Se acaba de acabar",
+    "output": "Se acabó"
+  },
+  {
+    "input": "Se acaba de terminar",
+    "output": "Se terminó"
+  },
+  {
+    "input": "Colaboración mútua",
+    "output": "Colaboración"
+  },
+  {
+    "input": "Barrer con la escoba",
+    "output": "Barrer"
+  },
+  {
+    "input": "Fregar con la fregona",
+    "output": "Fregar"
+  },
+  {
+    "input": "Silla para sentarse",
+    "output": "Silla"
+  },
+  {
+    "input": "Madrugar de madrugada",
+    "output": "Madrugar"
+  },
+  {
+    "input": "Masticar con los dientes",
+    "output": "Masticar"
+  },
+  {
+    "input": "Saborear con la lengua",
+    "output": "Saborear"
+  },
+  {
+    "input": "Comer comida",
+    "output": "Comer"
+  },
+  {
+    "input": "Mentira falsa",
+    "output": "Mentira"
+  },
+  {
+    "input": "Ambas dos",
+    "output": "Ambas"
+  },
+  {
+    "input": "Niños y niñas de ambos géneros",
+    "output": "Niños y niñas"
+  },
+  {
+    "input": "Peluca postiza",
+    "output": "Peluca"
+  },
+  {
+    "input": "Toalla para secar",
+    "output": "Toalla"
+  },
+  {
+    "input": "Pintaúñas para las uñas",
+    "output": "Pintaúñas"
+  },
+  {
+    "input": "Audífonos para oír",
+    "output": "Audífonos"
+  },
+  {
+    "input": "Demencia mental",
+    "output": "Demencia"
+  },
+  {
+    "input": "Estrenar por primera vez",
+    "output": "Estrenar"
+  },
+  {
+    "input": "Exportar al exterior",
+    "output": "Exportar"
+  },
+  {
+    "input": "Perdurar en el tiempo",
+    "output": "Perdurar"
+  },
+  {
+    "input": "Monedero para monedas",
+    "output": "Monedero"
+  },
+  {
+    "input": "Facial para la cara",
+    "output": "Facial"
+  },
+  {
+    "input": "El más mejor",
+    "output": "El mejor"
+  },
+  {
+    "input": "Avanzar hacia delante",
+    "output": "Avanzar"
+  },
+  {
+    "input": "Sonarse la nariz",
+    "output": "Sonarse"
+  },
+  {
+    "input": "Portazo a la puerta",
+    "output": "Portazo"
+  },
+  {
+    "input": "Muy extremo",
+    "output": "Extremo"
+  },
+  {
+    "input": "Antecedentes previos",
+    "output": "Antecedentes"
+  },
+  {
+    "input": "¡Aplaudan con las manos!",
+    "output": "¡Aplaudan!"
+  },
+  {
+    "input": "Ven aquí",
+    "output": "Ven"
+  },
+  {
+    "input": "Camina andando por el parque",
+    "output": "Camina por el parque"
+  },
+  {
+    "input": "Camina andando por el parque",
+    "output": "Anda por el parque"
+  },
+  {
+    "input": "Parejas de a dos",
+    "output": "Pares"
+  },
+  {
+    "input": "Ambas dos",
+    "output": "Las dos"
+  }
+]
