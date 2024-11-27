@@ -5,11 +5,11 @@ import warnings
 import os
 from typing import Optional, Tuple
 
-from autoaumento.utils.data_manager import DataManager
-from autoaumento.models.generator import InstructModel
-from autoaumento.models.embedder import EmbeddingModel
-from autoaumento.verifier.verifier import Verifier
-from autoaumento.benchmark.benchmark_evaluator import BenchmarkEvaluator
+from main.utils.data_manager import DataManager
+from main.models.generator import InstructModel
+from main.models.embedder import EmbeddingModel
+from main.verifier.verifier import Verifier
+from main.benchmark.benchmark_evaluator import BenchmarkEvaluator
 from config.config import *
 
 

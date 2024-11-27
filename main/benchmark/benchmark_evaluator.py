@@ -3,8 +3,8 @@
 from collections import defaultdict
 from typing import List, Dict, Tuple, Callable, Any, Optional
 
-from autoaumento.utils.visualizer import Visualizer
-from autoaumento.benchmark.result_handler import ResultHandler
+from main.utils.visualizer import Visualizer
+from main.benchmark.result_handler import ResultHandler
 
 class BenchmarkEvaluator:
     """

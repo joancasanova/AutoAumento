@@ -21,7 +21,7 @@ LOCAL_GENERATOR: bool = False
 LOCAL_EMBEDDER: bool = False
 LOCAL_FOLDER: str = "local-models"
 
-MODEL_GENERATOR_NAME: str = "Llama-3.1-8B-Instruct"
+MODEL_GENERATOR_NAME: str = "meta-llama/Llama-3.1-8B-Instruct"
 MODEL_EMBEDDER_NAME: str = "Alibaba-NLP/gte-multilingual-base"
 
 # GENERATION TASKS - DO NOT REMOVE VARIABLES - CHANGE VALUE IF NEEDED

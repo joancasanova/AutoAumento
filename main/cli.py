@@ -1,7 +1,7 @@
 # cli.py
 
 import inquirer
-from autoaumento.main import main as execute_main
+from main.main import main as execute_main
 from config.config import *
 
 class CLI:
