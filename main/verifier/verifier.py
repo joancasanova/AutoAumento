@@ -1,7 +1,7 @@
 # autoaumento/verifier/verifier.py
 
 from typing import List, Dict, Optional
-from autoaumento.utils.data_manager import DataManager
+from main.utils.data_manager import DataManager
 from config.config import *
 
 class Verifier:
