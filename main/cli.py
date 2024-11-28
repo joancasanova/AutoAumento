@@ -108,7 +108,6 @@ class CLI:
                 verification_method=verification_method,
                 data_file=data_file
             )
-            print("Data generation completed successfully.")
         except Exception as e:
             print(f"An error occurred during data generation: {e}")
 
@@ -118,7 +117,6 @@ class CLI:
         """
         try:
             execute_main(verification_method=verification_method)
-            print("Data generation completed successfully.")
         except Exception as e:
             print(f"An error occurred during data generation: {e}")
 
@@ -234,7 +232,6 @@ class CLI:
                 verification_method="embedding",
                 data_file=data_file_path
             )
-            print("Optimal threshold search completed successfully.")
         except Exception as e:
             print(f"An error occurred during the threshold search: {e}")
 
@@ -272,7 +269,6 @@ class CLI:
                 verification_method="embedding",
                 data_file=data_file_path
             )
-            print("Threshold evaluation completed successfully.")
         except Exception as e:
             print(f"An error occurred during threshold evaluation: {e}")
 
@@ -303,6 +299,13 @@ class CLI:
         consensus_method = answers.get("consensus_method")
         positive_label = answers.get("positive_label")
         data_file_path = answers.get("data_file_path")
+        
+        if answers.get("consensus_method") == "semantic coherence" and data_file_path == "":
+            data_file_path = "test-semantic-coherence.json"
+        if answers.get("consensus_method") == "information loss" and data_file_path == "":
+            data_file_path = "test-information-loss.json"
+        if answers.get("consensus_method") == "redundant cohenrence" and data_file_path == "":
+            data_file_path = "test.json"
 
         try:
             execute_main(
@@ -312,7 +315,6 @@ class CLI:
                 consensus_method=consensus_method,
                 data_file=data_file_path
             )
-            print("Consensus benchmarking completed successfully.")
         except Exception as e:
             print(f"An error occurred during consensus benchmarking: {e}")
 
