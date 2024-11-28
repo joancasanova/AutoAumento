@@ -63,12 +63,12 @@ class Verifier:
             print(f"An error occurred during similarity verification: {e}")
             return False
 
-    def verify_with_consensus(self, task: str, input_text: str = "", output_text: str = "") -> bool:
+    def verify_with_consensus(self, input_text: str = "", output_text: str = "", consensus_method: str = "") -> bool:
         """
-        Verifies a specific task using consensus from the instructional language model's responses.
+        Verifies a specific consensus method using consensus from the instructional language model's responses.
 
         Args:
-            task (str): The consensus task to evaluate.
+            consensus_method (str): The consensus method to evaluate.
             input_text (str, optional): The input phrase.
             output_text (str, optional): The output phrase.
 
@@ -80,7 +80,7 @@ class Verifier:
         try:
             # Generate responses using the instructional model
             responses = self.generator.generate(
-                task,
+                consensus_method,
                 input_text,
                 output_text,
                 num_responses= NUM_RESPONSES_CONSENSUS
@@ -91,7 +91,7 @@ class Verifier:
             consensus = positive_responses >= NUM_OK
 
             # Log the responses and consensus result
-            print(f"-- {task.upper()}: {'Yes' if consensus else 'No'}")
+            print(f"-- {consensus_method.upper()}: {'Yes' if consensus else 'No'}")
             print(f"  - Positive responses: {positive_responses} out of {NUM_RESPONSES_CONSENSUS}")
 
             return consensus
@@ -137,11 +137,11 @@ class Verifier:
 
         # Verification using consensus
         if "consensus" in methods and self.generator:
-            tasks_to_use = CONSENSUS_TASKS
-            total_conditions += len(tasks_to_use)
+            methods_to_use = METHODS
+            total_conditions += len(methods_to_use)
             consensus_results = []
-            for task in tasks_to_use:
-                result = self.verify_with_consensus(task, input_text, output_text)
+            for method in methods_to_use:
+                result = self.verify_with_consensus(input_text, output_text, method)
                 consensus_results.append(result)
 
             conditions_met += sum(consensus_results)

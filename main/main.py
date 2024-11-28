@@ -68,7 +68,7 @@ def main(
         threshold (float, optional): Specific threshold for evaluation.
         find_optimal_threshold (bool, optional): If True, searches for the optimal threshold.
         threshold_range (Tuple[float, float], optional): Range of thresholds to search for the optimal (min, max).
-        consensus_method (str, optional): Consensus task to evaluate.
+        consensus_method (str, optional): Consensus method to evaluate.
     """
     # Use argparse if arguments are not passed directly
     if all(arg is None for arg in [generate_from_dataset, benchmark, data_file, positive_label]):
@@ -85,7 +85,7 @@ def main(
         parser.add_argument("--threshold", type=float, help="Specific threshold for evaluation")
         parser.add_argument("--find_optimal_threshold", action="store_true", help="Search for the optimal threshold")
         parser.add_argument("--threshold_range", type=float, nargs=2, metavar=("MIN", "MAX"), help="Range of thresholds to search for the optimal")
-        parser.add_argument("--consensus_method", choices=CONSENSUS_TASKS, help="Consensus task to evaluate")
+        parser.add_argument("--consensus_method", choices=CONSENSUS_METHODS, help="Consensus methods to evaluate")
     
         args = parser.parse_args()
 
@@ -143,7 +143,7 @@ def main(
                     threshold=threshold
                 )
             elif verification_method == "consensus":
-                if consensus_method not in CONSENSUS_TASKS:
+                if consensus_method not in CONSENSUS_METHODS:
                     print("An existing consensus method has not been specified.")
                     return
                 benchmark_evaluator.evaluate(

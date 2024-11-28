@@ -284,7 +284,7 @@ class CLI:
             inquirer.List(
                 "consensus_method",
                 message="Select the consensus method",
-                choices=CONSENSUS_TASKS,
+                choices=CONSENSUS_METHODS,
             ),
             inquirer.Text(
                 "positive_label",
