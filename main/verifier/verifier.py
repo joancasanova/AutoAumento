@@ -1,6 +1,6 @@
 # autoaumento/verifier/verifier.py
 
-from typing import List, Dict, Optional
+from typing import List, Optional
 from main.utils.data_manager import DataManager
 from config.config import *
 
@@ -60,8 +60,9 @@ class Verifier:
                 return False  # Phrases are not sufficiently similar
 
         except Exception as e:
-            print(f"An error occurred during similarity verification: {e}")
-            return False
+            error_msg = f"similarity verification -> {e}"
+            
+            raise ValueError(error_msg)
 
     def verify_with_consensus(self, input_text: str = "", output_text: str = "", consensus_method: str = "") -> bool:
         """
@@ -86,20 +87,21 @@ class Verifier:
                 num_responses= NUM_RESPONSES_CONSENSUS
             )
 
-            # Count how many responses contain "Yes" to determine consensus
-            positive_responses = sum("Yes" in response for response in responses)
+            # Count how many responses contain the positive response to determine consensus
+            positive_responses = sum(POSITIVE_RESPONSE in response for response in responses)
             consensus = positive_responses >= NUM_OK
 
             # Log the responses and consensus result
-            print(f"-- {consensus_method.upper()}: {'Yes' if consensus else 'No'}")
+            print(f"-- {consensus_method.upper()}: {POSITIVE_RESPONSE if consensus else 'No'}")
             print(f"  - Positive responses: {positive_responses} out of {NUM_RESPONSES_CONSENSUS}")
 
             return consensus
 
         except Exception as e:
-            print(f"An error occurred during consensus verification: {e}")
-            return False
-
+            error_msg = f"consensus verification -> {e}"
+            
+            raise ValueError(error_msg)
+        
     def _analyze(self, input_text: str, output_text: str, methods: Optional[List[str]] = None) -> int:
         """
         Analyzes if a pair of phrases (input and output) meets the specified conditions.
@@ -117,7 +119,9 @@ class Verifier:
         """
         print(f"- VERIFYING GENERATION:\t{input_text} --> {output_text}")
 
-        methods = methods or ["embedding", "consensus"]
+        if methods == []:
+            methods = ["embedding", "consensus"]
+
         conditions_met = 0
         total_conditions = 0
 
@@ -137,7 +141,7 @@ class Verifier:
 
         # Verification using consensus
         if "consensus" in methods and self.generator:
-            methods_to_use = METHODS
+            methods_to_use = CONSENSUS_METHODS
             total_conditions += len(methods_to_use)
             consensus_results = []
             for method in methods_to_use:
@@ -147,6 +151,9 @@ class Verifier:
             conditions_met += sum(consensus_results)
 
         # Determine the verdict based on the conditions met
+        if total_conditions == 0 or conditions_met == 0:
+            print(f"CONCLUSION -- DISCARDED: No tests passed\n")
+            return -1  # Discarded
         if conditions_met == total_conditions:
             print(f"CONCLUSION -- CONFIRMED: {input_text} -> {output_text}\n")
             return 0  # Confirmed
@@ -157,104 +164,26 @@ class Verifier:
             print("CONCLUSION -- DISCARDED\n")
             return -1  # Discarded
 
-    @staticmethod
-    def _parse_generated_responses(responses: List[str]) -> List[Dict[str, str]]:
-        """
-        Parses the model's responses to extract input-output pairs.
-
-        Args:
-            responses (List[str]): List of responses from the model.
-
-        Returns:
-            List[Dict[str, str]]: A list of dictionaries containing 'input' and 'output' keys.
-        """
-        variation_pairs = []
-        temp_pair = {}
-
-        for response in responses:
-            for line in response.splitlines():
-                line = line.strip()
-
-                if "input" in line.lower() and ":" in line:
-                    if 'input' in temp_pair and 'output' not in temp_pair:
-                        # Add a pair with the existing input and empty output if we encounter another input
-                        variation_pairs.append({'input': temp_pair['input'], 'output': ''})
-                    # Start a new pair with the new input
-                    temp_pair['input'] = line.split(":", 1)[1].strip()
-                    temp_pair.pop('output', None)  # Clear any existing output in temp_pair
-
-                elif "output" in line.lower() and ":" in line:
-                    temp_pair['output'] = line.split(":", 1)[1].strip()
-
-                if 'input' in temp_pair and 'output' in temp_pair:
-                    # Add the complete pair to variation_pairs
-                    variation_pairs.append(temp_pair.copy())
-                    temp_pair = {}  # Reset temp_pair for the next pair
-
-            # Handle case where there's a leftover input without an output
-            if 'input' in temp_pair and 'output' not in temp_pair:
-                variation_pairs.append({'input': temp_pair['input'], 'output': ''})
-
-        return variation_pairs
-
-
-    def verify(self, generations: List[str], verification_method: str) -> None:
+    def verify(self, generation: str, verification_method: str) -> None:
         """
         Processes and verifies the generations.
 
         Args:
-            generations (List[str]): List of generated responses to verify.
+            generation [str]: Generated response to verify.
             verification_method (str): The verification method to use.
         """
-        unique_inputs = set()
-        valid_generations = []
-        to_verify_data = []
 
         try:
-            parsed_generations = self._parse_generated_responses(generations)
+            input_text = generation.get('input', "")
+            output_text = generation.get('output', "")
 
-            for generation in parsed_generations:                    
-                input_text = generation.get('input', "")
-                output_text = generation.get('output', "")
-
-                if 'input' not in generation:
-                    print("The 'input' key is not present in the datapoint. An empty string ('') is assigned")
-                if 'output' not in generation:
-                    print("The 'output' key is not present in the datapoint. An empty string ('') is assigned")
-     
-
-                if input_text in unique_inputs:
-                    print("Duplicate input discarded.")
-                    continue
-                unique_inputs.add(input_text)
-
-                verdict = self._analyze(
-                    input_text,
-                    output_text,
-                    methods=[verification_method] if verification_method != 'all' else None
-                )
-                
-                # Prepare the entry dynamically based on non-empty values
-                generation_entry = {}
-                if input_text:
-                    generation_entry["input"] = input_text
-                if output_text:
-                    generation_entry["output"] = output_text
-
-                if verdict == 0:
-                    valid_generations.append(generation_entry)
-                    print("Added to confirmed list.")
-                elif verdict == 1:
-                    to_verify_data.append(generation_entry)
-                    print("Added to verification list.")
-        
-            # Save results
-            DataManager.register_data(
-                valid_generations,
-                to_verify_data,
-                CONFIRMED_FILE,
-                VERIFY_FILE
+            return self._analyze(
+                input_text,
+                output_text,
+                methods=[verification_method] if verification_method != 'all' else ["embedding", "consensus"]
             )
-
+                        
         except Exception as e:
-            print(f"An error occurred during verification: {e}")
+            error_msg = f"verification -> {e}"
+            
+            raise ValueError(error_msg)

@@ -3,7 +3,7 @@
 import argparse
 import warnings
 import os
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
 
 from main.utils.data_manager import DataManager
 from main.models.generator import InstructModel
@@ -43,6 +43,48 @@ def _initialize_models(benchmark: bool, verification_method: str) -> Tuple[Optio
         raise
 
     return generator, embedder
+
+def process_generation(
+    generation,
+    generator,
+    verifier,
+    verification_method,
+    valid_generations,
+    to_verify_data,
+    unique_inputs
+) -> None:
+    """
+    Processes a single generation by parsing, verifying, and categorizing it.
+
+    Args:
+        generation (str): The raw generation output from the generator model.
+        generator (InstructModel): The generator model instance.
+        verifier (Verifier): The verifier instance.
+        verification_method (str): The verification method to use.
+        valid_generations (list): List to store valid generations.
+        to_verify_data (list): List to store generations that need further verification.
+        unique_inputs (set): Set to track unique input texts.
+    """
+    parsed_generation = generator.parse_generated_response(generation)
+    input_text = parsed_generation.get('input', "")
+
+    if input_text in unique_inputs:
+        print("Duplicate input discarded.")
+        return
+    unique_inputs.add(input_text)
+
+    # Process generations
+    verdict = verifier.verify(
+        parsed_generation, 
+        verification_method
+    )
+
+    if verdict == 0:
+        valid_generations.append(parsed_generation)
+        print("Added to confirmed list.")
+    elif verdict == 1:
+        to_verify_data.append(parsed_generation)
+        print("Added to verification list.")
 
 
 def main(
@@ -159,6 +201,10 @@ def main(
 
     # Data Generation
     else:
+        valid_generations = []
+        to_verify_data = []
+        unique_inputs = set()
+        
         try:
             # Generation with reference data from a verified JSON file
             if generate_from_dataset:
@@ -168,27 +214,30 @@ def main(
                 else:
                     data_file_path = os.path.join(DATA_DIR, data_file)
                     data = DataManager.load_json(data_file_path, "reference dataset")
-
-                generations = []
         
                 for datapoint in data:
                     input_text = datapoint.get('input', "")
                     output_text = datapoint.get('output', "")
 
-                    if 'input' not in datapoint:
-                        print("The 'input' key is not present in the datapoint. An empty string ('') is assigned")
-                    if 'output' not in datapoint:
-                        print("The 'output' key is not present in the datapoint. An empty string ('') is assigned")
-     
-                    print(f"Processing input: {input_text} --> {output_text}")
+                    print(f"Processing datapoint: {input_text} --> {output_text}")
 
-                    generation = generator.generate(
+                    generations = generator.generate(
                         GENERATE_WITH_DATASET,
                         input_text,
                         output_text
                     )
-                    generations.extend(generation)
-        
+                    
+                    for generation in generations:
+                        process_generation(
+                            generation,
+                            generator,
+                            verifier,
+                            verification_method,
+                            valid_generations,
+                            to_verify_data,
+                            unique_inputs
+                        )
+
             # Generation of synthetic data without dataset references
             else:
                 generations = generator.generate(
@@ -196,11 +245,25 @@ def main(
                     num_responses=NUM_RESPONSES_GENERATE
                 )
                 
-            # Process generations
-            verifier.verify(
-                generations, 
-                verification_method
+                for generation in generations:
+                    process_generation(
+                        generation,
+                        generator,
+                        verifier,
+                        verification_method,
+                        valid_generations,
+                        to_verify_data,
+                        unique_inputs
+                    )
+                        
+            # Save results
+            DataManager.register_data(
+                valid_generations,
+                to_verify_data,
+                CONFIRMED_FILE,
+                VERIFY_FILE
             )
+            
         except Exception as e:
             print(f"An error occurred during data generation: {e}")
 

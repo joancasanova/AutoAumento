@@ -21,7 +21,7 @@ LOCAL_GENERATOR: bool = False
 LOCAL_EMBEDDER: bool = False
 LOCAL_FOLDER: str = "local-models"
 
-MODEL_GENERATOR_NAME: str = "BSC-LT/salamandra-7b-instruct"
+MODEL_GENERATOR_NAME: str = "BSC-LT/salamandra-2b-instruct"
 MODEL_EMBEDDER_NAME: str = "Alibaba-NLP/gte-multilingual-base"
 
 # GENERATION TASKS - DO NOT REMOVE VARIABLES - CHANGE VALUE IF NEEDED
@@ -46,9 +46,10 @@ NUM_RESPONSES_GENERATE: int = 5
 # VERIFIER PARAMETERS - DO NOT REMOVE VARIABLES - CHANGE VALUE IF NEEDED
 
 # Semantic distance verifier using embeddings
-THRESHOLD: float = 0.90
+THRESHOLD: float = 0.91
 UPPER_THRESHOLD: float = 0.99
 
 # Consensus verifier
+POSITIVE_RESPONSE = "Sí"
 NUM_RESPONSES_CONSENSUS: int = 5
 NUM_OK: int = 4

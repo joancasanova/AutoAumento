@@ -40,8 +40,8 @@ class InstructModel:
             self.tokenizer = AutoTokenizer.from_pretrained(model_path)
             self.model = AutoModelForCausalLM.from_pretrained(model_path)
         except Exception as e:
-            print(f"An error occurred while loading the model: {e}")
-            raise e
+            error_msg = f"while loading the model -> {e}"
+            raise ValueError(error_msg)
 
         # Determine the device
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -69,17 +69,16 @@ class InstructModel:
                 prompts = json.load(file)
         except FileNotFoundError:
             error_msg = f"The JSON file '{PROMPTS_FILE}' was not found."
-            print(error_msg)
+            
             raise ValueError(error_msg)
         except json.JSONDecodeError:
             error_msg = f"The JSON file '{PROMPTS_FILE}' has an invalid format."
-            print(error_msg)
+            
             raise ValueError(error_msg)
 
         # Check if the task exists in the JSON file
         if task not in prompts:
-            error_msg = f"The task '{task}' does not exist in the JSON file."
-            print(error_msg)
+            error_msg = f"The task '{task}' does not exist in the prompts JSON file (config/prompts.json)."
             raise ValueError(error_msg)
 
         # Get the context and instruction for the specific task
@@ -114,7 +113,7 @@ class InstructModel:
             return match.group(1).strip()
         return None
 
-    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 1, max_new_tokens: int = 300) -> List[Optional[str]]:
+    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 1, max_new_tokens: int = 200) -> List[Optional[str]]:
         """
         Generates responses from the model based on the provided messages.
 
@@ -157,8 +156,8 @@ class InstructModel:
 
             return responses
         except Exception as e:
-            print(f"An error occurred during response generation: {e}")
-            return []
+            error_msg = f"response generation -> {e}"
+            raise ValueError(error_msg)
 
     def generate(self, task: str, input_text: str = "", output_text: str = "", num_responses: int = 1) -> List[Optional[str]]:
         """
@@ -178,5 +177,37 @@ class InstructModel:
             responses = self._get_response(messages, num_responses)
             return responses
         except Exception as e:
-            print(f"An error occurred during generation: {e}")
-            return []
+            error_msg = f"generation -> {e}"
+            raise ValueError(error_msg)
+        
+    @staticmethod
+    def parse_generated_response(response: str) -> Dict[str, str]:
+            """
+            Parses the model's response to extract input-output pair.
+
+            Args:
+                response [str]: Response from the model.
+
+            Returns:
+                Dict[str, str]: Dictionary containing 'input' and 'output' keys.
+            """
+            parsed_response = {}
+
+            for line in response.splitlines():
+                line = line.strip()
+
+                if "input" in line.lower() and ":" in line:
+                    if 'input' in parsed_response and 'output' not in parsed_response:
+                        parsed_response['output'] = ""
+                        return parsed_response
+                    
+                    # Start a new pair with the new input
+                    parsed_response['input'] = line.split(":", 1)[1].strip()
+
+                elif "output" in line.lower() and ":" in line:
+                    parsed_response['output'] = line.split(":", 1)[1].strip()
+
+                if 'input' in parsed_response and 'output' in parsed_response:
+                    return parsed_response
+                
+            return parsed_response

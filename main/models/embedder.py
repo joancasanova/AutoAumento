@@ -39,8 +39,10 @@ class EmbeddingModel:
             self.tokenizer = AutoTokenizer.from_pretrained(model_path)
             self.model = AutoModel.from_pretrained(model_path, trust_remote_code=True)
         except Exception as e:
-            print(f"An error occurred while loading the embedding model: {e}")
-            raise e
+            error_msg = f"while loading the embedding model -> {e}"
+            
+            raise ValueError(error_msg)
+
         
         # Determine the device
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -58,7 +60,7 @@ class EmbeddingModel:
             torch.Tensor: The normalized embedding vector for the text.
 
         Raises:
-            Exception: If an error occurs during embedding calculation.
+            Exception: If an curs during embedding calculation.
         """
         try:
             # Tokenize the text
@@ -79,5 +81,6 @@ class EmbeddingModel:
             return embedding
 
         except Exception as e:
-            print(f"An error occurred while calculating the embedding: {e}")
-            raise e
+            error_msg = f"while calculating the embedding -> {e}"
+            
+            raise ValueError(error_msg)

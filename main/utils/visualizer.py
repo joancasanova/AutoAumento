@@ -41,5 +41,6 @@ class Visualizer:
             print(f"Plot saved at {filepath}")
 
         except Exception as e:
-            print(f"An error occurred while generating the plot: {e}")
-            raise
+            error_msg = f"while generating the plot -> {e}"
+            
+            raise ValueError(error_msg)

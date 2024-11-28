@@ -35,7 +35,7 @@ class ResultHandler:
                     json.dump(misclassified_cases, f, ensure_ascii=False, indent=4)
                 print(f"Misclassified cases saved to: {filepath}")
             except Exception as e:
-                print(f"An error occurred while saving misclassified cases: {e}")
+                print(f"while saving misclassified cases -> {e}")
                 raise e
         else:
             print("No misclassified cases to save.")

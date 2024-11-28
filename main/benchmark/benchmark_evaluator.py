@@ -54,9 +54,9 @@ class BenchmarkEvaluator:
                 # Evaluate the datapoint
                 prediction = evaluation_function(input_text, output_text, **kwargs)
             except Exception as e:
-                print(f"An error occurred during evaluation: {e}")
-                continue
-
+                error_msg = f"evaluation -> {e}"
+                raise ValueError(error_msg)
+            
             # Determine the predicted class
             predicted_class = 'positive' if prediction else 'negative'
 
@@ -96,7 +96,8 @@ class BenchmarkEvaluator:
         try:
             ResultHandler.save_misclassified_cases(misclassified_cases)
         except Exception as e:
-            print(f"An error occurred while saving misclassified cases: {e}")
+            error_msg = f"An error occurred while saving misclassified cases: {e}"
+            raise ValueError(error_msg)
 
         return overall_accuracy
 
@@ -134,9 +135,8 @@ class BenchmarkEvaluator:
                     threshold=current_threshold
                 )
             except Exception as e:
-                print(f"An error occurred during evaluation at threshold {current_threshold}: {e}")
-                current_threshold += 0.01
-                continue
+                error_msg = f"evaluation at threshold {current_threshold} -> {e}"
+                raise ValueError(error_msg)
 
             thresholds.append(current_threshold)
             accuracies.append(overall_accuracy)
@@ -149,7 +149,9 @@ class BenchmarkEvaluator:
         try:
             Visualizer.plot_threshold_vs_accuracy(thresholds, accuracies)
         except Exception as e:
-            print(f"An error occurred while plotting thresholds vs accuracies: {e}")
+            error_msg = f"An error occurred while plotting thresholds vs accuracies: {e}"
+            
+            raise ValueError(error_msg)
 
         return best_threshold, best_accuracy, thresholds, accuracies
 

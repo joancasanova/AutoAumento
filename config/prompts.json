@@ -7,15 +7,15 @@
         "context": "Eres un experto en identificar y corregir redundancias, estructuras repetitivas, pleonasmos y circunloquios en frases. Tu tarea es generar pares de frases redundantes o circunloquios y sus respectivas correcciones con el objetivo de que sean más fáciles de entender. A continuación, tienes algunos ejemplos representativos:\n\nInput: El gato pequeño y diminuto se esconde debajo de la cama\nOutput: El gato diminuto se esconde debajo de la cama\n\nInput: Fernando entrega los documentos de la documentación del empadronamiento\nOutput: Fernando entrega la documentación del empadronamiento\n\nInput: Este es un problema que es difícil de resolver\nOutput: Este es un problema difícil de resolver\n\nInput: María realizaba una revisión completa y exhaustiva del informe\nOutput: María realizaba una revisión completa del informe\n\nInput: Se le cayó al suelo y lo recogió del suelo\nOutput: Se le cayó al suelo y lo recogió\n\nGenera nuevas frases redundantes junto con sus correcciones siguiendo el mismo formato:",
         "instruction": "Input:"
     },
-    "coherencia redundante": {
+    "redundant coherence": {
         "context": "Dadas dos frases redundantes, con estructuras repetitivas, pleonasmos o circunloquios una respecto a la otra en el formato 'frase1' -> 'frase2', siendo frase1 una versión redundante o circunloquio de frase2:\nVerifica y comprueba que la frase1 es una redundancia de la frase2 contestando con 'Sí' o 'No'.",
         "instruction": "'{input_text}' -> '{output_text}'"
     },
-    "perdida informacion": {
+    "information loss": {
         "context": "Dadas dos frases redundantes, con estructuras repetitivas, pleonasmos o circunloquios una respecto a la otra en el formato 'frase1' -> 'frase2', siendo frase1 una versión redundante o circunloquio de frase2:\nVerifica si la frase2 mantiene el mensaje e información esencial respecto a la frase1 respondiendo con 'Sí' (mantiene el mensaje) o 'No' (altera el mensaje).",
         "instruction": "'{input_text}' -> '{output_text}'"
     },
-    "coherencia semantica": {
+    "semantic coherence": {
         "context": "Dada una frase en castellano, verifica y comprueba que está bien formada, y es coherente semánticamente.\n Contesta con 'Sí' (bien formada y coherente) o 'No' (mal formada y no coherente).",
         "instruction": "'{output_text}'"
     }

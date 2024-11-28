@@ -72,11 +72,11 @@ class CLI:
     
         
         verification_method = ""
-        if answers["verification_method"] == "LLM Consensus":
+        if answers["verification_method"] == "LLM Consensus only":
             verification_method = "consensus"
-        if answers["verification_method"] == "Semantic Sentence Similarity":
+        if answers["verification_method"] == "Semantic Sentence Similarity only":
             verification_method = "embedding"
-        if answers["verification_method"] == "Both":
+        if answers["verification_method"] == "All methods":
             verification_method = "all"
             
         action = answers["action"]    

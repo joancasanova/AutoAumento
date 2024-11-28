@@ -45,8 +45,9 @@ class DataManager:
             raise ValueError(f"Invalid JSON format in file {file_name}") from e
 
         except Exception as e:
-            print(f"Error loading {description}: {e}")
-            raise e
+            error_msg = f"Error loading {description}: {e}"
+            
+            raise ValueError(error_msg)
 
     @staticmethod
     def register_data(
@@ -100,5 +101,6 @@ class DataManager:
                 print(f"Verification data saved to {verify_file_name}.")
 
         except Exception as e:
-            print(f"Error registering data: {e}")
-            raise e
+            error_msg = f"Error registering data: {e}"
+            
+            raise ValueError(error_msg)
