@@ -88,11 +88,16 @@ class Verifier:
             )
 
             # Count how many responses contain the positive response to determine consensus
-            positive_responses = sum(POSITIVE_RESPONSE in response for response in responses)
+            positive_responses = 0
+            for response in responses:
+                print(response)
+                if any(word in response for word in POSITIVE_RESPONSES):
+                    positive_responses += 1
+                    
             consensus = positive_responses >= NUM_OK
 
             # Log the responses and consensus result
-            print(f"-- {consensus_method.upper()}: {POSITIVE_RESPONSE if consensus else 'No'}")
+            print(f"-- {consensus_method.upper()}: {POSITIVE_RESPONSES if consensus else 'No'}")
             print(f"  - Positive responses: {positive_responses} out of {NUM_RESPONSES_CONSENSUS}")
 
             return consensus

@@ -50,6 +50,6 @@ THRESHOLD: float = 0.91
 UPPER_THRESHOLD: float = 0.99
 
 # Consensus verifier
-POSITIVE_RESPONSE = "Sí"
+POSITIVE_RESPONSES = ["Sí", "Yes", "Si", "yes", "sí", "si"]
 NUM_RESPONSES_CONSENSUS: int = 5
 NUM_OK: int = 4
