@@ -8,6 +8,13 @@ to generate instructions and process responses.
 """
 
 import os
+
+# Import DeviceManager and set CUDA_VISIBLE_DEVICES before importing torch
+from main.models.device_manager import DeviceManager
+
+device_manager = DeviceManager()
+device_manager.set_cuda_visible_devices_mig()
+
 import json
 import re
 import torch

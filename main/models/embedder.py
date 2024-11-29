@@ -8,7 +8,13 @@ using pre-trained embedding models.
 """
 
 import os
-from typing import Optional
+
+# Import DeviceManager and set CUDA_VISIBLE_DEVICES before importing torch
+from main.models.device_manager import DeviceManager
+
+device_manager = DeviceManager()
+device_manager.set_cuda_visible_devices_mig()
+
 import torch
 import torch.nn.functional as F
 from transformers import AutoModel, AutoTokenizer
@@ -40,12 +46,18 @@ class EmbeddingModel:
             self.model = AutoModel.from_pretrained(model_path, trust_remote_code=True)
         except Exception as e:
             error_msg = f"while loading the embedding model -> {e}"
-            
             raise ValueError(error_msg)
 
-        
         # Determine the device
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        if torch.cuda.is_available():
+            self.device = torch.device('cuda')
+            print(f"Number of GPUs: {torch.cuda.device_count()}")
+            print(f"DEVICE: {self.device}")
+        else:
+            self.device = torch.device('cpu')
+            print("CUDA is not available. Using CPU.")
+
+        # Move the model to the device
         self.model.to(self.device)
         print(f"Embedding model loaded and moved to device: {self.device}")
 
@@ -60,7 +72,7 @@ class EmbeddingModel:
             torch.Tensor: The normalized embedding vector for the text.
 
         Raises:
-            Exception: If an curs during embedding calculation.
+            Exception: If an error occurs during embedding calculation.
         """
         try:
             # Tokenize the text
@@ -82,5 +94,4 @@ class EmbeddingModel:
 
         except Exception as e:
             error_msg = f"while calculating the embedding -> {e}"
-            
             raise ValueError(error_msg)
