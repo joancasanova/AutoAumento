@@ -1,0 +1,82 @@
+[
+    {
+        "input": "Fernando retrocede hacia atrás.",
+        "label": "redundante"
+    },
+    {
+        "input": "Protagonista principal.",
+        "label": "redundante"
+    },
+    {
+        "input": "Navegar por el agua.",
+        "label": "redundante"
+    },
+    {
+        "input": "La autopsia realizada al cadáver.",
+        "label": "redundante"
+    },
+    {
+        "input": "En la autopista, Andrea conduce su coche rápido, a gran velocidad.",
+        "label": "redundante"
+    },
+    {
+        "input": "Subió por la subida hasta la cima de la montaña",
+        "label": "redundante"
+    },
+    {
+        "input": "La vista ofrece una visión completa de todo el área",
+        "label": "redundante"
+    },
+    {
+        "input": "Está prohibido publicar la información de los datos personales.",
+        "label": "redundante"
+    },
+    {
+        "input": "El joven muchacho subió hacia arriba por las escaleras de madera vieja y antigua, mientras miraba con sus propios ojos el panorama del paisaje que se extendía más allá.",
+        "label": "redundante"
+    },
+    {
+        "input": "El paciente presentó una hemorragia de sangre que continuó fluyendo de manera continua y persistente, requiriendo atención médica urgente e inmediata.",
+        "label": "redundante"
+    },
+    {
+        "input": "Navegar por la red.",
+        "label": "correcto"
+    },
+    {
+        "input": "Caminar bajo la lluvia.",
+        "label": "correcto"
+    },
+    {
+        "input": "Cocinar a fuego lento.",
+        "label": "correcto"
+    },
+    {
+        "input": "Vivir en la ciudad.",
+        "label": "correcto"
+    },
+    {
+        "input": "El libro estaba sobre la mesa de la sala.",
+        "label": "correcto"
+    },
+    {
+        "input": "La computadora está encendida desde hace varias horas.",
+        "label": "correcto"
+    },
+    {
+        "input": "El perro corrió hacia el parque cuando vio la pelota.",
+        "label": "correcto"
+    },
+    {
+        "input": "Me gusta escuchar música mientras estudio para los exámenes.",
+        "label": "correcto"
+    },
+    {
+        "input": "Ella pintó un cuadro lleno de colores vibrantes y contrastes.",
+        "label": "correcto"
+    },
+    {
+        "input": "Escribió una carta a su amigo que vive en otro país.",
+        "label": "correcto"
+    }
+]

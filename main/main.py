@@ -50,8 +50,7 @@ def process_generation(
     verifier,
     verification_method,
     valid_generations,
-    to_verify_data,
-    unique_inputs
+    to_verify_data
 ) -> None:
     """
     Processes a single generation by parsing, verifying, and categorizing it.
@@ -63,15 +62,9 @@ def process_generation(
         verification_method (str): The verification method to use.
         valid_generations (list): List to store valid generations.
         to_verify_data (list): List to store generations that need further verification.
-        unique_inputs (set): Set to track unique input texts.
     """
     parsed_generation = generator.parse_generated_response(generation)
     input_text = parsed_generation.get('input', "")
-
-    if input_text in unique_inputs:
-        print("Duplicate input discarded.")
-        return
-    unique_inputs.add(input_text)
 
     # Process generations
     verdict = verifier.verify(
@@ -120,7 +113,7 @@ def main(
         parser.add_argument("--generate_from_dataset", action="store_true", help="Generate data using a reference JSON file")
         parser.add_argument("--benchmark", action="store_true", help="Execute model evaluation benchmark")
         parser.add_argument("--data_file", type=str, default=DATA_FILE, help="JSON data file")
-        parser.add_argument("--verification_method", choices=["all", "embedding", "consensus"], default="all", help="Verification method to use")
+        parser.add_argument("--verification_method", choices=["all", "embedding", "consensus", "None"], default="all", help="Verification method to use")
         
         # Benchmark specific arguments
         parser.add_argument("--positive_label", type=str, help="Label to consider as positive")
@@ -203,7 +196,6 @@ def main(
     else:
         valid_generations = []
         to_verify_data = []
-        unique_inputs = set()
         
         try:
             # Generation with reference data from a verified JSON file
@@ -228,14 +220,14 @@ def main(
                     )
                     
                     for generation in generations:
+                        print(generation)
                         process_generation(
                             generation,
                             generator,
                             verifier,
                             verification_method,
                             valid_generations,
-                            to_verify_data,
-                            unique_inputs
+                            to_verify_data
                         )
 
             # Generation of synthetic data without dataset references
@@ -246,14 +238,14 @@ def main(
                 )
                 
                 for generation in generations:
+                    print(generation)
                     process_generation(
                         generation,
                         generator,
                         verifier,
                         verification_method,
                         valid_generations,
-                        to_verify_data,
-                        unique_inputs
+                        to_verify_data
                     )
                         
             # Save results

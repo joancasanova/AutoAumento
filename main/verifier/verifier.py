@@ -88,17 +88,16 @@ class Verifier:
             )
 
             # Count how many responses contain the positive response to determine consensus
-            positive_responses = 0
+            num_positive_responses = 0
             for response in responses:
-                print(response)
                 if any(word in response for word in POSITIVE_RESPONSES):
-                    positive_responses += 1
+                    num_positive_responses += 1
                     
-            consensus = positive_responses >= NUM_OK
+            consensus = num_positive_responses >= NUM_OK
 
             # Log the responses and consensus result
-            print(f"-- {consensus_method.upper()}: {POSITIVE_RESPONSES if consensus else 'No'}")
-            print(f"  - Positive responses: {positive_responses} out of {NUM_RESPONSES_CONSENSUS}")
+            print(f"-- {consensus_method.upper()}: {'POSITIVE' if consensus else 'NEGATIVE'}")
+            print(f"  - Positive responses: {num_positive_responses} out of {NUM_RESPONSES_CONSENSUS}")
 
             return consensus
 
@@ -181,11 +180,20 @@ class Verifier:
         try:
             input_text = generation.get('input', "")
             output_text = generation.get('output', "")
+            
+            methods=[] 
+            if verification_method == 'embedding' or verification_method == 'consensus':
+                methods=[verification_method] 
+            elif verification_method == 'all':
+                methods=["embedding", "consensus"]
+            elif verification_method == 'None':
+                methods=["None"]
 
+            
             return self._analyze(
                 input_text,
                 output_text,
-                methods=[verification_method] if verification_method != 'all' else ["embedding", "consensus"]
+                methods=methods
             )
                         
         except Exception as e:

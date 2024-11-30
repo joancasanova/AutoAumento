@@ -61,7 +61,8 @@ class CLI:
                 choices=[
                     "All methods",
                     "LLM Consensus only",
-                    "Semantic Sentence Similarity only"
+                    "Semantic Sentence Similarity only",
+                    "None"
                 ],
             )
         ]
@@ -78,6 +79,8 @@ class CLI:
             verification_method = "embedding"
         if answers["verification_method"] == "All methods":
             verification_method = "all"
+        if answers["verification_method"] == "None":
+            verification_method = "None"
             
         action = answers["action"]    
         if action == "Data Generation using Support JSON File":
