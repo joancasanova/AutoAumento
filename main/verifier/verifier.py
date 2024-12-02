@@ -121,11 +121,11 @@ class Verifier:
                 1 if it requires additional verification,
                 -1 if it is discarded.
         """
-        print(f"- VERIFYING GENERATION:\t{input_text} --> {output_text}")
 
         input_text = generation.get('input', "")
         output_text = generation.get('output', "")
         
+        print(f"- VERIFYING GENERATION:\t{input_text} --> {output_text}")
         
         methods=[] 
         if verification_method == 'embedding' or verification_method == 'consensus':

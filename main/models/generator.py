@@ -120,14 +120,14 @@ class InstructModel:
             return match.group(1).strip()
         return None
 
-    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 1, max_new_tokens: int = 200) -> List[Optional[str]]:
+    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 3, max_new_tokens: int = 500) -> List[Optional[str]]:
         """
         Generates responses from the model based on the provided messages.
 
         Args:
             messages (List[Dict[str, str]]): The messages to send to the model.
-            num_return_sequences (int, optional): Number of responses to generate. Defaults to 1.
-            max_new_tokens (int, optional): Maximum number of new tokens to generate. Defaults to 300.
+            num_return_sequences (int, optional): Number of responses to generate. Defaults to 3.
+            max_new_tokens (int, optional): Maximum number of new tokens to generate. Defaults to 500.
 
         Returns:
             List[Optional[str]]: A list of the assistant's responses.
@@ -214,7 +214,7 @@ class InstructModel:
                 elif "output" in line.lower() and ":" in line:
                     parsed_response['output'] = line.split(":", 1)[1].strip()
 
-                if 'input' in parsed_response and 'output' in parsed_response:
+                if "input" in parsed_response and 'output' in parsed_response:
                     return parsed_response
                 
             return parsed_response

@@ -44,14 +44,14 @@ def _initialize_models(benchmark: bool, verification_method: str) -> Tuple[Optio
 
     return generator, embedder
 
-def process_generation(
+def _process_generation(
     generation,
     generator,
     verifier,
     verification_method,
     valid_generations,
     to_verify_data,
-    processed_inputs
+    processed_inputs  # Conjunto con entradas procesadas
 ) -> None:
     """
     Processes a single generation by parsing, verifying, and categorizing it.
@@ -65,27 +65,41 @@ def process_generation(
         to_verify_data (list): List to store generations that need further verification.
         processed_inputs (set): Set of already processed inputs to avoid duplicates.
     """
-    parsed_generation = generator.parse_generated_response(generation)
-    input_text = parsed_generation.get('input', "")
+    try:
+        parsed_generation = generator.parse_generated_response(generation)
 
-    # Verificar si la entrada ya ha sido procesada
-    if input_text in processed_inputs:
-        print(f"Duplicate input detected and discarded: {input_text}")
-        return
-    
-    # Process generations
-    verdict = verifier.verify(
-        parsed_generation, 
-        verification_method
-    )
+        # Verificar que `parsed_generation` sea un diccionario
+        if not isinstance(parsed_generation, dict):
+            print(f"Invalid generation format: {parsed_generation}")
+            return
 
-    if verdict == 0:
-        valid_generations.append(parsed_generation)
-        print("Added to confirmed list.")
-    elif verdict == 1:
-        to_verify_data.append(parsed_generation)
-        print("Added to verification list.")
+        # Obtener input_text con un valor predeterminado
+        input_text = parsed_generation.get('input', "")
+        print(f"input_text: {input_text}")
 
+        # Manejo de cadenas vacías
+        if input_text == "":
+            print("Empty input detected and discarded.")
+            return
+
+        # Verificar duplicados exactos
+        if input_text in processed_inputs:
+            print(f"Exact duplicate detected and discarded: {input_text}")
+            return
+
+        # Añadir la entrada al conjunto de procesados
+        processed_inputs.add(input_text)
+
+        # Procesar generaciones
+        verdict = verifier.verify(parsed_generation, verification_method)
+        if verdict == 0:
+            valid_generations.append(parsed_generation)
+            print("Added to confirmed list.")
+        elif verdict == 1:
+            to_verify_data.append(parsed_generation)
+            print("Added to verification list.")
+    except Exception as e:
+        print(f"Error while processing generation: {e}")
 
 def main(
     generate_from_dataset: Optional[bool] = None,
@@ -228,8 +242,7 @@ def main(
                     )
                     
                     for generation in generations:
-                        print(generation)
-                        process_generation(
+                        _process_generation(
                             generation,
                             generator,
                             verifier,
@@ -247,8 +260,7 @@ def main(
                 )
                 
                 for generation in generations:
-                    print(generation)
-                    process_generation(
+                    _process_generation(
                         generation,
                         generator,
                         verifier,
