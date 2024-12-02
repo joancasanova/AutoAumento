@@ -106,7 +106,7 @@ class Verifier:
             
             raise ValueError(error_msg)
         
-    def _analyze(self, input_text: str, output_text: str, methods: Optional[List[str]] = None) -> int:
+    def verify(self, generation: str, verification_method: str) -> int:
         """
         Analyzes if a pair of phrases (input and output) meets the specified conditions.
 
@@ -123,8 +123,17 @@ class Verifier:
         """
         print(f"- VERIFYING GENERATION:\t{input_text} --> {output_text}")
 
-        if methods == []:
-            methods = ["embedding", "consensus"]
+        input_text = generation.get('input', "")
+        output_text = generation.get('output', "")
+        
+        
+        methods=[] 
+        if verification_method == 'embedding' or verification_method == 'consensus':
+            methods=[verification_method] 
+        elif verification_method == 'all':
+            methods=["embedding", "consensus"]
+        elif verification_method == 'None':
+            methods=["None"]
 
         conditions_met = 0
         total_conditions = 0
@@ -167,36 +176,3 @@ class Verifier:
         else:
             print("CONCLUSION -- DISCARDED\n")
             return -1  # Discarded
-
-    def verify(self, generation: str, verification_method: str) -> None:
-        """
-        Processes and verifies the generations.
-
-        Args:
-            generation [str]: Generated response to verify.
-            verification_method (str): The verification method to use.
-        """
-
-        try:
-            input_text = generation.get('input', "")
-            output_text = generation.get('output', "")
-            
-            methods=[] 
-            if verification_method == 'embedding' or verification_method == 'consensus':
-                methods=[verification_method] 
-            elif verification_method == 'all':
-                methods=["embedding", "consensus"]
-            elif verification_method == 'None':
-                methods=["None"]
-
-            
-            return self._analyze(
-                input_text,
-                output_text,
-                methods=methods
-            )
-                        
-        except Exception as e:
-            error_msg = f"verification -> {e}"
-            
-            raise ValueError(error_msg)

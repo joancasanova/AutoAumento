@@ -50,7 +50,8 @@ def process_generation(
     verifier,
     verification_method,
     valid_generations,
-    to_verify_data
+    to_verify_data,
+    processed_inputs
 ) -> None:
     """
     Processes a single generation by parsing, verifying, and categorizing it.
@@ -62,10 +63,16 @@ def process_generation(
         verification_method (str): The verification method to use.
         valid_generations (list): List to store valid generations.
         to_verify_data (list): List to store generations that need further verification.
+        processed_inputs (set): Set of already processed inputs to avoid duplicates.
     """
     parsed_generation = generator.parse_generated_response(generation)
     input_text = parsed_generation.get('input', "")
 
+    # Verificar si la entrada ya ha sido procesada
+    if input_text in processed_inputs:
+        print(f"Duplicate input detected and discarded: {input_text}")
+        return
+    
     # Process generations
     verdict = verifier.verify(
         parsed_generation, 
@@ -194,6 +201,7 @@ def main(
 
     # Data Generation
     else:
+        processed_inputs = set()
         valid_generations = []
         to_verify_data = []
         
@@ -227,7 +235,8 @@ def main(
                             verifier,
                             verification_method,
                             valid_generations,
-                            to_verify_data
+                            to_verify_data,
+                            processed_inputs
                         )
 
             # Generation of synthetic data without dataset references
@@ -245,7 +254,8 @@ def main(
                         verifier,
                         verification_method,
                         valid_generations,
-                        to_verify_data
+                        to_verify_data,
+                        processed_inputs
                     )
                         
             # Save results
