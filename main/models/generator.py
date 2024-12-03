@@ -120,13 +120,13 @@ class InstructModel:
             return match.group(1).strip()
         return None
 
-    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 3, max_new_tokens: int = 500) -> List[Optional[str]]:
+    def _get_response(self, messages: List[Dict[str, str]], num_return_sequences: int = 1, max_new_tokens: int = 500) -> List[Optional[str]]:
         """
         Generates responses from the model based on the provided messages.
 
         Args:
             messages (List[Dict[str, str]]): The messages to send to the model.
-            num_return_sequences (int, optional): Number of responses to generate. Defaults to 3.
+            num_return_sequences (int, optional): Number of responses to generate. Defaults to 1.
             max_new_tokens (int, optional): Maximum number of new tokens to generate. Defaults to 500.
 
         Returns:
@@ -188,7 +188,7 @@ class InstructModel:
             raise ValueError(error_msg)
         
     @staticmethod
-    def parse_generated_response(response: str) -> Dict[str, str]:
+    def parse_generated_response(response: str) -> List[Dict[str, str]]:
             """
             Parses the model's response to extract input-output pair.
 
@@ -196,8 +196,10 @@ class InstructModel:
                 response [str]: Response from the model.
 
             Returns:
-                Dict[str, str]: Dictionary containing 'input' and 'output' keys.
+                List[Dict[str, str]]: List containing 'input' and 'output' pairs.
             """
+            
+            generated_pairs = []
             parsed_response = {}
 
             for line in response.splitlines():
@@ -206,8 +208,10 @@ class InstructModel:
                 if "input" in line.lower() and ":" in line:
                     if 'input' in parsed_response and 'output' not in parsed_response:
                         parsed_response['output'] = ""
-                        return parsed_response
-                    
+                        generated_pairs.append(parsed_response)
+                        parsed_response = {}
+                        continue
+                                           
                     # Start a new pair with the new input
                     parsed_response['input'] = line.split(":", 1)[1].strip()
 
@@ -215,6 +219,8 @@ class InstructModel:
                     parsed_response['output'] = line.split(":", 1)[1].strip()
 
                 if "input" in parsed_response and 'output' in parsed_response:
-                    return parsed_response
+                    generated_pairs.append(parsed_response)
+                    parsed_response = {}
+                    continue
                 
-            return parsed_response
+            return generated_pairs

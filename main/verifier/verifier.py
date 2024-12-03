@@ -76,8 +76,6 @@ class Verifier:
         Returns:
             bool: True if consensus is achieved, False otherwise.
         """
-        print(f"Verifying input: {input_text} | output: {output_text}")
-
         try:
             # Generate responses using the instructional model
             responses = self.generator.generate(

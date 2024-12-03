@@ -66,38 +66,39 @@ def _process_generation(
         processed_inputs (set): Set of already processed inputs to avoid duplicates.
     """
     try:
-        parsed_generation = generator.parse_generated_response(generation)
+        
+        for generated_pair in generator.parse_generated_response(generation):
+            
+            # Verificar que `parsed_generation` sea un diccionario
+            if not isinstance(generated_pair, dict):
+                print(f"Invalid generation format: {generated_pair}")
+                return
 
-        # Verificar que `parsed_generation` sea un diccionario
-        if not isinstance(parsed_generation, dict):
-            print(f"Invalid generation format: {parsed_generation}")
-            return
+            # Obtener input_text con un valor predeterminado
+            input_text = generated_pair.get('input', "")
 
-        # Obtener input_text con un valor predeterminado
-        input_text = parsed_generation.get('input', "")
-        print(f"input_text: {input_text}")
+            # Manejo de cadenas vacías
+            if input_text == "":
+                print("Empty input detected and discarded.")
+                return
 
-        # Manejo de cadenas vacías
-        if input_text == "":
-            print("Empty input detected and discarded.")
-            return
+            # Verificar duplicados exactos
+            if input_text in processed_inputs:
+                print(f"Exact duplicate detected and discarded: {input_text}")
+                return
 
-        # Verificar duplicados exactos
-        if input_text in processed_inputs:
-            print(f"Exact duplicate detected and discarded: {input_text}")
-            return
+            # Añadir la entrada al conjunto de procesados
+            processed_inputs.add(input_text)
 
-        # Añadir la entrada al conjunto de procesados
-        processed_inputs.add(input_text)
-
-        # Procesar generaciones
-        verdict = verifier.verify(parsed_generation, verification_method)
-        if verdict == 0:
-            valid_generations.append(parsed_generation)
-            print("Added to confirmed list.")
-        elif verdict == 1:
-            to_verify_data.append(parsed_generation)
-            print("Added to verification list.")
+            # Procesar generaciones
+            verdict = verifier.verify(generated_pair, verification_method)
+            if verdict == 0:
+                valid_generations.append(generated_pair)
+                print("Added to confirmed list.")
+            elif verdict == 1:
+                to_verify_data.append(generated_pair)
+                print("Added to verification list.")
+                
     except Exception as e:
         print(f"Error while processing generation: {e}")
 
@@ -232,13 +233,16 @@ def main(
                 for datapoint in data:
                     input_text = datapoint.get('input', "")
                     output_text = datapoint.get('output', "")
+                                                
+                    processed_inputs.add(input_text)
 
                     print(f"Processing datapoint: {input_text} --> {output_text}")
 
                     generations = generator.generate(
                         GENERATE_WITH_DATASET,
                         input_text,
-                        output_text
+                        output_text,
+                        num_responses=NUM_RESPONSES_GENERATE
                     )
                     
                     for generation in generations:
