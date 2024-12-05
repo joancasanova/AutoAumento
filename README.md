@@ -577,7 +577,7 @@ AutoAumento has been benchmarked using different datasets for each verification 
 1. Run the CLI:
 
    ```bash
-   python -m autoaumento.cli
+   python -m main.cli
    ```
 
 2. Choose **Data Generation** > **Normal Data Generation**.
