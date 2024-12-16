@@ -212,7 +212,7 @@ Ejemplo de parseo:
 Texto: "Usuario: Ana, Edad: 30. Usuario: Luis, Edad: 25."
 
 Reglas (simplificadas):
-- Usuario (keyword): "Usuario:\s*", y secondary_pattern="Edad:"
+- Usuario (keyword): "Usuario:", y secondary_pattern=", Edad:"
 - Edad (regex): "Edad:\s*(\d+)"
 
 Salida JSON:
