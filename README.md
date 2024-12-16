@@ -38,7 +38,7 @@
 
 1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/autoaumento.git
+   git clone https://github.com/joancasanova/autoaumento.git
    cd autoaumento
    ```
 
