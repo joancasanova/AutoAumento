@@ -258,7 +258,7 @@ Ejemplo de `methods.json`:
     "mode": "cumulative",
     "name": "CheckPalabraClave",
     "system_prompt": "Eres un verificador que busca la palabra 'holaaa'.",
-    "user_prompt": "Comprueba si en la respuesta del asistente aparece la palabra 'holaaa'.",
+    "user_prompt": "holaaa, como estáaaas??.",
     "valid_responses": ["holaaa"],
     "num_sequences": 3,
     "required_matches": 2
@@ -266,9 +266,9 @@ Ejemplo de `methods.json`:
   {
     "mode": "eliminatory",
     "name": "CheckRespuestaFormal",
-    "system_prompt": "Eres un verificador estricto.",
-    "user_prompt": "Asegúrate que no se use lenguaje informal.",
-    "valid_responses": ["Buenos días", "Saludos cordiales"],
+    "system_prompt": "Eres un verificador estricto. Asegúrate que no se use lenguaje informal. ¿Tiene la siguiente frase un tono formal?",
+    "user_prompt": "Qué pasa, nos hacemos algo chulo o qué",
+    "valid_responses": ["Sí", "Si", "Yes"],
     "num_sequences": 2,
     "required_matches": 2
   }
@@ -288,7 +288,7 @@ Ejemplo de `methods.json`:
 Al final se imprime un JSON con el resumen de verificación:
 ```json
 {
-  "final_status": "review",
+  "final_status": "discarded",
   "success_rate": 0.5,
   "execution_time": 1.2345,
   "results": [
@@ -300,7 +300,7 @@ Al final se imprime un JSON con el resumen de verificación:
       "timestamp": "2024-01-01T12:00:00",
       "details": {
         "total_responses": 3,
-        "positive_responses": 2,
+        "positive_responses": 3,
         "valid_responses": ["holaaa"],
         "required_matches": 2
       }
@@ -314,20 +314,20 @@ Al final se imprime un JSON con el resumen de verificación:
       "details": {
         "total_responses": 2,
         "positive_responses": 0,
-        "valid_responses": ["Buenos días", "Saludos cordiales"],
+        "valid_responses": ["Sí", "Si", "Yes"],
         "required_matches": 2
       }
     }
   ]
 }
 ```
-En este ejemplo, se obtuvo `final_status: "review"` porque la primera verificación *cumulative* pasó, pero la segunda *eliminatory* falló (eso suele llevar al *discarded*, pero digamos que en la lógica actual se comparan umbrales con `required-confirmed` y `required-review`).
+En este ejemplo, se obtuvo `final_status: "discarded"` porque la primera verificación *cumulative* pasó, pero la segunda *eliminatory* falló (eso lleva directamente a *discarded*).
 
 ---
 
 ### Archivos JSON de Ejemplo
 
-**1) `reference.json`** (para placeholders):
+**1) `reference.json`** (para placeholders en prompts):
 ```json
 {
   "tema": "astrofísica",
@@ -340,14 +340,14 @@ En este ejemplo, se obtuvo `final_status: "review"` porque la primera verificaci
 [
   {
     "name": "Usuario",
-    "pattern": "Usuario:\\s*",
     "mode": "keyword",
+    "pattern": "Usuario:",
     "secondary_pattern": ", Edad:"
   },
   {
     "name": "Edad",
-    "pattern": "Edad:\\s*(\\d+)",
     "mode": "regex",
+    "pattern": "Edad:\\s*(\\d+)",
     "fallback_value": "desconocida"
   }
 ]
@@ -359,8 +359,8 @@ En este ejemplo, se obtuvo `final_status: "review"` porque la primera verificaci
   {
     "mode": "cumulative",
     "name": "CheckPalabraClave",
-    "system_prompt": "Eres un verificador que busca cierta palabra.",
-    "user_prompt": "¿El texto contiene la palabra 'ejemplo'? Por favor, respóndelo claramente.",
+    "system_prompt": "Eres un verificador que busca cierta palabra. ¿El texto contiene la palabra 'ejemplo'? Por favor, respóndelo claramente.",
+    "user_prompt": "Un ejemplo de adicción es el abuso del tabaco",
     "valid_responses": ["ejemplo"],
     "num_sequences": 3,
     "required_matches": 2
@@ -368,8 +368,8 @@ En este ejemplo, se obtuvo `final_status: "review"` porque la primera verificaci
   {
     "mode": "eliminatory",
     "name": "CheckFormalidad",
-    "system_prompt": "Eres un verificador formal.",
-    "user_prompt": "Asegúrate que la respuesta sea formal",
+    "system_prompt": "Eres un verificador formal. Asegúrate que la respuesta sea formal",
+    "user_prompt": "Estimado alcalde, le escribo debido a los recientes acontecimientos...",
     "valid_responses": ["Estimado", "Saludos cordiales"],
     "num_sequences": 2,
     "required_matches": 2
