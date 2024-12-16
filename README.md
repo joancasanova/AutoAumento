@@ -189,20 +189,21 @@ Cada regla puede ser **regex** o **keyword**:
 [
   {
     "name": "Usuario",
-    "pattern": "Usuario:\\s*",
     "mode": "keyword",
+    "pattern": "Usuario:",
     "secondary_pattern": ", Edad:"
   },
   {
     "name": "Edad",
-    "pattern": "Edad:\\s*(\\d+)",
-    "mode": "regex"
+    "mode": "regex",
+    "pattern": "Edad:\\s*(\\d+)"
+    "fallback_value": "missing_edad"
   }
 ]
 ```
 - `name`: Identificador único de la regla (ej. "Usuario").
-- `pattern`: El patrón principal (si mode=regex, es una expresión regular; si mode=keyword, es la palabra clave que buscamos).
 - `mode`: `"regex"` o `"keyword"`.
+- `pattern`: El patrón principal (si mode=regex, es una expresión regular; si mode=keyword, es la palabra clave que buscamos).
 - `secondary_pattern` (opcional): Si `mode` es `keyword`, define un *límite* hasta donde se extrae el texto.
 - `fallback_value` (opcional): Valor por defecto si no se encuentra coincidencia.
 
