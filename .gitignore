@@ -6,6 +6,7 @@ venv/
 .venv/
 .idea/
 .vscode/
+dist/
 *.log
 prompter.py
 AutoAumento.egg-info
