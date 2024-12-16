@@ -9,7 +9,6 @@ description = "A CLI-based text processing pipeline for generating, parsing, and
 authors = [
     {name = "Joan Casanova", email = "juancasanovaferrer@gmail.com"}
 ]
-license = "MIT"
 keywords = ["llm", "text-generation", "nlp", "cli", "parsing"]
 requires-python = ">=3.8"
 dependencies = [
@@ -25,4 +24,4 @@ dependencies = [
 Homepage = "https://github.com/joancasanova/AutoAumento" 
 
 [tool.setuptools.packages.find]
-where = ["app"]
+where = ["."]
