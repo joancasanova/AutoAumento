@@ -53,7 +53,7 @@ La estructura es la siguiente:
 │       └── external/
 │           └── llm/
 │               └── instruct_model.py
-├── main.py
+├── app/main.py
 ├── pyproject.toml
 └── README.md
 ```
@@ -62,7 +62,7 @@ La estructura es la siguiente:
   - **application/use_cases**: Casos de uso concretos (generate, parse, verify).
   - **domain/**: Modelos de datos (entities), puertos (interfaces) y servicios.
   - **infrastructure/**: Integraciones externas (p.ej. con Hugging Face).
-- **main.py**: Punto de entrada para la línea de comandos.
+- **app/main.py**: Punto de entrada para la línea de comandos.
 - **pyproject.toml**: Administrador de dependencias y configuración general del proyecto.
 - **README.md**: Este archivo (documentación).
 
@@ -98,7 +98,7 @@ La estructura es la siguiente:
 
 Una vez instalado, puedes ejecutar la herramienta desde la raíz del proyecto con:
 ```bash
-python main.py <comando> [opciones]
+python app/main.py <comando> [opciones]
 ```
 
 ### General
@@ -111,7 +111,7 @@ Existen *subcomandos* principales:
 
 Para ver la ayuda de un subcomando (ej. `generate`):
 ```bash
-python main.py generate --help
+python app/main.py generate --help
 ```
 
 ---
@@ -122,7 +122,7 @@ python main.py generate --help
 
 **Uso básico**:
 ```bash
-python main.py generate \
+python app/main.py generate \
   --gen-model-name "Qwen/Qwen2.5-1.5B-Instruct" \
   --system-prompt "Eres un asistente útil." \
   --user-prompt "Explica la computación cuántica de forma sencilla." \
@@ -167,7 +167,7 @@ python main.py generate \
 
 **Uso básico**:
 ```bash
-python main.py parse \
+python app/main.py parse \
   --text "Usuario: Ana, Edad: 30. Usuario: Luis, Edad: 25." \
   --rules "rules.json" \
   --output-filter "all"
@@ -235,7 +235,7 @@ Salida JSON:
 
 **Uso básico**:
 ```bash
-python main.py verify \
+python app/main.py verify \
   --verify-model-name "Qwen/Qwen2.5-3B-Instruct" \
   --methods "methods.json" \
   --required-confirmed 2 \
