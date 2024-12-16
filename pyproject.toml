@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "AutoAumento"
+version = "1.0.0"
+description = "A CLI-based text processing pipeline for generating, parsing, and verifying text with an LLM."
+authors = [
+    {name = "Joan Casanova", email = "juancasanovaferrer@gmail.com"}
+]
+license = "MIT"
+keywords = ["llm", "text-generation", "nlp", "cli", "parsing"]
+requires-python = ">=3.8"
+dependencies = [
+    "torch>=2.5.1",
+    "transformers>=4.46.3",
+    "argparse",
+    "sacremoses>=0.1.1",
+    "huggingface-hub>=0.26.2",
+    "tokenizers>=0.20.3"
+]
+
+[project.urls]
+Homepage = "https://github.com/joancasanova/AutoAumento" 
+
+[tool.setuptools.packages.find]
+where = ["app"]

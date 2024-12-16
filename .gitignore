@@ -1,0 +1,10 @@
+# Typical Python/PyCharm/VSCode ignore patterns, etc.
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+.idea/
+.vscode/
+*.log
+prompter.py
