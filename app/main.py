@@ -1,3 +1,5 @@
+# app/main.py
+
 import argparse
 import json
 import logging
@@ -25,14 +27,20 @@ from application.use_cases.verify_use_case import (
 from domain.model.entities.parsing import ParseMode, ParseRule
 from domain.model.entities.verification import (
     VerificationMethod,
-    VerifyRequest,
     VerificationMode,
     VerifyResponse
 )
 from domain.services.parse_service import ParseService
 from domain.services.verifier_service import VerifierService
+from domain.model.entities.pipeline import (
+    PipelineStep,
+    PipelineRequest
+)
+from application.use_cases.pipeline_use_case import PipelineUseCase
+from domain.services.pipeline_service import PipelineService
 
 logger = logging.getLogger(__name__)
+
 
 def load_json_file(file_path: str) -> Dict[str, Any]:
     """
@@ -41,12 +49,14 @@ def load_json_file(file_path: str) -> Dict[str, Any]:
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def save_json_file(data: Dict[str, Any], file_path: str):
     """
     Saves a dictionary as JSON to the specified file.
     """
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+
 
 def create_parser() -> argparse.ArgumentParser:
     """
@@ -117,10 +127,10 @@ def create_parser() -> argparse.ArgumentParser:
         "--reference-data", type=str, help="JSON file containing dictionary with reference data for placeholder substitution"
     )
 
-    # (4) Pipeline command (placeholder)
+    # (4) Pipeline command
     pipeline_parser = subparsers.add_parser("pipeline", help="Execute pipeline")
     pipeline_parser.add_argument("--config", required=True, help="JSON file containing pipeline configuration")
-    pipeline_parser.add_argument("--input", required=True, help="Initial input for pipeline")
+    pipeline_parser.add_argument("--reference-data", type=str, help="JSON file containing global reference data for placeholders")
 
     # (5) Benchmark command (placeholder)
     benchmark_parser = subparsers.add_parser("benchmark", help="Run benchmark")
@@ -128,6 +138,7 @@ def create_parser() -> argparse.ArgumentParser:
     benchmark_parser.add_argument("--entries", required=True, help="JSON file containing benchmark entries")
 
     return parser
+
 
 def parse_rules_from_json(file_path: str) -> List[ParseRule]:
     """
@@ -140,6 +151,7 @@ def parse_rules_from_json(file_path: str) -> List[ParseRule]:
         rule = ParseRule(mode=mode, **rule_data)
         rules.append(rule)
     return rules
+
 
 def parse_verification_methods_from_json(file_path: str) -> List[VerificationMethod]:
     """
@@ -161,7 +173,7 @@ def parse_verification_methods_from_json(file_path: str) -> List[VerificationMet
                     system_prompt=method_data["system_prompt"],
                     user_prompt=method_data["user_prompt"],
                     valid_responses=method_data["valid_responses"],
-                    num_sequences=method_data.get("num_sequences", 5),
+                    num_sequences=method_data.get("num_sequences", 3),
                     required_matches=method_data.get("required_matches")
                 )
                 methods.append(method)
@@ -172,6 +184,7 @@ def parse_verification_methods_from_json(file_path: str) -> List[VerificationMet
     except Exception as e:
         raise ValueError(f"Failed to parse verification methods: {e}")
     return methods
+
 
 def format_verification_result(verify_response: VerifyResponse) -> Dict[str, Any]:
     """
@@ -199,6 +212,7 @@ def format_verification_result(verify_response: VerifyResponse) -> Dict[str, Any
 
     return formatted_output
 
+
 def main():
     parser = create_parser()
     args = parser.parse_args()
@@ -211,14 +225,19 @@ def main():
         logger.info(f"Running command: {args.command}")
         result = None
 
+        # Initialize LLM models once to reuse across steps
+        # Default models can be overridden per step
+        llm = InstructModel(model_name="Qwen/Qwen2.5-1.5B-Instruct")
+
         if args.command == "generate":
-            llm_gen = InstructModel(model_name=args.gen_model_name)
-            generate_use_case = GenerateTextUseCase(llm_gen)
-            
+            # Merge reference data if provided
             reference_data = None
             if args.reference_data:
                 reference_data = load_json_file(args.reference_data)
 
+            # Utilize the pre-instantiated LLM model for generation
+            generate_use_case = GenerateTextUseCase(llm)
+            
             request = GenerateTextRequest(
                 system_prompt=args.system_prompt,
                 user_prompt=args.user_prompt,
@@ -227,8 +246,15 @@ def main():
                 temperature=args.temperature,
                 reference_data=reference_data
             )
-            result = generate_use_case.execute(request)
-            print(result)
+            response = generate_use_case.execute(request)
+            # Serialize the response
+            response_dict = {
+                "generated_texts": [gen.content for gen in response.generated_texts],
+                "total_tokens": response.total_tokens,
+                "generation_time": response.generation_time,
+                "model_name": response.model_name
+            }
+            print(json.dumps(response_dict, indent=2))
 
         elif args.command == "parse":
             parse_service = ParseService()
@@ -241,19 +267,20 @@ def main():
                 output_filter=args.output_filter,
                 output_limit=args.output_limit
             )
-            result = parse_use_case.execute(request)
-            print(json.dumps(result.parse_result.to_list_of_dicts(), indent=2))
+            response = parse_use_case.execute(request)
+            print(json.dumps(response.parse_result.to_list_of_dicts(), indent=2))
 
         elif args.command == "verify":
-            llm_verify = InstructModel(model_name=args.verify_model_name)
-            verifier_service = VerifierService(llm_verify)
-            verify_use_case = VerifyUseCase(verifier_service)
-
-            methods = parse_verification_methods_from_json(args.methods)
-
+            # Merge reference data if provided
             reference_data = None
             if args.reference_data:
                 reference_data = load_json_file(args.reference_data)
+
+            methods = parse_verification_methods_from_json(args.methods)
+
+            # Utilize the pre-instantiated LLM model for verification
+            verifier_service = VerifierService(llm)
+            verify_use_case = VerifyUseCase(verifier_service)
 
             request = VerifyRequest(
                 methods=methods,
@@ -261,20 +288,55 @@ def main():
                 required_for_review=args.required_review,
                 reference_data=reference_data
             )
-            result = verify_use_case.execute(request)
+            response = verify_use_case.execute(request)
 
-            formatted_result = format_verification_result(result)
+            formatted_result = format_verification_result(response)
             print(json.dumps(formatted_result, indent=2))
 
-        # Additional commands (pipeline, benchmark) placeholders
         elif args.command == "pipeline":
-            logger.warning("Pipeline command not yet implemented.")
+            # Load pipeline_config.json
+            pipeline_config = load_json_file(args.config)
+            steps_data = pipeline_config["steps"]
+            pipeline_steps = []
+            for step_data in steps_data:
+                step_type = step_data["type"]
+                params = step_data["params"]
+                pipeline_steps.append(PipelineStep(step_type=step_type, params=params))
+
+            # Load global reference data if provided
+            global_ref_data = None
+            if args.reference_data:
+                global_ref_data = load_json_file(args.reference_data)
+
+            # Initialize PipelineService with pre-instantiated LLM models
+            pipeline_service = PipelineService(llm=llm)
+            pipeline_use_case = PipelineUseCase(pipeline_service)
+
+            pipeline_request = PipelineRequest(
+                steps=pipeline_steps,
+                global_reference_data=global_ref_data
+            )
+            pipeline_response = pipeline_use_case.execute(pipeline_request)
+
+            # Serialize the pipeline results
+            final_output = []
+            for step_result in pipeline_response.step_results:
+                final_output.append({
+                    "step_type": step_result.step_type,
+                    "input_data": step_result.input_data,
+                    "output_data": step_result.output_data
+                })
+
+            print(json.dumps(final_output, indent=2))
+
+        # Additional commands (benchmark) placeholders
         elif args.command == "benchmark":
             logger.warning("Benchmark command not yet implemented.")
 
     except Exception as e:
         logger.exception("An error occurred while executing the command.")
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

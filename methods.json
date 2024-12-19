@@ -1,0 +1,21 @@
+[
+    {
+      "mode": "eliminatory",
+      "name": "Check Completeness",
+      "system_prompt": "You are a verification assistant. Is the explanation of quantum computing complete?",
+      "user_prompt": "{topic}",
+      "valid_responses": ["yes", "complete"],
+      "num_sequences": 3,
+      "required_matches": 2
+    },
+    {
+      "mode": "cumulative",
+      "name": "Check Clarity",
+      "system_prompt": "You are a verification assistant. Is the explanation of quantum computing clear?",
+      "user_prompt": "{description}",
+      "valid_responses": ["yes", "clear"],
+      "num_sequences": 3,
+      "required_matches": 2
+    }
+  ]
+  

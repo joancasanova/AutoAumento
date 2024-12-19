@@ -1,0 +1,35 @@
+{
+    "steps": [
+      {
+        "type": "generate",
+        "params": {
+          "gen_model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+          "system_prompt": "You are a helpful assistant.",
+          "user_prompt": "Explain quantum computing in simple terms.",
+          "num_sequences": 2,
+          "max_tokens": 50,
+          "temperature": 0.9,
+          "reference_data_source": "global"
+        }
+      },
+      {
+        "type": "parse",
+        "params": {
+          "rules_file": "rules.json",
+          "output_filter": "all",
+          "output_limit": null
+        }
+      },
+      {
+        "type": "verify",
+        "params": {
+          "verify_model_name": "Qwen/Qwen2.5-3B-Instruct",
+          "methods_file": "methods.json",
+          "required_confirmed": 2,
+          "required_review": 1,
+          "reference_data_source": "parse_step_2"
+        }
+      }
+    ]
+  }
+  
