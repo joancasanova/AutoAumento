@@ -5,9 +5,9 @@ import json
 import logging
 from typing import Dict, Any, List
 
-# Configure the logging here (for simplicity, we do it in main.py)
+# Configurar el logging aquí (por simplicidad, lo hacemos en main.py)
 logging.basicConfig(
-    level=logging.INFO,  # Adjust level to DEBUG for more granularity
+    level=logging.INFO,  # Ajustar a DEBUG para mayor granularidad
     format="%(asctime)s [%(levelname)s] %(name)s - %(message)s"
 )
 
@@ -41,108 +41,104 @@ from domain.services.pipeline_service import PipelineService
 
 logger = logging.getLogger(__name__)
 
-
 def load_json_file(file_path: str) -> Dict[str, Any]:
     """
-    Loads a JSON file and returns the parsed dictionary.
+    Carga un archivo JSON y devuelve un diccionario.
     """
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-
 def save_json_file(data: Dict[str, Any], file_path: str):
     """
-    Saves a dictionary as JSON to the specified file.
+    Guarda un diccionario como JSON en un archivo.
     """
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-
 def create_parser() -> argparse.ArgumentParser:
     """
-    Creates an argument parser for the CLI tool, defining subcommands for:
+    Crea un analizador de argumentos para la herramienta CLI, definiendo subcomandos para:
      - generate
      - parse
      - verify
      - pipeline
      - benchmark
     """
-    parser = argparse.ArgumentParser(description="Text Processing Pipeline")
+    parser = argparse.ArgumentParser(description="Pipeline de Procesamiento de Texto")
 
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+    subparsers = parser.add_subparsers(dest="command", help="Comandos disponibles")
 
     # (1) Generate
-    gen_parser = subparsers.add_parser("generate", help="Generate text")
+    gen_parser = subparsers.add_parser("generate", help="Generar texto")
     gen_parser.add_argument(
         "--gen-model-name",
         default="Qwen/Qwen2.5-1.5B-Instruct",
-        help="Name of the language model to use"
+        help="Nombre del modelo de lenguaje a usar"
     )
-    gen_parser.add_argument("--system-prompt", required=True, help="System prompt")
-    gen_parser.add_argument("--user-prompt", required=True, help="User prompt")
+    gen_parser.add_argument("--system-prompt", required=True, help="Prompt del sistema")
+    gen_parser.add_argument("--user-prompt", required=True, help="Prompt del usuario")
     gen_parser.add_argument(
-        "--num-sequences", type=int, default=1, help="Number of sequences to generate"
-    )
-    gen_parser.add_argument(
-        "--max-tokens", type=int, default=50, help="Maximum tokens to generate"
+        "--num-sequences", type=int, default=1, help="Número de secuencias a generar"
     )
     gen_parser.add_argument(
-        "--temperature", type=float, default=1.0, help="Generation temperature"
+        "--max-tokens", type=int, default=50, help="Máximo de tokens a generar"
+    )
+    gen_parser.add_argument(
+        "--temperature", type=float, default=1.0, help="Temperatura de generación"
     )
     gen_parser.add_argument(
         "--reference-data", type=str,
-        help="JSON file containing dictionary with reference data for placeholder substitution"
+        help="Archivo JSON con datos de referencia para sustitución de placeholders"
     )
 
     # (2) Parse
-    parse_parser = subparsers.add_parser("parse", help="Parse text")
-    parse_parser.add_argument("--text", required=True, help="Text to parse")
-    parse_parser.add_argument("--rules", required=True, help="JSON file containing parse rules")
+    parse_parser = subparsers.add_parser("parse", help="Analizar texto")
+    parse_parser.add_argument("--text", required=True, help="Texto a analizar")
+    parse_parser.add_argument("--rules", required=True, help="Archivo JSON con reglas de análisis")
     parse_parser.add_argument(
         "--output-filter", type=str, default="all",
         choices=["all", "successful", "first", "first_n"],
-        help="Filter entries by specified criteria"
+        help="Filtrar resultados por criterio"
     )
     parse_parser.add_argument(
-        "--output-limit", type=int, help="Number of entries to return when output filter is first_n"
+        "--output-limit", type=int, help="Número de entradas a devolver con el filtro first_n"
     )
 
     # (3) Verify
-    verify_parser = subparsers.add_parser("verify", help="Verify")
+    verify_parser = subparsers.add_parser("verify", help="Verificar texto")
     verify_parser.add_argument(
         "--verify-model-name",
         default="Qwen/Qwen2.5-3B-Instruct",
-        help="Name of the language model to use"
+        help="Nombre del modelo de lenguaje a usar"
     )
     verify_parser.add_argument(
-        "--methods", required=True, help="JSON file containing verification methods"
+        "--methods", required=True, help="Archivo JSON con métodos de verificación"
     )
     verify_parser.add_argument(
-        "--required-confirmed", type=int, required=True, help="Required confirmations"
+        "--required-confirmed", type=int, required=True, help="Confirmaciones requeridas"
     )
     verify_parser.add_argument(
-        "--required-review", type=int, required=True, help="Required reviews"
+        "--required-review", type=int, required=True, help="Revisiones requeridas"
     )
     verify_parser.add_argument(
-        "--reference-data", type=str, help="JSON file containing dictionary with reference data for placeholder substitution"
+        "--reference-data", type=str, help="Archivo JSON con datos de referencia para sustitución de placeholders"
     )
 
     # (4) Pipeline command
-    pipeline_parser = subparsers.add_parser("pipeline", help="Execute pipeline")
-    pipeline_parser.add_argument("--config", required=True, help="JSON file containing pipeline configuration")
-    pipeline_parser.add_argument("--reference-data", type=str, help="JSON file containing global reference data for placeholders")
+    pipeline_parser = subparsers.add_parser("pipeline", help="Ejecutar pipeline")
+    pipeline_parser.add_argument("--config", required=True, help="Archivo JSON con la configuración del pipeline")
+    pipeline_parser.add_argument("--reference-data", type=str, help="Archivo JSON con datos de referencia globales para placeholders")
 
     # (5) Benchmark command (placeholder)
-    benchmark_parser = subparsers.add_parser("benchmark", help="Run benchmark")
-    benchmark_parser.add_argument("--config", required=True, help="JSON file containing benchmark configuration")
-    benchmark_parser.add_argument("--entries", required=True, help="JSON file containing benchmark entries")
+    benchmark_parser = subparsers.add_parser("benchmark", help="Ejecutar benchmark")
+    benchmark_parser.add_argument("--config", required=True, help="Archivo JSON con la configuración del benchmark")
+    benchmark_parser.add_argument("--entries", required=True, help="Archivo JSON con las entradas del benchmark")
 
     return parser
 
-
 def parse_rules_from_json(file_path: str) -> List[ParseRule]:
     """
-    Helper function to load parse rules from a JSON file and convert them into ParseRule objects.
+    Carga reglas de análisis desde un archivo JSON y las convierte en objetos ParseRule.
     """
     rules_data = load_json_file(file_path)
     rules = []
@@ -152,17 +148,15 @@ def parse_rules_from_json(file_path: str) -> List[ParseRule]:
         rules.append(rule)
     return rules
 
-
 def parse_verification_methods_from_json(file_path: str) -> List[VerificationMethod]:
     """
-    Helper function to load verification methods from a JSON file and convert 
-    them into a list of VerificationMethod objects.
+    Carga métodos de verificación desde un archivo JSON y los convierte en objetos VerificationMethod.
     """
     try:
         methods_data = load_json_file(file_path)
         if not isinstance(methods_data, list):
-            raise ValueError("Methods file must contain a list of verification methods")
-        
+            raise ValueError("El archivo de métodos debe contener una lista de métodos de verificación")
+
         methods = []
         for method_data in methods_data:
             try:
@@ -178,17 +172,16 @@ def parse_verification_methods_from_json(file_path: str) -> List[VerificationMet
                 )
                 methods.append(method)
             except KeyError as e:
-                raise ValueError(f"Missing required field in verification method: {e}")
+                raise ValueError(f"Falta campo requerido en el método de verificación: {e}")
             except ValueError as e:
-                raise ValueError(f"Invalid verification method data: {e}")
+                raise ValueError(f"Datos inválidos en el método de verificación: {e}")
     except Exception as e:
-        raise ValueError(f"Failed to parse verification methods: {e}")
+        raise ValueError(f"Error al analizar los métodos de verificación: {e}")
     return methods
-
 
 def format_verification_result(verify_response: VerifyResponse) -> Dict[str, Any]:
     """
-    Converts a VerifyResponse object into a structured dictionary suitable for JSON output.
+    Convierte un objeto VerifyResponse en un diccionario estructurado para la salida JSON.
     """
     summary = verify_response.verification_summary
     results_formatted = []
@@ -212,7 +205,6 @@ def format_verification_result(verify_response: VerifyResponse) -> Dict[str, Any
 
     return formatted_output
 
-
 def main():
     parser = create_parser()
     args = parser.parse_args()
@@ -222,22 +214,15 @@ def main():
         return
 
     try:
-        logger.info(f"Running command: {args.command}")
+        logger.info(f"Ejecutando comando: {args.command}")
         result = None
 
-        # Initialize LLM models once to reuse across steps
-        # Default models can be overridden per step
+        # Inicializar modelos LLM una vez para reutilizar
         llm = InstructModel(model_name="Qwen/Qwen2.5-1.5B-Instruct")
 
         if args.command == "generate":
-            # Merge reference data if provided
-            reference_data = None
-            if args.reference_data:
-                reference_data = load_json_file(args.reference_data)
-
-            # Utilize the pre-instantiated LLM model for generation
+            reference_data = load_json_file(args.reference_data) if args.reference_data else None
             generate_use_case = GenerateTextUseCase(llm)
-            
             request = GenerateTextRequest(
                 system_prompt=args.system_prompt,
                 user_prompt=args.user_prompt,
@@ -247,7 +232,6 @@ def main():
                 reference_data=reference_data
             )
             response = generate_use_case.execute(request)
-            # Serialize the response
             response_dict = {
                 "generated_texts": [gen.content for gen in response.generated_texts],
                 "total_tokens": response.total_tokens,
@@ -259,7 +243,6 @@ def main():
         elif args.command == "parse":
             parse_service = ParseService()
             parse_use_case = ParseGeneratedOutputUseCase(parse_service)
-
             rules = parse_rules_from_json(args.rules)
             request = ParseRequest(
                 text=args.text,
@@ -271,17 +254,10 @@ def main():
             print(json.dumps(response.parse_result.to_list_of_dicts(), indent=2))
 
         elif args.command == "verify":
-            # Merge reference data if provided
-            reference_data = None
-            if args.reference_data:
-                reference_data = load_json_file(args.reference_data)
-
+            reference_data = load_json_file(args.reference_data) if args.reference_data else None
             methods = parse_verification_methods_from_json(args.methods)
-
-            # Utilize the pre-instantiated LLM model for verification
             verifier_service = VerifierService(llm)
             verify_use_case = VerifyUseCase(verifier_service)
-
             request = VerifyRequest(
                 methods=methods,
                 required_for_confirmed=args.required_confirmed,
@@ -289,54 +265,33 @@ def main():
                 reference_data=reference_data
             )
             response = verify_use_case.execute(request)
-
             formatted_result = format_verification_result(response)
             print(json.dumps(formatted_result, indent=2))
 
         elif args.command == "pipeline":
-            # Load pipeline_config.json
             pipeline_config = load_json_file(args.config)
-            steps_data = pipeline_config["steps"]
-            pipeline_steps = []
-            for step_data in steps_data:
-                step_type = step_data["type"]
-                params = step_data["params"]
-                pipeline_steps.append(PipelineStep(step_type=step_type, params=params))
+            pipeline_steps = [PipelineStep(name=step["name"], type=step["type"]) for step in pipeline_config["steps"]]
+            pipeline_params = pipeline_config["parameters"]
 
-            # Load global reference data if provided
-            global_ref_data = None
-            if args.reference_data:
-                global_ref_data = load_json_file(args.reference_data)
+            global_ref_data = load_json_file(args.reference_data) if args.reference_data else None
 
-            # Initialize PipelineService with pre-instantiated LLM models
             pipeline_service = PipelineService(llm=llm)
             pipeline_use_case = PipelineUseCase(pipeline_service)
-
             pipeline_request = PipelineRequest(
                 steps=pipeline_steps,
+                parameters=pipeline_params,
                 global_reference_data=global_ref_data
             )
             pipeline_response = pipeline_use_case.execute(pipeline_request)
 
-            # Serialize the pipeline results
-            final_output = []
-            for step_result in pipeline_response.step_results:
-                final_output.append({
-                    "step_type": step_result.step_type,
-                    "input_data": step_result.input_data,
-                    "output_data": step_result.output_data
-                })
+            print(json.dumps(pipeline_response.step_results, indent=2, ensure_ascii=False))
 
-            print(json.dumps(final_output, indent=2))
-
-        # Additional commands (benchmark) placeholders
         elif args.command == "benchmark":
-            logger.warning("Benchmark command not yet implemented.")
+            logger.warning("Comando benchmark no implementado todavía.")
 
     except Exception as e:
-        logger.exception("An error occurred while executing the command.")
-        print(f"An error occurred: {e}")
-
+        logger.exception("Ocurrió un error al ejecutar el comando.")
+        print(f"Ocurrió un error: {e}")
 
 if __name__ == "__main__":
     main()

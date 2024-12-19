@@ -2,6 +2,8 @@
 
 import logging
 from typing import Any, Dict, List, Optional
+import json
+import copy
 
 from app.application.use_cases.generate_text_use_case import GenerateTextUseCase, GenerateTextRequest
 from app.application.use_cases.parse_generated_output_use_case import ParseGeneratedOutputUseCase, ParseRequest
@@ -14,115 +16,181 @@ from app.domain.model.entities.generation import GeneratedResult
 from app.domain.model.entities.parsing import ParseMode, ParseRule
 from app.domain.model.entities.verification import (
     VerificationMethod,
-    VerificationMode
+    VerificationMode,
+    VerifyResponse
 )
 
 logger = logging.getLogger(__name__)
 
-
 class PipelineService:
     """
-    PipelineService handles the sequential execution of steps in a pipeline.
-    Each step can be 'generate', 'parse', or 'verify', and takes the
-    output of the previous step as its input.
+    PipelineService maneja la ejecución secuencial de los pasos en un pipeline.
+    Cada paso puede ser 'generate', 'parse', o 'verify', y toma la
+    salida del paso previo como su entrada.
 
-    This service returns a list of outputs for each step, suitable for
-    continuing the pipeline or exporting intermediate data.
+    Almacena los resultados intermedios de cada paso y permite exportarlos a JSON.
     """
 
     def __init__(self, llm: InstructModel):
         """
-        Initializes the PipelineService with pre-instantiated LLM models for
-        generate and verify steps to avoid multiple instantiations and excessive memory usage.
+        Inicializa el PipelineService.
 
         Args:
-            llm (InstructModel): Pre-instantiated LLM model for text generation.
+            llm (InstructModel): Modelo LLM pre-instanciado para generación de texto.
         """
         self.llm = llm
         self.reference_data_store: Dict[str, Any] = {}
-        # Initialize with global reference data if available
-        # This will be set externally via PipelineUseCase
-        logger.debug("PipelineService initialized with pre-instantiated LLM models.")
+        self.intermediate_results: List[Dict[str, Any]] = []
+        logger.debug("PipelineService inicializado.")
+
+    def run_pipeline(self, steps: List[Dict[str, str]], parameters: Dict[str, Dict[str, Any]]):
+        """
+        Ejecuta un pipeline completo, paso a paso.
+
+        Args:
+            steps: Lista de pasos del pipeline.
+            parameters: Diccionario con los parámetros para cada paso.
+        """
+        logger.info("Ejecutando el pipeline completo.")
+        self.intermediate_results = []  # Resetear resultados intermedios
+        current_inputs: List[Any] = [None]  # Input inicial es None
+        execution_order = 1
+
+        for step in steps:
+            step_name = step.name  # Acceder al atributo name usando notación de punto
+            step_type = step.type  # Acceder al atributo type usando notación de punto
+            step_params = parameters.get(step_name)
+
+            if not step_params:
+                logger.error(f"No se encontraron parámetros para el paso '{step_name}'.")
+                raise ValueError(f"Faltan parámetros para el paso '{step_name}'.")
+
+            logger.info(f"Ejecutando paso: {step_name} (tipo: {step_type}, orden: {execution_order})")
+
+            step_outputs = []
+            for current_input in current_inputs:
+                try:
+                    output_items = self.run_pipeline_step(
+                        step_type=step_type,
+                        params=step_params,
+                        input_data=current_input,
+                        step_name=step_name,
+                        execution_order=execution_order,
+                    )
+                    # Formatear la salida de verify para mayor consistencia
+                    if step_type == 'verify':
+                        output_items = [
+                            {
+                                "final_status": output.verification_summary.final_status,
+                                "success_rate": output.success_rate,
+                                "execution_time": output.execution_time,
+                                "details": [
+                                    {
+                                        "method_name": result.method.name,
+                                        "mode": result.method.mode.value,
+                                        "passed": result.passed,
+                                        "score": result.score,
+                                        "timestamp": result.timestamp.isoformat(),
+                                        "details": result.details
+                                    }
+                                    for result in output.verification_summary.results
+                                ]
+                            }
+                            for output in output_items
+                        ]
+                    
+                    step_outputs.extend(output_items)
+                    
+                    # Almacenar resultados intermedios
+                    self.add_intermediate_result(step_name, step_type, execution_order, current_input, output_items)
+
+                except Exception as e:
+                    logger.error(f"Error al ejecutar el paso {step_name}: {e}")
+                    raise
+
+            current_inputs = step_outputs
+            execution_order += 1
+
+        logger.info("Pipeline completado.")
 
     def run_pipeline_step(
         self,
         step_type: str,
         params: Dict[str, Any],
         input_data: Any,
-        step_number: int
+        step_name: str,
+        execution_order: int,
     ) -> List[Any]:
         """
-        Executes a single pipeline step of type 'generate', 'parse', or 'verify'.
-        The output is always returned as a list of items to feed the next step.
+        Ejecuta un solo paso del pipeline.
 
         Args:
-            step_type (str): 'generate', 'parse', or 'verify'.
-            params (Dict[str, Any]): Parameters for the step.
-            input_data (Any): Input data from the previous step.
-            step_number (int): The current step number (1-based index).
+            step_type: Tipo de paso ('generate', 'parse', 'verify').
+            params: Parámetros para el paso.
+            input_data: Datos de entrada del paso anterior.
+            step_name: Nombre del paso actual.
+            execution_order: Orden de ejecución del paso actual.
 
         Returns:
-            List[Any]: Output items from the step.
+            Lista de outputs del paso.
         """
-        logger.info(f"Executing '{step_type}' step (Step {step_number}).")
+        logger.info(f"Ejecutando '{step_type}' para el paso '{step_name}'.")
 
-        # Determine reference_data_source
-        reference_data_source = params.get("reference_data_source", "global" if step_number == 1 else None)
+        reference_data_source = params.get("reference_data_source")
+        reference_data = self._get_reference_data(reference_data_source, execution_order, step_name)
 
-        # Fetch reference_data based on source
+        if step_type == "generate":
+            return self._run_generate(params, reference_data, input_data)
+        elif step_type == "parse":
+            outputs = self._run_parse(params, input_data)
+            self.reference_data_store[f"parse_step_{execution_order}"] = outputs
+            return outputs
+        elif step_type == "verify":
+            return self._run_verify(params, input_data, reference_data)
+        else:
+            logger.warning(f"Tipo de paso desconocido '{step_type}'. Saltando.")
+            return []
+
+    def _get_reference_data(self, reference_data_source: Optional[str], execution_order: int, step_name: str) -> Optional[Dict[str, Any]]:
+        """Obtiene los datos de referencia según la fuente especificada."""
         if reference_data_source == "global":
-            if step_number != 1:
-                logger.error("Global reference data can only be used in the first step.")
-                raise ValueError("Global reference data can only be used in the first step.")
+            if execution_order != 1:
+                logger.error("Los datos de referencia globales solo se pueden usar en el primer paso.")
+                raise ValueError("Los datos de referencia globales solo se pueden usar en el primer paso.")
             reference_data = self.reference_data_store.get("global")
             if not reference_data:
-                logger.error("Global reference data not provided.")
-                raise ValueError("Global reference data not provided.")
+                logger.error("Datos de referencia globales no proporcionados.")
+                raise ValueError("Datos de referencia globales no proporcionados.")
         elif reference_data_source and reference_data_source.startswith("parse_step_"):
             try:
                 parse_step_number = int(reference_data_source.split("_")[-1])
             except ValueError:
-                logger.error(f"Invalid reference_data_source '{reference_data_source}'. Must be 'global' or 'parse_step_<number>'.")
-                raise ValueError(f"Invalid reference_data_source '{reference_data_source}'. Must be 'global' or 'parse_step_<number>'.")
-            if parse_step_number >= step_number:
-                logger.error(f"Reference data source '{reference_data_source}' must refer to a parse step before the current step.")
-                raise ValueError(f"Reference data source '{reference_data_source}' must refer to a parse step before the current step.")
+                logger.error(f"Fuente de datos de referencia inválida '{reference_data_source}'. Debe ser 'global' o 'parse_step_<número>'.")
+                raise ValueError(f"Fuente de datos de referencia inválida '{reference_data_source}'. Debe ser 'global' o 'parse_step_<número>'.")
+            if parse_step_number >= execution_order:
+                logger.error(f"La fuente de datos de referencia '{reference_data_source}' debe referirse a un paso de análisis anterior al paso actual.")
+                raise ValueError(f"La fuente de datos de referencia '{reference_data_source}' debe referirse a un paso de análisis anterior al paso actual.")
             reference_data = self.reference_data_store.get(reference_data_source)
             if not reference_data:
-                logger.error(f"Reference data '{reference_data_source}' not found.")
-                raise ValueError(f"Reference data '{reference_data_source}' not found.")
+                logger.error(f"Datos de referencia '{reference_data_source}' no encontrados.")
+                raise ValueError(f"Datos de referencia '{reference_data_source}' no encontrados.")
         else:
-            reference_data = None  # No reference data used
+            reference_data = None
+        return reference_data
 
-        # Execute the step based on its type
-        if step_type == "generate":
-            output_items = self._run_generate(params, reference_data, step_number)
-        elif step_type == "parse":
-            output_items = self._run_parse(params, input_data, step_number)
-            # After a parse step, store its outputs as reference data for future steps
-            self.reference_data_store[f"parse_step_{step_number}"] = output_items
-        elif step_type == "verify":
-            output_items = self._run_verify(params, input_data, reference_data, step_number)
-        else:
-            logger.warning(f"Unknown pipeline step type '{step_type}'. Skipping.")
-            output_items = []
-
-        logger.info(f"Step '{step_type}' completed. Outputs: {output_items}")
-        return output_items
-
-    def _run_generate(self, params: Dict[str, Any], reference_data: Optional[Dict[str, Any]]) -> List[str]:
+    def _run_generate(self, params: Dict[str, Any], reference_data: Optional[Dict[str, Any]], input_data: Any) -> List[str]:
         """
-        Calls GenerateTextUseCase. Returns a list of generated strings
-        (one string per generated sequence).
+        Ejecuta el paso 'generate'.
 
         Args:
-            params (Dict[str, Any]): Parameters for the generate step.
-            reference_data (Optional[Dict[str, Any]]): Reference data for placeholders.
+            params: Parámetros para el paso.
+            reference_data: Datos de referencia para placeholders.
+            input_data: Datos de entrada del paso anterior (ignorados en generate).
 
         Returns:
-            List[str]: Generated text sequences.
+            Lista de textos generados.
         """
-        logger.info("Executing 'generate' step.")
+        logger.info("Ejecutando paso 'generate'.")
 
         system_prompt = params["system_prompt"]
         user_prompt = params["user_prompt"]
@@ -130,9 +198,7 @@ class PipelineService:
         max_tokens = params.get("max_tokens", 50)
         temperature = params.get("temperature", 1.0)
 
-        # Utilize the pre-instantiated LLM model for generation
         generate_use_case = GenerateTextUseCase(self.llm)
-        
         request = GenerateTextRequest(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
@@ -142,44 +208,36 @@ class PipelineService:
             reference_data=reference_data if reference_data else None
         )
         response = generate_use_case.execute(request)
-
-        # response.generated_texts is a list[GeneratedResult]
-        # Next step input: each .content is appended to a list
-        outputs = [gen_result.content for gen_result in response.generated_texts]
-        return outputs
+        return [gen_result.content for gen_result in response.generated_texts]
 
     def _run_parse(self, params: Dict[str, Any], text_to_parse: str) -> List[Dict[str, str]]:
         """
-        Calls ParseGeneratedOutputUseCase for the given input text.
-        Returns a list of parse result entries (list of dicts).
+        Ejecuta el paso 'parse'.
 
         Args:
-            params (Dict[str, Any]): Parameters for the parse step.
-            input_item (Any): Input data from the previous step.
+            params: Parámetros para el paso.
+            text_to_parse: Texto a analizar.
 
         Returns:
-            List[Dict[str, str]]: Parsed entries.
+            Lista de diccionarios con los resultados del análisis.
         """
-        logger.info("Executing 'parse' step.")
+        logger.info("Ejecutando paso 'parse'.")
 
-        # If the input is None or empty, skip
         if not text_to_parse:
-            logger.warning("No input text provided for 'parse' step.")
+            logger.warning("No hay texto de entrada para el paso 'parse'.")
             return []
 
         rules_file = params["rules_file"]
         output_filter = params.get("output_filter", "all")
         output_limit = params.get("output_limit")
 
-        import json
         try:
             with open(rules_file, "r", encoding="utf-8") as f:
                 rules_data = json.load(f)
         except Exception as e:
-            logger.error(f"Failed to load rules file '{rules_file}': {e}")
+            logger.error(f"Error al cargar el archivo de reglas '{rules_file}': {e}")
             raise
 
-        # Convert each rule into a ParseRule object
         rules = []
         for rd in rules_data:
             try:
@@ -193,10 +251,10 @@ class PipelineService:
                 )
                 rules.append(rule)
             except KeyError as e:
-                logger.error(f"Missing key in rules file: {e}")
+                logger.error(f"Clave faltante en el archivo de reglas: {e}")
                 raise
             except ValueError as e:
-                logger.error(f"Invalid mode in rules file: {e}")
+                logger.error(f"Modo inválido en el archivo de reglas: {e}")
                 raise
 
         parse_service = ParseService()
@@ -210,8 +268,6 @@ class PipelineService:
         )
         parse_response = parse_use_case.execute(parse_request)
 
-        # parse_response.parse_result.entries is List[Dict[str, str]]
-        # These can be used as inputs for subsequent steps
         return parse_response.parse_result.entries
 
     def _run_verify(
@@ -219,44 +275,39 @@ class PipelineService:
         params: Dict[str, Any],
         input_item: Any,
         reference_data: Optional[Dict[str, Any]],
-        step_number: int
-    ) -> List[Dict[str, Any]]:
+    ) -> List[VerifyResponse]:
         """
-        Calls VerifyUseCase. Returns a list with the final verification summary dict.
-        In a pipeline with multiple inputs, each input item is verified separately.
+        Ejecuta el paso 'verify'.
 
         Args:
-            params (Dict[str, Any]): Parameters for the verify step.
-            input_item (Any): Input data from the previous step.
-            reference_data (Optional[Dict[str, Any]]): Reference data for placeholders.
-            step_number (int): Current step number.
+            params: Parámetros para el paso.
+            input_item: Elemento de entrada del paso anterior.
+            reference_data: Datos de referencia para placeholders.
 
         Returns:
-            List[Dict[str, Any]]: Verification summaries.
+            Lista de VerifyResponse, una para cada ejecución de verificación.
         """
-        logger.info("Executing 'verify' step.")
-
-        # If there's no input, skip
+        logger.info("Ejecutando paso 'verify'.")
+        
         if input_item is None:
-            logger.warning("No input item for 'verify' step.")
+            logger.warning("No hay elemento de entrada para el paso 'verify'.")
             return []
 
         methods_file = params["methods_file"]
         required_confirmed = params["required_confirmed"]
         required_review = params["required_review"]
 
-        import json
         try:
             with open(methods_file, "r", encoding="utf-8") as f:
                 methods_data = json.load(f)
         except Exception as e:
-            logger.error(f"Failed to load methods file '{methods_file}': {e}")
+            logger.error(f"Error al cargar el archivo de métodos '{methods_file}': {e}")
             raise
 
         methods_list = []
         for m in methods_data:
             try:
-                mode = VerificationMode(m["mode"].upper())  # "ELIMINATORY" or "CUMULATIVE"
+                mode = VerificationMode(m["mode"].upper())
                 verification_method = VerificationMethod(
                     mode=mode,
                     name=m["name"],
@@ -268,13 +319,12 @@ class PipelineService:
                 )
                 methods_list.append(verification_method)
             except KeyError as e:
-                logger.error(f"Missing key in methods file: {e}")
+                logger.error(f"Clave faltante en el archivo de métodos: {e}")
                 raise
             except ValueError as e:
-                logger.error(f"Invalid mode in methods file: {e}")
+                logger.error(f"Modo inválido en el archivo de métodos: {e}")
                 raise
 
-        # Utilize the pre-instantiated LLM model for verification
         verifier_service = VerifierService(self.llm)
         verify_use_case = VerifyUseCase(verifier_service)
 
@@ -284,15 +334,57 @@ class PipelineService:
             required_for_review=required_review,
             reference_data=reference_data if reference_data else None
         )
-        verify_response = verify_use_case.execute(verify_request)
 
-        # Return a short summary as a dict
-        final_status = verify_response.verification_summary.final_status
-        success_rate = verify_response.success_rate
-        execution_time = verify_response.execution_time
+        # Pasar cada input al verify use case y recoger las respuestas
+        verify_responses: List[VerifyResponse] = []
+        if isinstance(input_item, list):
+            for item in input_item:
+                verify_request.reference_data=item
+                response = verify_use_case.execute(verify_request)
+                verify_responses.append(response)
+        else:
+            verify_request.reference_data = input_item
+            response = verify_use_case.execute(verify_request)
+            verify_responses.append(response)
+        
+        return verify_responses
 
-        return [{
-            "final_status": final_status,
-            "success_rate": success_rate,
-            "execution_time": execution_time
-        }]
+    def add_intermediate_result(
+        self,
+        step_name: str,
+        step_type: str,
+        execution_order: int,
+        input_data: Any,
+        output_data: Any
+    ):
+        """Añade un resultado intermedio a la lista de resultados."""
+        step_result = {
+            "step_name": step_name,
+            "step_type": step_type,
+            "execution_order": execution_order,
+            "results": [
+                {
+                    "input": input_data,
+                    "output": output_data
+                }
+            ]
+        }
+
+        # Buscar si ya existe un paso con el mismo nombre y orden de ejecución
+        existing_step_index = next((i for i, step in enumerate(self.intermediate_results) if step["step_name"] == step_name and step["execution_order"] == execution_order), None)
+
+        if existing_step_index is not None:
+            # Si existe, añadir los resultados al paso existente
+            self.intermediate_results[existing_step_index]["results"].extend(step_result["results"])
+        else:
+            # Si no existe, añadir el nuevo paso a la lista
+            self.intermediate_results.append(step_result)
+
+    def get_intermediate_results(self) -> List[Dict[str, Any]]:
+        """Devuelve una copia de los resultados intermedios del pipeline."""
+        return copy.deepcopy(self.intermediate_results)
+
+    def export_results_to_json(self, filepath: str):
+        """Exporta los resultados del pipeline a un archivo JSON."""
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(self.intermediate_results, f, indent=2, ensure_ascii=False)

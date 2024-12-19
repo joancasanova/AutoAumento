@@ -1,35 +1,36 @@
 {
     "steps": [
       {
-        "type": "generate",
-        "params": {
-          "gen_model_name": "Qwen/Qwen2.5-1.5B-Instruct",
-          "system_prompt": "You are a helpful assistant.",
-          "user_prompt": "Explain quantum computing in simple terms.",
-          "num_sequences": 2,
-          "max_tokens": 50,
-          "temperature": 0.9,
-          "reference_data_source": "global"
-        }
+        "name": "generate_step",
+        "type": "generate"
       },
       {
-        "type": "parse",
-        "params": {
-          "rules_file": "rules.json",
-          "output_filter": "all",
-          "output_limit": null
-        }
+        "name": "parse_step",
+        "type": "parse"
       },
       {
-        "type": "verify",
-        "params": {
-          "verify_model_name": "Qwen/Qwen2.5-3B-Instruct",
-          "methods_file": "methods.json",
-          "required_confirmed": 2,
-          "required_review": 1,
-          "reference_data_source": "parse_step_2"
-        }
+        "name": "verify_step",
+        "type": "verify"
       }
-    ]
+    ],
+    "parameters": {
+      "generate_step": {
+        "system_prompt": "Eres un asistente de generación de chistes.",
+        "user_prompt": "Instrucciones: Genera dos chistes sobre {tema} en el siguiente formato.\n\nChiste 1:\nAquí empieza el chiste 1:\nEste es un chiste de prueba sobre gatos.\nAquí acaba el chiste 1.\n\nChiste 2:\n",
+        "num_sequences": 2,
+        "max_tokens": 100,
+        "temperature": 0.7,
+        "reference_data_source": "global"
+      },
+      "parse_step": {
+        "rules_file": "rules.json",
+        "output_filter": "all"
+      },
+      "verify_step": {
+        "methods_file": "methods.json",
+        "required_confirmed": 1,
+        "required_review": 1,
+        "reference_data_source": "parse_step_2"
+      }
+    }
   }
-  

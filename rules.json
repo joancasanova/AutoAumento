@@ -1,17 +1,9 @@
 [
     {
-      "name": "topic",
-      "pattern": "quantum computing",
-      "secondary_pattern": "\n",
+      "name": "chiste",
       "mode": "keyword",
-      "fallback_value": "unknown_topic"
-    },
-    {
-      "name": "description",
-      "pattern": "qubits",
-      "secondary_pattern": "\n",
-      "mode": "keyword",
-      "fallback_value": "no_description"
+      "pattern": "Aquí empieza el chiste",
+      "secondary_pattern": ".",
+      "fallback_value": "No se encontró el chiste"
     }
   ]
-  

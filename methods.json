@@ -1,21 +1,11 @@
 [
     {
-      "mode": "eliminatory",
-      "name": "Check Completeness",
-      "system_prompt": "You are a verification assistant. Is the explanation of quantum computing complete?",
-      "user_prompt": "{topic}",
-      "valid_responses": ["yes", "complete"],
-      "num_sequences": 3,
-      "required_matches": 2
-    },
-    {
-      "mode": "cumulative",
-      "name": "Check Clarity",
-      "system_prompt": "You are a verification assistant. Is the explanation of quantum computing clear?",
-      "user_prompt": "{description}",
-      "valid_responses": ["yes", "clear"],
-      "num_sequences": 3,
-      "required_matches": 2
+      "mode": "CUMULATIVE",
+      "name": "CheckChiste",
+      "system_prompt": "Eres un verificador que comprueba si el texto es un chiste.",
+      "user_prompt": "Analiza el siguiente texto y responde 'Sí' si crees que es un chiste o 'No' en caso contrario:\n{chiste}",
+      "valid_responses": ["Sí", "Si"],
+      "num_sequences": 2,
+      "required_matches": 1
     }
   ]
-  

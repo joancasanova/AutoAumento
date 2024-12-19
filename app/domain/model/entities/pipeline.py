@@ -3,46 +3,33 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-
 @dataclass
 class PipelineStep:
     """
-    Defines a single pipeline step configuration:
-    - step_type: 'generate', 'parse', or 'verify'
-    - params: Dictionary containing any parameters needed for the step
+    Define un solo paso en el pipeline.
+    - name: Nombre único del paso.
+    - type: Tipo de paso ('generate', 'parse', 'verify').
     """
-    step_type: str
-    params: Dict[str, Any]
-
+    name: str
+    type: str
 
 @dataclass
 class PipelineRequest:
     """
-    Describes the entire pipeline to be executed:
-    - steps: A list of PipelineStep objects indicating the pipeline order and parameters
-    - global_reference_data: Optional dictionary with placeholders or global data
+    Describe el pipeline completo a ejecutar.
+    - steps: Lista de PipelineStep indicando el orden y el tipo de cada paso.
+    - parameters: Diccionario con los parámetros para cada paso.
+    - global_reference_data: Diccionario opcional con datos globales para placeholders.
     """
     steps: List[PipelineStep]
+    parameters: Dict[str, Dict[str, Any]]
     global_reference_data: Optional[Dict[str, Any]] = None
-
-
-@dataclass
-class PipelineStepResult:
-    """
-    Holds the result of a single pipeline step execution:
-    - step_type: Which step was executed ('generate', 'parse', 'verify', etc.)
-    - input_data: The input fed into this step
-    - output_data: The output returned by this step
-    """
-    step_type: str
-    input_data: Any
-    output_data: Any
-
 
 @dataclass
 class PipelineResponse:
     """
-    Final pipeline response, containing the aggregated results of all steps:
-    - step_results: A list of PipelineStepResult for each step executed in the pipeline
+    Respuesta final del pipeline, con los resultados agregados de todos los pasos.
+    - step_results: Lista de diccionarios, donde cada diccionario contiene la información y
+                    resultados de un paso del pipeline.
     """
-    step_results: List[PipelineStepResult]
+    step_results: List[Dict[str, Any]]
