@@ -19,6 +19,7 @@ from app.domain.model.entities.verification import (
     VerificationMode,
     VerifyResponse
 )
+from app.domain.model.entities.pipeline import PipelineStep
 
 logger = logging.getLogger(__name__)
 
@@ -43,22 +44,15 @@ class PipelineService:
         self.intermediate_results: List[Dict[str, Any]] = []
         logger.debug("PipelineService inicializado.")
 
-    def run_pipeline(self, steps: List[Dict[str, str]], parameters: Dict[str, Dict[str, Any]]):
-        """
-        Ejecuta un pipeline completo, paso a paso.
-
-        Args:
-            steps: Lista de pasos del pipeline.
-            parameters: Diccionario con los parámetros para cada paso.
-        """
+    def run_pipeline(self, steps: List[PipelineStep], parameters: Dict[str, Dict[str, Any]]):
         logger.info("Ejecutando el pipeline completo.")
-        self.intermediate_results = []  # Resetear resultados intermedios
-        current_inputs: List[Any] = [None]  # Input inicial es None
+        self.intermediate_results = []
+        current_inputs: List[Any] = [None]
         execution_order = 1
 
         for step in steps:
-            step_name = step.name  # Acceder al atributo name usando notación de punto
-            step_type = step.type  # Acceder al atributo type usando notación de punto
+            step_name = step.name
+            step_type = step.type
             step_params = parameters.get(step_name)
 
             if not step_params:
@@ -67,50 +61,71 @@ class PipelineService:
 
             logger.info(f"Ejecutando paso: {step_name} (tipo: {step_type}, orden: {execution_order})")
 
-            step_outputs = []
-            for current_input in current_inputs:
+            if step_type == "generate":
+                # Si es 'generate', ejecutamos normalmente y actualizamos current_inputs
                 try:
                     output_items = self.run_pipeline_step(
                         step_type=step_type,
                         params=step_params,
-                        input_data=current_input,
+                        input_data=current_inputs[0],
                         step_name=step_name,
                         execution_order=execution_order,
                     )
-                    # Formatear la salida de verify para mayor consistencia
-                    if step_type == 'verify':
-                        output_items = [
-                            {
-                                "final_status": output.verification_summary.final_status,
-                                "success_rate": output.success_rate,
-                                "execution_time": output.execution_time,
-                                "details": [
-                                    {
-                                        "method_name": result.method.name,
-                                        "mode": result.method.mode.value,
-                                        "passed": result.passed,
-                                        "score": result.score,
-                                        "timestamp": result.timestamp.isoformat(),
-                                        "details": result.details
-                                    }
-                                    for result in output.verification_summary.results
-                                ]
-                            }
-                            for output in output_items
-                        ]
                     
-                    step_outputs.extend(output_items)
-                    
-                    # Almacenar resultados intermedios
-                    self.add_intermediate_result(step_name, step_type, execution_order, current_input, output_items)
+                    current_inputs = output_items
 
+                    self.add_intermediate_result(step_name, step_type, execution_order, current_inputs, output_items)
+                
                 except Exception as e:
                     logger.error(f"Error al ejecutar el paso {step_name}: {e}")
                     raise
 
-            current_inputs = step_outputs
-            execution_order += 1
+            elif step_type in ["parse", "verify"]:
+                # Para 'parse' y 'verify', iteramos sobre los inputs actuales
+                step_outputs = []
+                for current_input in current_inputs:
+                    try:
+                        output_items = self.run_pipeline_step(
+                            step_type=step_type,
+                            params=step_params,
+                            input_data=current_input,
+                            step_name=step_name,
+                            execution_order=execution_order,
+                        )
 
+                        # Formatear la salida de verify para mayor consistencia
+                        if step_type == 'verify':
+                            output_items = [
+                                {
+                                    "final_status": output.verification_summary.final_status,
+                                    "success_rate": output.success_rate,
+                                    "execution_time": output.execution_time,
+                                    "details": [
+                                        {
+                                            "method_name": result.method.name,
+                                            "mode": result.method.mode.value,
+                                            "passed": result.passed,
+                                            "score": result.score,
+                                            "timestamp": result.timestamp.isoformat(),
+                                            "details": result.details
+                                        }
+                                        for result in output.verification_summary.results
+                                    ]
+                                }
+                                for output in output_items
+                            ]
+
+                        step_outputs.extend(output_items)
+                        self.add_intermediate_result(step_name, step_type, execution_order, current_input, output_items)
+
+                    except Exception as e:
+                        logger.error(f"Error al ejecutar el paso {step_name}: {e}")
+                        raise
+                current_inputs = step_outputs  # Actualizar current_inputs con los outputs de este paso
+            else:
+                logger.warning(f"Tipo de paso desconocido '{step_type}'. Saltando.")
+
+            execution_order += 1
         logger.info("Pipeline completado.")
 
     def run_pipeline_step(
