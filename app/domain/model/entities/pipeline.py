@@ -1,7 +1,11 @@
 # app/domain/model/entities/pipeline.py
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
+
+from app.domain.model.entities.generation import GenerateTextRequest
+from app.domain.model.entities.parsing import ParseRequest
+from app.domain.model.entities.verification import VerifyRequest
 
 @dataclass
 class PipelineStep:
@@ -18,11 +22,11 @@ class PipelineRequest:
     """
     Describe el pipeline completo a ejecutar.
     - steps: Lista de PipelineStep indicando el orden y el tipo de cada paso.
-    - parameters: Diccionario con los parámetros para cada paso.
+    - parameters: Diccionario que mapea nombres de pasos a sus respectivas dataclasses de request.
     - global_reference_data: Diccionario opcional con datos globales para placeholders.
     """
     steps: List[PipelineStep]
-    parameters: Dict[str, Dict[str, Any]]
+    parameters: Dict[str, Union[GenerateTextRequest, ParseRequest, VerifyRequest]]
     global_reference_data: Optional[Dict[str, Any]] = None
 
 @dataclass

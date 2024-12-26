@@ -1,7 +1,3 @@
-A continuación tienes un **README** mucho más detallado, paso a paso, para que cualquier persona (incluso quien no sepa nada de Python) pueda usar correctamente **AutoAumento** y entender cada uno de sus casos de uso. Se incluyen ejemplos de archivos JSON (`methods.json`, `rules.json`, `placeholders`, etc.) y explicaciones exhaustivas.
-
----
-
 # AutoAumento
 
 **AutoAumento** es una aplicación de línea de comandos (CLI) en Python que ejecuta tres grandes tareas sobre textos usando un modelo de lenguaje (LLM):

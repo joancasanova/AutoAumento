@@ -1,7 +1,7 @@
 # app/domain/services/pipeline_service.py
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 import json
 import copy
 
@@ -44,10 +44,10 @@ class PipelineService:
         self.intermediate_results: List[Dict[str, Any]] = []
         logger.debug("PipelineService inicializado.")
 
-    def run_pipeline(self, steps: List[PipelineStep], parameters: Dict[str, Dict[str, Any]]):
+    def run_pipeline(self, steps: List[PipelineStep], parameters: Dict[str, Any]):
         logger.info("Ejecutando el pipeline completo.")
         self.intermediate_results = []
-        current_inputs: List[Any] = [None]
+        current_inputs: List[Any] = [None]  # Input inicial sigue siendo None
         execution_order = 1
 
         for step in steps:
@@ -61,21 +61,31 @@ class PipelineService:
 
             logger.info(f"Ejecutando paso: {step_name} (tipo: {step_type}, orden: {execution_order})")
 
+            if execution_order == 1 and step_type != "generate":
+                # Si es el primer paso y no es 'generate', obtenemos la entrada del input_data del step.
+                # En cualquier otro caso, la entrada será la salida del paso anterior
+                current_input = step_params.get("input_data")
+            else:
+                current_input = current_inputs[0] if step_type == "generate" else current_inputs
+            
             if step_type == "generate":
-                # Si es 'generate', ejecutamos normalmente y actualizamos current_inputs
+                # Si es 'generate', usamos current_inputs[0] (que será None para la primera ejecución)
                 try:
+                    request = self._prepare_request(step_type, step_params, execution_order, None) # Input data será None
                     output_items = self.run_pipeline_step(
                         step_type=step_type,
-                        params=step_params,
-                        input_data=current_inputs[0],
+                        request=request,
+                        input_data=None, # Input data será None
                         step_name=step_name,
                         execution_order=execution_order,
                     )
+
+                    # Almacenar resultados intermedios
+                    self.add_intermediate_result(step_name, step_type, execution_order, request, output_items)
                     
+                    # Actualizar current_inputs con la salida del paso 'generate'
                     current_inputs = output_items
 
-                    self.add_intermediate_result(step_name, step_type, execution_order, current_inputs, output_items)
-                
                 except Exception as e:
                     logger.error(f"Error al ejecutar el paso {step_name}: {e}")
                     raise
@@ -83,11 +93,17 @@ class PipelineService:
             elif step_type in ["parse", "verify"]:
                 # Para 'parse' y 'verify', iteramos sobre los inputs actuales
                 step_outputs = []
+
+                # Si es el primer paso, desempaquetamos input_data para la iteración.
+                if execution_order == 1:
+                    current_inputs = [current_input]
+
                 for current_input in current_inputs:
                     try:
+                        request = self._prepare_request(step_type, step_params, execution_order, current_input)
                         output_items = self.run_pipeline_step(
                             step_type=step_type,
-                            params=step_params,
+                            request=request,
                             input_data=current_input,
                             step_name=step_name,
                             execution_order=execution_order,
@@ -116,12 +132,14 @@ class PipelineService:
                             ]
 
                         step_outputs.extend(output_items)
+                        # Almacenar resultados intermedios
                         self.add_intermediate_result(step_name, step_type, execution_order, current_input, output_items)
 
                     except Exception as e:
                         logger.error(f"Error al ejecutar el paso {step_name}: {e}")
                         raise
-                current_inputs = step_outputs  # Actualizar current_inputs con los outputs de este paso
+                
+                current_inputs = step_outputs  # Actualizar current_inputs para el siguiente paso
             else:
                 logger.warning(f"Tipo de paso desconocido '{step_type}'. Saltando.")
 
@@ -131,8 +149,7 @@ class PipelineService:
     def run_pipeline_step(
         self,
         step_type: str,
-        params: Dict[str, Any],
-        input_data: Any,
+        request: Any,
         step_name: str,
         execution_order: int,
     ) -> List[Any]:
@@ -141,7 +158,7 @@ class PipelineService:
 
         Args:
             step_type: Tipo de paso ('generate', 'parse', 'verify').
-            params: Parámetros para el paso.
+            request: Instancia de la dataclass de request adecuada para el paso actual.
             input_data: Datos de entrada del paso anterior.
             step_name: Nombre del paso actual.
             execution_order: Orden de ejecución del paso actual.
@@ -151,27 +168,78 @@ class PipelineService:
         """
         logger.info(f"Ejecutando '{step_type}' para el paso '{step_name}'.")
 
-        reference_data_source = params.get("reference_data_source")
-        reference_data = self._get_reference_data(reference_data_source, execution_order, step_name)
-
         if step_type == "generate":
-            return self._run_generate(params, reference_data, input_data)
+            return self._run_generate(request)
         elif step_type == "parse":
-            outputs = self._run_parse(params, input_data)
+            outputs = self._run_parse(request)
             self.reference_data_store[f"parse_step_{execution_order}"] = outputs
             return outputs
         elif step_type == "verify":
-            return self._run_verify(params, input_data, reference_data)
+            return self._run_verify(request)
         else:
             logger.warning(f"Tipo de paso desconocido '{step_type}'. Saltando.")
             return []
 
+    def _run_generate(self, request: GenerateTextRequest) -> List[str]:
+        """
+        Ejecuta el paso 'generate'.
+
+        Args:
+            request: GenerateTextRequest con los parámetros del paso.
+
+        Returns:
+            Lista de textos generados.
+        """
+        logger.info("Ejecutando paso 'generate'.")
+
+        generate_use_case = GenerateTextUseCase(self.llm)
+        response = generate_use_case.execute(request)
+        return [gen_result.content for gen_result in response.generated_texts]
+
+    def _run_parse(self, request: ParseRequest) -> List[Dict[str, str]]:
+        """
+        Ejecuta el paso 'parse'.
+
+        Args:
+            request: ParseRequest con los parámetros del paso.
+
+        Returns:
+            Lista de diccionarios con los resultados del análisis.
+        """
+        logger.info("Ejecutando paso 'parse'.")
+
+        parse_service = ParseService()
+        parse_use_case = ParseGeneratedOutputUseCase(parse_service)
+
+        parse_response = parse_use_case.execute(request)
+        return parse_response.parse_result.entries
+
+    def _run_verify(self, request: VerifyRequest) -> List[VerifyResponse]:
+        """
+        Ejecuta el paso 'verify'.
+
+        Args:
+            request: VerifyRequest con los parámetros del paso.
+
+        Returns:
+            Lista de VerifyResponse, una para cada ejecución de verificación.
+        """
+        logger.info("Ejecutando paso 'verify'.")
+
+        verifier_service = VerifierService(self.llm)
+        verify_use_case = VerifyUseCase(verifier_service)
+
+        # Pasar cada input al verify use case y recoger las respuestas
+        verify_responses: List[VerifyResponse] = []
+
+        response = verify_use_case.execute(request)
+        verify_responses.append(response)
+        
+        return verify_responses
+
     def _get_reference_data(self, reference_data_source: Optional[str], execution_order: int, step_name: str) -> Optional[Dict[str, Any]]:
         """Obtiene los datos de referencia según la fuente especificada."""
         if reference_data_source == "global":
-            if execution_order != 1:
-                logger.error("Los datos de referencia globales solo se pueden usar en el primer paso.")
-                raise ValueError("Los datos de referencia globales solo se pueden usar en el primer paso.")
             reference_data = self.reference_data_store.get("global")
             if not reference_data:
                 logger.error("Datos de referencia globales no proporcionados.")
@@ -192,178 +260,90 @@ class PipelineService:
         else:
             reference_data = None
         return reference_data
-
-    def _run_generate(self, params: Dict[str, Any], reference_data: Optional[Dict[str, Any]], input_data: Any) -> List[str]:
+    
+    def _prepare_request(self, step_type: str, step_params: Dict[str, Any], execution_order: int, input_data: Optional[Any] = None) -> Union[GenerateTextRequest, ParseRequest, VerifyRequest]:
         """
-        Ejecuta el paso 'generate'.
+        Prepara la dataclass de request adecuada para el paso actual, a partir de la configuración en formato JSON.
 
         Args:
-            params: Parámetros para el paso.
-            reference_data: Datos de referencia para placeholders.
-            input_data: Datos de entrada del paso anterior (ignorados en generate).
+            step_type: Tipo de paso.
+            step_params: Diccionario con los parámetros del paso, tal como viene del JSON.
+            execution_order: Orden de ejecución del paso actual.
+            input_data: Datos de entrada del paso anterior (opcional).
 
         Returns:
-            Lista de textos generados.
+            Instancia de la dataclass de request adecuada.
         """
-        logger.info("Ejecutando paso 'generate'.")
-
-        system_prompt = params["system_prompt"]
-        user_prompt = params["user_prompt"]
-        num_sequences = params.get("num_sequences", 1)
-        max_tokens = params.get("max_tokens", 50)
-        temperature = params.get("temperature", 1.0)
-
-        generate_use_case = GenerateTextUseCase(self.llm)
-        request = GenerateTextRequest(
-            system_prompt=system_prompt,
-            user_prompt=user_prompt,
-            num_sequences=num_sequences,
-            max_tokens=max_tokens,
-            temperature=temperature,
-            reference_data=reference_data if reference_data else None
-        )
-        response = generate_use_case.execute(request)
-        return [gen_result.content for gen_result in response.generated_texts]
-
-    def _run_parse(self, params: Dict[str, Any], text_to_parse: str) -> List[Dict[str, str]]:
-        """
-        Ejecuta el paso 'parse'.
-
-        Args:
-            params: Parámetros para el paso.
-            text_to_parse: Texto a analizar.
-
-        Returns:
-            Lista de diccionarios con los resultados del análisis.
-        """
-        logger.info("Ejecutando paso 'parse'.")
-
-        if not text_to_parse:
-            logger.warning("No hay texto de entrada para el paso 'parse'.")
-            return []
-
-        rules_file = params["rules_file"]
-        output_filter = params.get("output_filter", "all")
-        output_limit = params.get("output_limit")
-
-        try:
-            with open(rules_file, "r", encoding="utf-8") as f:
-                rules_data = json.load(f)
-        except Exception as e:
-            logger.error(f"Error al cargar el archivo de reglas '{rules_file}': {e}")
-            raise
-
-        rules = []
-        for rd in rules_data:
-            try:
-                mode = ParseMode(rd["mode"].lower())
-                rule = ParseRule(
-                    name=rd["name"],
-                    pattern=rd["pattern"],
-                    mode=mode,
-                    secondary_pattern=rd.get("secondary_pattern"),
-                    fallback_value=rd.get("fallback_value", None)
-                )
-                rules.append(rule)
-            except KeyError as e:
-                logger.error(f"Clave faltante en el archivo de reglas: {e}")
-                raise
-            except ValueError as e:
-                logger.error(f"Modo inválido en el archivo de reglas: {e}")
-                raise
-
-        parse_service = ParseService()
-        parse_use_case = ParseGeneratedOutputUseCase(parse_service)
-
-        parse_request = ParseRequest(
-            text=text_to_parse,
-            rules=rules,
-            output_filter=output_filter,
-            output_limit=output_limit
-        )
-        parse_response = parse_use_case.execute(parse_request)
-
-        return parse_response.parse_result.entries
-
-    def _run_verify(
-        self,
-        params: Dict[str, Any],
-        input_item: Any,
-        reference_data: Optional[Dict[str, Any]],
-    ) -> List[VerifyResponse]:
-        """
-        Ejecuta el paso 'verify'.
-
-        Args:
-            params: Parámetros para el paso.
-            input_item: Elemento de entrada del paso anterior.
-            reference_data: Datos de referencia para placeholders.
-
-        Returns:
-            Lista de VerifyResponse, una para cada ejecución de verificación.
-        """
-        logger.info("Ejecutando paso 'verify'.")
+        reference_data_source = step_params.get("reference_data_source")
+        reference_data = self._get_reference_data(reference_data_source, execution_order, "current_step_name")
         
-        if input_item is None:
-            logger.warning("No hay elemento de entrada para el paso 'verify'.")
-            return []
+        if step_type == "generate":
+            gen_params = step_params.get("generate_request", {})
+            return GenerateTextRequest(
+                system_prompt=gen_params.get("system_prompt"),
+                user_prompt=gen_params.get("user_prompt"),
+                num_sequences=gen_params.get("num_sequences", 1),
+                max_tokens=gen_params.get("max_tokens", 50),
+                temperature=gen_params.get("temperature", 1.0),
+                reference_data=reference_data
+            )
+        elif step_type == "parse":
+            parse_params = step_params.get("parse_request", {})
+            
+            rules_data = parse_params.get("rules", [])
+            rules = []
+            for rule_data in rules_data:
+                try:
+                    mode = ParseMode(rule_data["mode"].lower())
+                    rule = ParseRule(
+                        name=rule_data["name"],
+                        pattern=rule_data["pattern"],
+                        mode=mode,
+                        secondary_pattern=rule_data.get("secondary_pattern"),
+                        fallback_value=rule_data.get("fallback_value")
+                    )
+                    rules.append(rule)
+                except (KeyError, ValueError) as e:
+                    logger.error(f"Error en la definición de la regla: {e}")
+                    raise
+            
+            return ParseRequest(
+                text= input_data if execution_order > 1 else parse_params.get("text"),
+                rules=rules,
+                output_filter=parse_params.get("output_filter", "all"),
+                output_limit=parse_params.get("output_limit")
+            )
+        elif step_type == "verify":
+            verify_params = step_params.get("verify_request", {})
+            
+            methods_data = verify_params.get("methods", [])
+            methods = []
+            for method_data in methods_data:
+                try:
+                    mode = VerificationMode(method_data["mode"].upper())
+                    method = VerificationMethod(
+                        mode=mode,
+                        name=method_data["name"],
+                        system_prompt=method_data["system_prompt"],
+                        user_prompt=method_data["user_prompt"],
+                        valid_responses=method_data["valid_responses"],
+                        num_sequences=method_data.get("num_sequences", 3),
+                        required_matches=method_data.get("required_matches", 2)
+                    )
+                    methods.append(method)
+                except (KeyError, ValueError) as e:
+                    logger.error(f"Error en la definición del método de verificación: {e}")
+                    raise
 
-        methods_file = params["methods_file"]
-        required_confirmed = params["required_confirmed"]
-        required_review = params["required_review"]
-
-        try:
-            with open(methods_file, "r", encoding="utf-8") as f:
-                methods_data = json.load(f)
-        except Exception as e:
-            logger.error(f"Error al cargar el archivo de métodos '{methods_file}': {e}")
-            raise
-
-        methods_list = []
-        for m in methods_data:
-            try:
-                mode = VerificationMode(m["mode"].upper())
-                verification_method = VerificationMethod(
-                    mode=mode,
-                    name=m["name"],
-                    system_prompt=m["system_prompt"],
-                    user_prompt=m["user_prompt"],
-                    valid_responses=m["valid_responses"],
-                    num_sequences=m.get("num_sequences", 3),
-                    required_matches=m.get("required_matches", 2)
-                )
-                methods_list.append(verification_method)
-            except KeyError as e:
-                logger.error(f"Clave faltante en el archivo de métodos: {e}")
-                raise
-            except ValueError as e:
-                logger.error(f"Modo inválido en el archivo de métodos: {e}")
-                raise
-
-        verifier_service = VerifierService(self.llm)
-        verify_use_case = VerifyUseCase(verifier_service)
-
-        verify_request = VerifyRequest(
-            methods=methods_list,
-            required_for_confirmed=required_confirmed,
-            required_for_review=required_review,
-            reference_data=reference_data if reference_data else None
-        )
-
-        # Pasar cada input al verify use case y recoger las respuestas
-        verify_responses: List[VerifyResponse] = []
-        if isinstance(input_item, list):
-            for item in input_item:
-                verify_request.reference_data=item
-                response = verify_use_case.execute(verify_request)
-                verify_responses.append(response)
+            return VerifyRequest(
+                methods=methods,
+                required_for_confirmed=verify_params.get("required_for_confirmed"),
+                required_for_review=verify_params.get("required_for_review"),
+                reference_data=reference_data if reference_data else input_data
+            )
         else:
-            verify_request.reference_data = input_item
-            response = verify_use_case.execute(verify_request)
-            verify_responses.append(response)
+            raise ValueError(f"Tipo de paso desconocido: {step_type}")
         
-        return verify_responses
-
     def add_intermediate_result(
         self,
         step_name: str,
@@ -373,6 +353,9 @@ class PipelineService:
         output_data: Any
     ):
         """Añade un resultado intermedio a la lista de resultados."""
+        if step_type == "generate":
+            input_data = {"system_prompt": input_data.system_prompt, "user_prompt": input_data.user_prompt}
+        
         step_result = {
             "step_name": step_name,
             "step_type": step_type,

@@ -271,7 +271,8 @@ def main():
         elif args.command == "pipeline":
             pipeline_config = load_json_file(args.config)
             pipeline_steps = [PipelineStep(name=step["name"], type=step["type"]) for step in pipeline_config["steps"]]
-            pipeline_params = pipeline_config["parameters"]
+            
+            pipeline_params = pipeline_config["parameters"] 
 
             global_ref_data = load_json_file(args.reference_data) if args.reference_data else None
 
