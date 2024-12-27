@@ -49,14 +49,12 @@ class GenerateTextRequest:
      - num_sequences: How many different responses should be generated.
      - max_tokens: Max tokens in the output.
      - temperature: Sampling temperature to control creativity.
-     - reference_data: Dictionary used to substitute placeholders in the prompts.
     """
     system_prompt: str
     user_prompt: str
     num_sequences: int = 1
     max_tokens: int = 100
     temperature: float = 1.0
-    reference_data: Optional[Dict[str, str]] = None
 
 @dataclass
 class GenerateTextResponse:

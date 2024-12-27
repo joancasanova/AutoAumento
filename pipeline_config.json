@@ -1,26 +1,75 @@
 {
-    "steps": [
-      {
-        "name": "generate_step",
-        "type": "generate"
-      },
-      {
-        "name": "parse_step",
-        "type": "parse"
-      }
-    ],
-    "parameters": {
-      "generate_step": {
-        "system_prompt": "Eres un asistente útil.",
-        "user_prompt": "Explica la {tema} de forma sencilla.",
-        "num_sequences": 2,
+  "steps": [
+    {
+      "name": "generate_step",
+      "type": "generate"
+    },
+    {
+      "name": "parse_step",
+      "type": "parse"
+    },
+    {
+      "name": "verify_step",
+      "type": "verify"
+    }
+  ],
+  "parameters": {
+    "generate_step": {
+      "generate_request": {
+        "system_prompt": "Eres un asistente experto en {tema}.",
+        "user_prompt": "¿Puedes explicar algo relacionado con {tema} y {subtema}?",
+        "num_sequences": 1,
         "max_tokens": 50,
-        "temperature": 0.7,
-        "reference_data_source": "global"
+        "temperature": 1.0
       },
-      "parse_step": {
-        "rules_file": "rules.json",
+      "reference_data_source": "global"
+    },
+    "parse_step": {
+      "parse_request": {
+        "text": null,
+        "rules": [
+          {
+            "name": "Nombre",
+            "mode": "keyword",
+            "pattern": "Nombre:",
+            "secondary_pattern": ", Edad:"
+          },
+          {
+            "name": "Edad",
+            "mode": "regex",
+            "pattern": "Edad: (\\d+)",
+            "fallback_value": "missing_edad"
+          }
+        ],
         "output_filter": "all"
       }
+    },
+    "verify_step": {
+      "verify_request": {
+        "methods": [
+          {
+            "mode": "CUMULATIVE",
+            "name": "CheckContains",
+            "system_prompt": "Eres un verificador de texto. Debes verificar si en el texto de entrada se encuentra la siguiente palabra o frase: '{word_or_phrase}'. Si la encuentras, responde únicamente con '{word_or_phrase}'. En caso contrario, responde únicamente con 'No'.",
+            "user_prompt": "Por favor, verifica si el siguiente texto contiene la palabra o frase '{word_or_phrase}': {text_to_analyze}",
+            "valid_responses": ["{word_or_phrase}"],
+            "num_sequences": 3,
+            "required_matches": 2
+          },
+          {
+            "mode": "ELIMINATORY",
+            "name": "CheckFormalGreeting",
+            "system_prompt": "Eres un verificador de texto. Debes verificar que el texto de entrada comience con un saludo formal como 'Estimado' o 'Apreciado'. Si comienza con un saludo formal, responde únicamente con 'Sí'. En caso contrario, responde con 'No'.",
+            "user_prompt": "Por favor, verifica si el siguiente texto comienza con un saludo formal: {text_to_analyze}",
+            "valid_responses": ["Sí"],
+            "num_sequences": 2,
+            "required_matches": 2
+          }
+        ],
+        "required_for_confirmed": 2,
+        "required_for_review": 1
+      },
+      "reference_data_source": "parse_step_1"
     }
   }
+}

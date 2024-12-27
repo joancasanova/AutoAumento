@@ -1,7 +1,6 @@
 # app/application/use_cases/pipeline/pipeline_use_case.py
 
 import logging
-from typing import List, Any, Dict
 
 from app.domain.model.entities.pipeline import (
     PipelineRequest,
@@ -49,13 +48,13 @@ class PipelineUseCase:
                 logger.debug("Datos de referencia globales cargados en PipelineService.")
 
             # Ejecuta el pipeline
-            self.service.run_pipeline(request.steps, request.parameters)
+            self.service.run_pipeline(request.steps)
 
             logger.info("Ejecución del pipeline finalizada.")
 
             # Devuelve los resultados completos del pipeline
             return PipelineResponse(
-                step_results=self.service.get_intermediate_results()
+                step_results=self.service.get_results()
             )
 
         except Exception as e:

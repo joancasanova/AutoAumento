@@ -41,9 +41,11 @@ class VerificationMethod:
     name: str
     system_prompt: str
     user_prompt: str
+    num_sequences: int
     valid_responses: List[str]
-    num_sequences: int = 5
-    required_matches: int = None
+    required_matches: int
+    max_tokens: int = 100
+    temperature: float = 1.0
 
 @dataclass(frozen=True)
 class VerificationResult:
@@ -99,12 +101,10 @@ class VerifyRequest:
     Describes what needs to be verified:
      - A list of VerificationMethods.
      - Thresholds for 'confirmed' or 'review'.
-     - Optional reference_data for placeholder substitution.
     """
     methods: List[VerificationMethod]
     required_for_confirmed: int
     required_for_review: int
-    reference_data: Optional[dict] = None
 
 @dataclass
 class VerifyResponse:

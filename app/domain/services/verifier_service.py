@@ -1,7 +1,7 @@
 # domain/services/verifier_service.py
 
 import logging
-from typing import List, Optional
+from typing import List
 from domain.model.entities.verification import (
     VerificationMethod, VerificationMode,
     VerificationResult, VerificationSummary, VerificationStatus
@@ -24,8 +24,7 @@ class VerifierService:
         self,
         methods: List[VerificationMethod],
         required_for_confirmed: int,
-        required_for_review: int,
-        reference_data: Optional[dict] = None
+        required_for_review: int
     ) -> VerificationSummary:
         """
         Verifies the provided methods. If any ELIMINATORY method fails, we discard.
@@ -38,7 +37,7 @@ class VerifierService:
 
         for method in methods:
             logger.debug(f"Verifying method '{method.name}' in mode '{method.mode}'.")
-            result = self._verify_consensus(method, reference_data)
+            result = self._verify_consensus(method)
             results.append(result)
 
             if not result.passed and method.mode == VerificationMode.ELIMINATORY:
@@ -68,7 +67,7 @@ class VerifierService:
             final_status=final_status.status,
         )
     
-    def _verify_consensus(self, method: VerificationMethod, reference_data: Optional[dict] = None) -> VerificationResult:
+    def _verify_consensus(self, method: VerificationMethod) -> VerificationResult:
         """
         Conduct a 'consensus' check: LLM generates multiple sequences; 
         we count how many responses match a valid_responses list.
@@ -86,15 +85,6 @@ class VerifierService:
 
         system_prompt = method.system_prompt
         user_prompt = method.user_prompt
-        if reference_data:
-            system_prompt = self.placeholder_service.validate_and_replace_placeholders(
-                system_prompt,
-                reference_data
-            )
-            user_prompt = self.placeholder_service.validate_and_replace_placeholders(
-                user_prompt,
-                reference_data
-            )
 
         logger.debug(f"Generating {method.num_sequences} sequence(s) for verification method '{method.name}'.")
         responses = self.llm.generate(

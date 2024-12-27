@@ -32,8 +32,7 @@ class VerifyUseCase:
             verification_summary = self.verifier_service.verify(
                 methods=request.methods,
                 required_for_confirmed=request.required_for_confirmed,
-                required_for_review=request.required_for_review,
-                reference_data=request.reference_data
+                required_for_review=request.required_for_review
             )
             
             execution_time = (datetime.now() - start_time).total_seconds()

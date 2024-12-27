@@ -1,5 +1,6 @@
 # domain/model/entities/parsing.py
 
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Literal
 from enum import Enum
 
@@ -12,23 +13,23 @@ class ParseMode(Enum):
     REGEX = "regex"
     KEYWORD = "keyword"
 
+@dataclass(frozen=True)
 class ParseMatch:
     """
     Represents a single parse match, storing the rule name and the extracted value.
     This might be used to link matched text to a specific parse rule.
     """
-    def __init__(self, rule_name: str, value: str):
-        self.rule_name = rule_name
-        self.value = value
+    rule_name: str
+    value: str
 
+@dataclass
 class ParseResult:
     """
     Represents the entire result of parsing an input string.
     It stores a list of parsed entries as dictionaries where each dictionary
     associates rule names with their matched values (or fallback).
     """
-    def __init__(self, entries: List[Dict[str, str]]):
-        self.entries = entries
+    entries: List[Dict[str, str]]
 
     def to_list_of_dicts(self) -> List[Dict[str, str]]:
         """
@@ -46,6 +47,7 @@ class ParseResult:
                 matches.append(entry[rule_name])
         return matches
 
+@dataclass(frozen=True)
 class ParseRule:
     """
     Defines a parsing rule:
@@ -55,13 +57,13 @@ class ParseRule:
      - secondary_pattern: In KEYWORD mode, indicates a substring boundary or stopping pattern.
      - fallback_value: If a rule doesn't match, fallback_value will be used.
     """
-    def __init__(self, name: str, pattern: str, mode: ParseMode, secondary_pattern: Optional[str] = None, fallback_value: Optional[str] = None):
-        self.name = name
-        self.pattern = pattern
-        self.mode = mode
-        self.secondary_pattern = secondary_pattern
-        self.fallback_value = fallback_value
+    name: str
+    pattern: str
+    mode: ParseMode
+    secondary_pattern: Optional[str] = None
+    fallback_value: Optional[str] = None
 
+@dataclass
 class ParseRequest:
     """
     Input object for parsing:
@@ -70,15 +72,14 @@ class ParseRequest:
      - output_filter: How to filter the parsing results (all, successful, first_n).
      - output_limit: Limit for 'first_n' filter.
     """
-    def __init__(self, text: str, rules: List['ParseRule'], output_filter: Literal["all", "successful", "first_n"] = "all", output_limit: Optional[int] = None):
-        self.text = text
-        self.rules = rules
-        self.output_filter = output_filter
-        self.output_limit = output_limit
+    text: str
+    rules: List[ParseRule]
+    output_filter: Literal["all", "successful", "first_n"] = "all"
+    output_limit: Optional[int] = None
 
+@dataclass
 class ParseResponse:
     """
     Represents the final parse response after applying the parse rules and filtering.
     """
-    def __init__(self, parse_result: 'ParseResult'):
-        self.parse_result = parse_result
+    parse_result: ParseResult

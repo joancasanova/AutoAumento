@@ -86,10 +86,6 @@ def create_parser() -> argparse.ArgumentParser:
     gen_parser.add_argument(
         "--temperature", type=float, default=1.0, help="Temperatura de generación"
     )
-    gen_parser.add_argument(
-        "--reference-data", type=str,
-        help="Archivo JSON con datos de referencia para sustitución de placeholders"
-    )
 
     # (2) Parse
     parse_parser = subparsers.add_parser("parse", help="Analizar texto")
@@ -120,14 +116,10 @@ def create_parser() -> argparse.ArgumentParser:
     verify_parser.add_argument(
         "--required-review", type=int, required=True, help="Revisiones requeridas"
     )
-    verify_parser.add_argument(
-        "--reference-data", type=str, help="Archivo JSON con datos de referencia para sustitución de placeholders"
-    )
 
     # (4) Pipeline command
     pipeline_parser = subparsers.add_parser("pipeline", help="Ejecutar pipeline")
     pipeline_parser.add_argument("--config", required=True, help="Archivo JSON con la configuración del pipeline")
-    pipeline_parser.add_argument("--reference-data", type=str, help="Archivo JSON con datos de referencia globales para placeholders")
 
     # (5) Benchmark command (placeholder)
     benchmark_parser = subparsers.add_parser("benchmark", help="Ejecutar benchmark")
@@ -221,15 +213,13 @@ def main():
         llm = InstructModel(model_name="Qwen/Qwen2.5-1.5B-Instruct")
 
         if args.command == "generate":
-            reference_data = load_json_file(args.reference_data) if args.reference_data else None
             generate_use_case = GenerateTextUseCase(llm)
             request = GenerateTextRequest(
                 system_prompt=args.system_prompt,
                 user_prompt=args.user_prompt,
                 num_sequences=args.num_sequences,
                 max_tokens=args.max_tokens,
-                temperature=args.temperature,
-                reference_data=reference_data
+                temperature=args.temperature
             )
             response = generate_use_case.execute(request)
             response_dict = {
@@ -254,15 +244,13 @@ def main():
             print(json.dumps(response.parse_result.to_list_of_dicts(), indent=2))
 
         elif args.command == "verify":
-            reference_data = load_json_file(args.reference_data) if args.reference_data else None
             methods = parse_verification_methods_from_json(args.methods)
             verifier_service = VerifierService(llm)
             verify_use_case = VerifyUseCase(verifier_service)
             request = VerifyRequest(
                 methods=methods,
                 required_for_confirmed=args.required_confirmed,
-                required_for_review=args.required_review,
-                reference_data=reference_data
+                required_for_review=args.required_review
             )
             response = verify_use_case.execute(request)
             formatted_result = format_verification_result(response)
@@ -273,15 +261,14 @@ def main():
             pipeline_steps = [PipelineStep(name=step["name"], type=step["type"]) for step in pipeline_config["steps"]]
             
             pipeline_params = pipeline_config["parameters"] 
-
-            global_ref_data = load_json_file(args.reference_data) if args.reference_data else None
+            global_reference_data = pipeline_config["global_reference_data"] 
 
             pipeline_service = PipelineService(llm=llm)
             pipeline_use_case = PipelineUseCase(pipeline_service)
             pipeline_request = PipelineRequest(
                 steps=pipeline_steps,
                 parameters=pipeline_params,
-                global_reference_data=global_ref_data
+                global_reference_data=global_reference_data
             )
             pipeline_response = pipeline_use_case.execute(pipeline_request)
 

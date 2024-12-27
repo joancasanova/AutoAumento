@@ -41,24 +41,6 @@ class GenerateTextUseCase:
             logger.debug("Extracting prompts and reference data for placeholders")
             system_prompt = request.system_prompt
             user_prompt = request.user_prompt
-            
-            # If reference data is provided, extract placeholders and replace them
-            if request.reference_data:
-                all_placeholders = (
-                    self.placeholder_service.extract_placeholders(system_prompt) |
-                    self.placeholder_service.extract_placeholders(user_prompt)
-                )
-                
-                if all_placeholders:
-                    logger.debug("Found placeholders, performing substitution.")
-                    system_prompt = self.placeholder_service.validate_and_replace_placeholders(
-                        system_prompt, 
-                        request.reference_data
-                    )
-                    user_prompt = self.placeholder_service.validate_and_replace_placeholders(
-                        user_prompt, 
-                        request.reference_data
-                    )
 
             # Generate text using the LLM
             logger.debug("Invoking LLMPort.generate() method")
