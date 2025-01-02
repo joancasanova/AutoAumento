@@ -27,7 +27,7 @@ class PipelineStep:
     uses_reference: bool = False
     reference_step_names: Optional[List[str]] = None
     uses_verification: bool = False
-    verification_status: Optional[Tuple[str, str]] = None
+    verification_step: Optional[Tuple[str, str]] = None
 
 @dataclass
 class PipelineRequest:
