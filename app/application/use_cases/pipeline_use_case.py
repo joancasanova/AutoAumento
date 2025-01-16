@@ -1,5 +1,3 @@
-# app/application/use_cases/pipeline/pipeline_use_case.py
-
 import logging
 
 from app.domain.model.entities.pipeline import (

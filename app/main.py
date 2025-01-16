@@ -1,5 +1,3 @@
-# app/main.py
-
 import argparse
 import json
 import logging
@@ -170,11 +168,10 @@ def create_parser() -> argparse.ArgumentParser:
 
     return parser
 
-def parse_rules_from_json(file_path: str) -> List[ParseRule]:
+def parse_rules_from_json(rules_data:List[Dict]) -> List[ParseRule]:
     """
-    Carga reglas de análisis desde un archivo JSON y las convierte en objetos ParseRule.
+    Carga reglas de análisis desde un JSON y las convierte en objetos ParseRule.
     """
-    rules_data = load_json_file(file_path)
     rules = []
     for rule_data in rules_data:
         mode = ParseMode[rule_data.pop("mode").upper()]
@@ -298,9 +295,14 @@ def main():
             pipeline_steps = []
             for step_data in pipeline_config["steps"]:
                 if step_data["type"] == "generate":
-                    parameters = GenerateTextRequest(**step_data["parameters"])  # Crear GenerateTextRequest
+                    parameters = GenerateTextRequest(**step_data["parameters"])
                 elif step_data["type"] == "parse":
-                    parameters = ParseRequest(text=step_data["parameters"]["text"], rules=parse_rules_from_json(step_data["parameters"]["rules"]))
+                   parameters = ParseRequest(
+                       text=step_data["parameters"].get("text", None),
+                       rules=parse_rules_from_json(step_data["parameters"]["rules"]),
+                       output_filter=step_data["parameters"].get("output_filter", "all"),
+                       output_limit=step_data["parameters"].get("output_limit", None)
+                    )
                 elif step_data["type"] == "verify":
                     parameters = VerifyRequest(
                             methods=parse_verification_methods_from_json(step_data["parameters"]["methods"]),
@@ -313,7 +315,7 @@ def main():
                 pipeline_steps.append(
                     PipelineStep(
                         type=step_data["type"],
-                        parameters=parameters,  # Usar el objeto creado
+                        parameters=parameters,
                         uses_reference=step_data.get("uses_reference", False),
                         reference_step_numbers=step_data.get("reference_step_numbers", []),
                         uses_verification=step_data.get("uses_verification", False),
@@ -322,7 +324,6 @@ def main():
                 )
 
             global_references = pipeline_config["global_references"] 
-
             
             pipeline_use_case = PipelineUseCase(args.pipeline_model_name)
             pipeline_request = PipelineRequest(

@@ -203,7 +203,47 @@ class PipelineService:
             A list containing the ParseResult.
         """
         request: ParseRequest = step.parameters
-        return [self.parse_service.parse(request)]
+        
+        if not step.uses_reference:
+            parse_result = self.parse_service.parse_text(
+                text=request.text,
+                rules=request.rules
+            )
+
+            filtered_parse_result = self.parse_service.filter_entries(
+                parse_result=parse_result,
+                filter_type=request.output_filter,
+                n=request.output_limit,
+                rules=request.rules
+            )
+
+            return [filtered_parse_result]
+    
+        reference_data = self._get_reference_data(step.reference_step_numbers, step_number)
+        if not reference_data and not self.global_references:
+            return []
+        
+        parse_results = []
+        for _, step_type, step_results in reference_data: 
+            if step_type == "generate":
+                generated_result: GeneratedResult
+                for generated_result in step_results:
+                    text = generated_result.content
+                    parse_result = self.parse_service.parse_text(
+                        text=text,
+                        rules=request.rules
+                    )
+
+                    filtered_parse_result = self.parse_service.filter_entries(
+                        parse_result=parse_result,
+                        filter_type=request.output_filter,
+                        n=request.output_limit,
+                        rules=request.rules
+                    )
+                    parse_results.append(filtered_parse_result)
+
+        return parse_results
+
 
     def _execute_verify(self, step: PipelineStep, step_number: int) -> List[VerificationSummary]:
         """
@@ -222,7 +262,7 @@ class PipelineService:
     def _create_prompt_variations(
         self,
         request: GenerateTextRequest,
-        reference_data: List[Tuple[str, List[Any]]]
+        reference_data: List[Tuple[int, str, List[Any]]]
     ) -> List[Tuple[str, str, Dict[str, str]]]:
         """
         Generates variations of prompts by filling placeholders with reference data.
