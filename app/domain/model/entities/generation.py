@@ -14,11 +14,14 @@ class GenerationMetadata:
      - Timestamp when the generation happened.
     """
     model_name: str
+    system_prompt: str
+    user_prompt: str
+    temperature: float
     tokens_used: int
     generation_time: float
     timestamp: datetime = datetime.now()
 
-@dataclass(frozen=True)
+@dataclass
 class GeneratedResult:
     """
     Represents a single generated text sequence along with associated metadata.
@@ -27,6 +30,21 @@ class GeneratedResult:
     content: str
     metadata: GenerationMetadata
     reference_data: Optional[Dict[str, str]] = None
+    
+    def to_dict(self):
+        return {
+            "content": self.content,
+            "metadata": {
+                "model_name": self.metadata.model_name,
+                "system_prompt": self.metadata.system_prompt,
+                "user_prompt": self.metadata.user_prompt,
+                "temperature": self.metadata.user_prompt,
+                "tokens_used": self.metadata.tokens_used,
+                "generation_time": self.metadata.generation_time,
+                "timestamp": self.metadata.timestamp.isoformat()  # Convert datetime to string
+            },
+            "reference_data": self.reference_data
+        }
     
     def contains_reference(self, text: str) -> bool:
         """
@@ -69,3 +87,11 @@ class GenerateTextResponse:
     total_tokens: int
     generation_time: float
     model_name: str
+
+    def to_dict(self):
+        return {
+            "generated_texts": [result.to_dict() for result in self.generated_texts],
+            "total_tokens": self.total_tokens,
+            "generation_time": self.generation_time,
+            "model_name": self.model_name
+        }

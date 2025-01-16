@@ -12,17 +12,17 @@ class ParseRequestValidationError(Exception):
     """
     pass
 
-class ParseGeneratedOutputUseCase:
+class ParseUseCase:
     """
     Use case that parses text according to a set of rules (ParseRule objects).
     It also supports filtering the parsed output (e.g., keep only successful parse entries).
     """
-    def __init__(self, parse_service: ParseService):
+    def __init__(self):
         """
         Constructor requires an instance of ParseService which encapsulates 
         the text parsing logic (regex, keyword scanning, etc.).
         """
-        self.parse_service = parse_service
+        self.parse_service = ParseService()
 
     def execute(self, request: ParseRequest) -> ParseResponse:
         """

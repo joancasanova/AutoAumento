@@ -233,7 +233,7 @@ Salida JSON:
 **Uso básico**:
 ```bash
 python app/main.py verify \
-  --verify-model-name "Qwen/Qwen2.5-3B-Instruct" \
+  --verify-model-name "Qwen/Qwen2.5-1.5B-Instruct" \
   --methods "methods.json" \
   --required-confirmed 2 \
   --required-review 1 \

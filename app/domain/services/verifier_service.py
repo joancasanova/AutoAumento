@@ -6,8 +6,7 @@ from domain.model.entities.verification import (
     VerificationMethod, VerificationMode,
     VerificationResult, VerificationSummary, VerificationStatus
 )
-from domain.ports.llm_port import LLMPort
-from domain.services.placeholder_service import PlaceholderService
+from domain.services.generate_service import GenerateService
 
 logger = logging.getLogger(__name__)
 
@@ -16,9 +15,8 @@ class VerifierService:
     Service that performs verification checks on text/data by leveraging
     a provided LLM. Supports both ELIMINATORY and CUMULATIVE verification modes.
     """
-    def __init__(self, llm: LLMPort):
-        self.llm = llm
-        self.placeholder_service = PlaceholderService()
+    def __init__(self, generate_service: GenerateService):
+        self.generate_service = generate_service
 
     def verify(
         self,
@@ -87,7 +85,7 @@ class VerifierService:
         user_prompt = method.user_prompt
 
         logger.debug(f"Generating {method.num_sequences} sequence(s) for verification method '{method.name}'.")
-        responses = self.llm.generate(
+        responses = self.generate_service.generate(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             num_sequences=method.num_sequences,

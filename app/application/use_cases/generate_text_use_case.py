@@ -3,8 +3,7 @@
 import logging
 from datetime import datetime
 from domain.model.entities.generation import GenerateTextRequest, GenerateTextResponse
-from domain.services.placeholder_service import PlaceholderService
-from domain.ports.llm_port import LLMPort
+from domain.services.generate_service import GenerateService
 
 logger = logging.getLogger(__name__)
 
@@ -14,14 +13,13 @@ class GenerateTextUseCase:
     It handles placeholder replacement, timing, token counting, and error management.
     """
 
-    def __init__(self, llm: LLMPort):
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct"):
         """
         Initializes the use case with a specific LLM port (interface).
         Also instantiates a placeholder service to handle placeholders
         in system prompts and user prompts.
         """
-        self.llm = llm
-        self.placeholder_service = PlaceholderService()
+        self.generate_service = GenerateService(model_name)
 
     def execute(self, request: GenerateTextRequest) -> GenerateTextResponse:
         """
@@ -44,7 +42,7 @@ class GenerateTextUseCase:
 
             # Generate text using the LLM
             logger.debug("Invoking LLMPort.generate() method")
-            generated_results = self.llm.generate(
+            generated_results = self.generate_service.generate(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
                 num_sequences=request.num_sequences,

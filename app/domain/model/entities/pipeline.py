@@ -13,21 +13,19 @@ class PipelineStep:
     """
     Define un solo paso en el pipeline.
 
-    - name: Nombre único del paso.
     - type: Tipo de paso ('generate', 'parse', 'verify').
     - parameters: Parámetros específicos para el paso actual (especificados externamente).
     - uses_reference: Indica si este paso utiliza datos de referencia.
-    - reference_step_names: Indica el orden de prioridad donde buscar los datos de referencia.
     - uses_verification: Indica si este paso se ejecuta dependiendo del resultado de una verificación.
-    - verification_status: Indica el nombre de un paso de verificación previo y resultado deseado de esta ('confirmed', 'review', or 'discarded').
+    - reference_step_number: Indica el orden de prioridad donde buscar los datos de referencia.
+    - verification_step_number: Indica el numero de un paso de verificación previo.
     """
-    name: str
     type: str
     parameters: Union[GenerateTextRequest, ParseRequest, VerifyRequest]
     uses_reference: bool = False
-    reference_step_names: Optional[List[str]] = None
+    reference_step_numbers: Optional[List[int]] = None
     uses_verification: bool = False
-    verification_step: Optional[Tuple[str, str]] = None
+    verification_step_number: Optional[int] = None
 
 @dataclass
 class PipelineRequest:
@@ -35,10 +33,10 @@ class PipelineRequest:
     Describe el pipeline completo a ejecutar.
 
     - steps: Lista de PipelineStep indicando el orden y el tipo de cada paso.
-    - global_reference_data: Diccionario opcional con datos globales para placeholders.
+    - global_references: Diccionario opcional con datos globales para placeholders.
     """
     steps: List[PipelineStep]
-    global_reference_data: Optional[Dict[str, Any]] = None
+    global_references: Optional[Dict[str, str]] = None
 
 @dataclass
 class PipelineResponse:
@@ -48,4 +46,9 @@ class PipelineResponse:
     - step_results: Lista de diccionarios, donde cada diccionario contiene la información y
                     resultados de un paso del pipeline.
     """
-    step_results: List[Dict[str, Any]]
+    step_results: List[Dict[str, Any]]    
+    
+    def to_dict(self):
+        return {
+            "step_results": self.step_results
+        }

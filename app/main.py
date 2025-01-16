@@ -11,13 +11,12 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s - %(message)s"
 )
 
-from infrastructure.external.llm.instruct_model import InstructModel
 from application.use_cases.generate_text_use_case import (
     GenerateTextUseCase,
     GenerateTextRequest,
 )
-from application.use_cases.parse_generated_output_use_case import (
-    ParseGeneratedOutputUseCase,
+from app.application.use_cases.parse_use_case import (
+    ParseUseCase,
     ParseRequest,
 )
 from application.use_cases.verify_use_case import (
@@ -30,16 +29,58 @@ from domain.model.entities.verification import (
     VerificationMode,
     VerifyResponse
 )
-from domain.services.parse_service import ParseService
-from domain.services.verifier_service import VerifierService
 from domain.model.entities.pipeline import (
+    PipelineResponse,
     PipelineStep,
     PipelineRequest
 )
 from application.use_cases.pipeline_use_case import PipelineUseCase
-from domain.services.pipeline_service import PipelineService
 
 logger = logging.getLogger(__name__)
+
+def print_pipeline_results(pipeline_response: PipelineResponse):
+    """
+    Imprime los resultados del pipeline de una manera más legible.
+    """
+    for i, step_result in enumerate(pipeline_response.step_results):
+        print(f"--- Paso {i}: {step_result['step_type']} ---")
+        for i, item in enumerate(step_result['step_data']):
+            if isinstance(item, dict):
+                if 'content' in item:
+                    print(f"\n  Resultado {i+1}:")
+                    print(f"    - Contenido: {item['content']}")
+                    if 'metadata' in item:
+                        print(f"    - Metadatos:")
+                        print(f"      -- System prompt: {item['metadata']['system_prompt']}")
+                        print(f"      -- User prompt: {item['metadata']['user_prompt']}")
+                    if 'reference_data' in item and item['reference_data']:
+                        print(f"    - Datos de referencia:")
+                        for ref_key, ref_value in item['reference_data'].items():
+                            print(f"      -- {ref_key}: {ref_value}")
+                elif 'final_status' in item:
+                    print(f"  Resultado de verificación {i+1}:")
+                    print(f"    Estado final: {item['final_status']}")
+                    print(f"    Tasa de éxito: {item['success_rate']:.2f}")
+                    print(f"    Tiempo de ejecución: {item['execution_time']:.2f} segundos")
+                    print(f"    Resultados:")
+                    for result in item['results']:
+                        print(f"      Método: {result['method_name']}")
+                        print(f"        Modo: {result['mode']}")
+                        print(f"        Pasó: {result['passed']}")
+                        print(f"        Puntuación: {result['score']:.2f}")
+                        print(f"        Fecha y hora: {result['timestamp']}")
+                        print(f"        Detalles: {result['details']}")
+                elif 'entries' in item:
+                    print(f"  Resultado de análisis {i+1}:")
+                    for j, entry in enumerate(item['entries']):
+                        print(f"    Entrada {j+1}:")
+                        for key, value in entry.items():
+                            print(f"      {key}: {value}")
+
+            else:
+                print(f"  Resultado {i+1}: {item}")  # Para otros tipos de datos
+            
+        print()
 
 def load_json_file(file_path: str) -> Dict[str, Any]:
     """
@@ -104,7 +145,7 @@ def create_parser() -> argparse.ArgumentParser:
     verify_parser = subparsers.add_parser("verify", help="Verificar texto")
     verify_parser.add_argument(
         "--verify-model-name",
-        default="Qwen/Qwen2.5-3B-Instruct",
+        default="Qwen/Qwen2.5-1.5B-Instruct",
         help="Nombre del modelo de lenguaje a usar"
     )
     verify_parser.add_argument(
@@ -120,6 +161,7 @@ def create_parser() -> argparse.ArgumentParser:
     # (4) Pipeline command
     pipeline_parser = subparsers.add_parser("pipeline", help="Ejecutar pipeline")
     pipeline_parser.add_argument("--config", required=True, help="Archivo JSON con la configuración del pipeline")
+    pipeline_parser.add_argument("--pipeline-model-name", default="Qwen/Qwen2.5-1.5B-Instruct", help="Nombre del modelo de lenguaje a usar")
 
     # (5) Benchmark command (placeholder)
     benchmark_parser = subparsers.add_parser("benchmark", help="Ejecutar benchmark")
@@ -207,13 +249,9 @@ def main():
 
     try:
         logger.info(f"Ejecutando comando: {args.command}")
-        result = None
-
-        # Inicializar modelos LLM una vez para reutilizar
-        llm = InstructModel(model_name="Qwen/Qwen2.5-1.5B-Instruct")
 
         if args.command == "generate":
-            generate_use_case = GenerateTextUseCase(llm)
+            generate_use_case = GenerateTextUseCase(args.gen_model_name)
             request = GenerateTextRequest(
                 system_prompt=args.system_prompt,
                 user_prompt=args.user_prompt,
@@ -231,8 +269,7 @@ def main():
             print(json.dumps(response_dict, indent=2))
 
         elif args.command == "parse":
-            parse_service = ParseService()
-            parse_use_case = ParseGeneratedOutputUseCase(parse_service)
+            parse_use_case = ParseUseCase()
             rules = parse_rules_from_json(args.rules)
             request = ParseRequest(
                 text=args.text,
@@ -245,8 +282,7 @@ def main():
 
         elif args.command == "verify":
             methods = parse_verification_methods_from_json(args.methods)
-            verifier_service = VerifierService(llm)
-            verify_use_case = VerifyUseCase(verifier_service)
+            verify_use_case = VerifyUseCase(args.verify_model_name)
             request = VerifyRequest(
                 methods=methods,
                 required_for_confirmed=args.required_confirmed,
@@ -258,21 +294,44 @@ def main():
 
         elif args.command == "pipeline":
             pipeline_config = load_json_file(args.config)
-            pipeline_steps = [PipelineStep(name=step["name"], type=step["type"]) for step in pipeline_config["steps"]]
-            
-            pipeline_params = pipeline_config["parameters"] 
-            global_reference_data = pipeline_config["global_reference_data"] 
 
-            pipeline_service = PipelineService(llm=llm)
-            pipeline_use_case = PipelineUseCase(pipeline_service)
+            pipeline_steps = []
+            for step_data in pipeline_config["steps"]:
+                if step_data["type"] == "generate":
+                    parameters = GenerateTextRequest(**step_data["parameters"])  # Crear GenerateTextRequest
+                elif step_data["type"] == "parse":
+                    parameters = ParseRequest(text=step_data["parameters"]["text"], rules=parse_rules_from_json(step_data["parameters"]["rules"]))
+                elif step_data["type"] == "verify":
+                    parameters = VerifyRequest(
+                            methods=parse_verification_methods_from_json(step_data["parameters"]["methods"]),
+                            required_for_confirmed=step_data["parameters"]["required_for_confirmed"],
+                            required_for_review=step_data["parameters"]["required_for_review"]
+                        )
+                else:
+                    raise ValueError(f"Unknown step type: {step_data['type']}")
+                
+                pipeline_steps.append(
+                    PipelineStep(
+                        type=step_data["type"],
+                        parameters=parameters,  # Usar el objeto creado
+                        uses_reference=step_data.get("uses_reference", False),
+                        reference_step_numbers=step_data.get("reference_step_numbers", []),
+                        uses_verification=step_data.get("uses_verification", False),
+                        verification_step_number=step_data.get("verification_step_number", 0)
+                    )
+                )
+
+            global_references = pipeline_config["global_references"] 
+
+            
+            pipeline_use_case = PipelineUseCase(args.pipeline_model_name)
             pipeline_request = PipelineRequest(
                 steps=pipeline_steps,
-                parameters=pipeline_params,
-                global_reference_data=global_reference_data
+                global_references=global_references
             )
             pipeline_response = pipeline_use_case.execute(pipeline_request)
 
-            print(json.dumps(pipeline_response.step_results, indent=2, ensure_ascii=False))
+            print_pipeline_results(pipeline_response)
 
         elif args.command == "benchmark":
             logger.warning("Comando benchmark no implementado todavía.")

@@ -1,0 +1,49 @@
+{
+  "steps": [
+      {
+          "type": "generate",
+          "parameters": {
+              "system_prompt": "Eres un asistente virtual {global3}.",
+              "user_prompt": "Escribe una frase sobre {global} y {global2}.",
+              "num_sequences": 2,
+              "max_tokens": 50,
+              "temperature": 0.7
+          },
+          "uses_reference": true
+      },
+      {
+          "type": "generate",
+          "parameters": {
+              "system_prompt": "Eres un asistente virtual muy cachondo que habla siempre sobre sexo y que equipara alimentos a atributos femeninos.",
+              "user_prompt": "Ahora, basado en la frase: '{content_0}', escribe un comentario gracioso. Menciona {global2} y su relacion con las partes intimas femeninas.",
+              "num_sequences": 1,
+              "max_tokens": 100,
+              "temperature": 0.9
+          },
+          "uses_reference": true,
+          "reference_step_numbers": [
+              0
+          ]
+      },
+      {
+          "type": "generate",
+          "parameters": {
+              "system_prompt": "Eres un analizador experto de chistes {global3}.",
+              "user_prompt": "Evalúa si el siguiente comentario es gracioso: '{content_1}'",
+              "num_sequences": 2,
+              "max_tokens": 100,
+              "temperature": 0.9
+          },
+          "uses_reference": true,
+          "reference_step_numbers": [
+              1
+          ]
+      }
+  ],
+  "global_references": 
+    {
+        "global": "melones",
+        "global2": "almejas",
+        "global3": "guay"
+    }   
+}

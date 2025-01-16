@@ -1,9 +1,19 @@
 [
-    {
-      "name": "chiste",
-      "mode": "keyword",
-      "pattern": "Aquí empieza el chiste",
+  {
+      "name": "nombre",
+      "pattern": "Me llamo (\\w+)",
+      "mode": "REGEX"
+  },
+  {
+      "name": "ciudad",
+      "pattern": "ciudad:",
+      "mode": "KEYWORD",
       "secondary_pattern": ".",
-      "fallback_value": "No se encontró el chiste"
-    }
-  ]
+      "fallback_value": "Desconocida"
+  },
+  {
+      "name": "edad",
+      "pattern": "tengo (\\d+) años",
+      "mode": "REGEX"
+  }
+]

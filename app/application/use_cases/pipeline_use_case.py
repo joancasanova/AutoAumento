@@ -17,14 +17,14 @@ class PipelineUseCase:
     se convierte en la entrada para el siguiente paso.
     """
 
-    def __init__(self, pipeline_service: PipelineService):
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct"):
         """
         Inicializa el PipelineUseCase con una instancia de PipelineService.
 
         Args:
             pipeline_service (PipelineService): El servicio que maneja los pasos del pipeline.
         """
-        self.service = pipeline_service
+        self.service = PipelineService(model_name)
         logger.debug("PipelineUseCase inicializado con PipelineService.")
 
     def execute(self, request: PipelineRequest) -> PipelineResponse:
@@ -43,8 +43,8 @@ class PipelineUseCase:
 
         try:
             # Inicializa reference_data_store con global_reference_data
-            if request.global_reference_data:
-                self.service.reference_data_store["global"] = request.global_reference_data
+            if request.global_references:
+                self.service.global_references = request.global_references
                 logger.debug("Datos de referencia globales cargados en PipelineService.")
 
             # Ejecuta el pipeline
@@ -52,9 +52,25 @@ class PipelineUseCase:
 
             logger.info("Ejecución del pipeline finalizada.")
 
+            # Convert results to a serializable format
+            serializable_results = []
+            for result in self.service.get_results():
+                step_type, step_data = result
+                
+                # Convertimos los datos del paso a una lista de diccionarios
+                step_data_dicts = [
+                    item.to_dict() if hasattr(item, 'to_dict') else item
+                    for item in step_data
+                ]
+
+                serializable_results.append({
+                    "step_type": step_type,
+                    "step_data": step_data_dicts
+                })
+
             # Devuelve los resultados completos del pipeline
             return PipelineResponse(
-                step_results=self.service.get_results()
+                step_results=serializable_results
             )
 
         except Exception as e:

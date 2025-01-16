@@ -2,6 +2,7 @@
 
 import logging
 from datetime import datetime
+from app.domain.services.generate_service import GenerateService
 from domain.model.entities.verification import VerifyRequest, VerifyResponse
 from domain.services.verifier_service import VerifierService
 
@@ -12,8 +13,8 @@ class VerifyUseCase:
     Use case for verifying text or data using one or more verification methods.
     These methods rely on LLM-based checks (consensus checks, placeholders, etc.).
     """
-    def __init__(self, verifier_service: VerifierService):
-        self.verifier_service = verifier_service
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct"):
+        self.verifier_service = VerifierService(GenerateService(model_name))
 
     def execute(self, request: VerifyRequest) -> VerifyResponse:
         """

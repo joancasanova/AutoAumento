@@ -1,23 +1,22 @@
-# infrastructure/external/llm/instruct_model.py
+# domain/services/generate_service.py
 
 import logging
+import re
 from typing import List
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import re
 from datetime import datetime
-from domain.ports.llm_port import LLMPort
 from domain.model.entities.generation import GeneratedResult, GenerationMetadata
 
 logger = logging.getLogger(__name__)
 
-class InstructModel(LLMPort):
+class GenerateService:
     """
-    Concrete implementation of LLMPort using Hugging Face Transformers library.
+    Concrete implementation of GenerateService using Hugging Face Transformers library.
     This class is intended for an instruct-style model, potentially Chat-like.
     """
 
-    def __init__(self, model_name: str = "Qwen/Qwen2.5-3B-Instruct"):
+    def __init__(self, model_name):
         """
         Initialize the model, tokenizer, and other relevant settings.
         By default, it attempts to use GPU if available.
@@ -92,6 +91,9 @@ class InstructModel(LLMPort):
 
                 metadata = GenerationMetadata(
                     model_name=self.model_name,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    temperature=temperature,
                     tokens_used=len(self.tokenizer.encode(content)),
                     generation_time=(datetime.now() - start_time).total_seconds()
                 )

@@ -1,11 +1,20 @@
 [
-    {
+  {
+      "name": "verificacion_positiva",
       "mode": "CUMULATIVE",
-      "name": "CheckChiste",
-      "system_prompt": "Eres un verificador que comprueba si el texto es un chiste.",
-      "user_prompt": "Analiza el siguiente texto y responde 'Sí' si crees que es un chiste o 'No' en caso contrario:\n{chiste}",
-      "valid_responses": ["Sí", "Si"],
+      "system_prompt": "Eres un asistente de verificación.",
+      "user_prompt": "El texto a verificar es: 'Esto es una prueba'. Responde 'sí' o 'no'.",
+      "num_sequences": 3,
+      "valid_responses": ["sí", "si"],
+      "required_matches": 2
+  },
+  {
+      "name": "verificacion_negativa",
+      "mode": "ELIMINATORY",
+      "system_prompt": "Eres un asistente de verificación.",
+      "user_prompt": "El texto a verificar es: 'Esto es una prueba'. Responde 'sí' o 'no'.",
       "num_sequences": 2,
+      "valid_responses": ["no"],
       "required_matches": 1
-    }
-  ]
+  }
+]
