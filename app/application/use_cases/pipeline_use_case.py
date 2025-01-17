@@ -71,6 +71,9 @@ class PipelineUseCase:
                 step_results=serializable_results
             )
 
+        except ValueError as e:
+            logger.error(f"Error de validación al ejecutar el pipeline: {e}")
+            raise  # Re-lanzar la excepción para que se capture en main.py
         except Exception as e:
             logger.error(f"Error al ejecutar el pipeline: {e}")
-            raise
+            raise  # Re-lanzar otras excepciones

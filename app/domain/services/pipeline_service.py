@@ -53,6 +53,7 @@ class PipelineService:
         self.results = []  # Clear previous results
         try:
             for step_number, step in enumerate(steps):
+                self._validate_step_references(step, step_number)
                 step_result = self._execute_step(step, step_number)
                 self._store_result(step_number, step.type, step_result)
         except Exception as e:
@@ -64,6 +65,24 @@ class PipelineService:
         Returns the accumulated results of all executed steps.
         """
         return self.results  # type: ignore
+    
+    def _validate_step_references(self, step: PipelineStep, step_number: int) -> None:
+        """
+        Validates that the reference_step_numbers for a step are valid (exist and are before current step).
+
+        Args:
+            step: The PipelineStep object being validated.
+            step_number: The index of the current step.
+
+        Raises:
+            ValueError: If any reference is invalid.
+        """
+        if step.uses_reference:
+             if not step.reference_step_numbers and not self.global_references:
+                 raise ValueError(f"Step {step_number} uses references but no references are provided.")
+             for ref_index in step.reference_step_numbers:
+                if not (0 <= ref_index < step_number):
+                   raise ValueError(f"Step {step_number} has an invalid reference to step {ref_index}. Must be a previous step.")
 
     def _execute_step(self, step: PipelineStep, step_number: int) -> List[Any]:
         """
@@ -171,8 +190,6 @@ class PipelineService:
             return self.generate_service.generate(**request.dict())
 
         reference_data = self._get_reference_data(step.reference_step_numbers, step_number)
-        if not reference_data and not self.global_references:
-            return []
 
         prompt_variations = self._create_prompt_variations(request, reference_data)
 
@@ -220,8 +237,6 @@ class PipelineService:
             return [filtered_parse_result]
     
         reference_data = self._get_reference_data(step.reference_step_numbers, step_number)
-        if not reference_data and not self.global_references:
-            return []
         
         parse_results = []
         for _, step_type, step_results in reference_data: 

@@ -337,6 +337,9 @@ def main():
         elif args.command == "benchmark":
             logger.warning("Comando benchmark no implementado todavía.")
 
+    except ValueError as e:
+        logger.error("Ocurrió un error de validación al ejecutar el pipeline.")
+        print(f"Error de validación: {e}")
     except Exception as e:
         logger.exception("Ocurrió un error al ejecutar el comando.")
         print(f"Ocurrió un error: {e}")
