@@ -3,28 +3,6 @@
        {
           "type":"parse",
           "parameters":{
-             "text":"Tenemos 3 'almejas' y 4 'gambas'",
-             "rules":[
-                {
-                   "name":"numero",
-                   "pattern":"(\\d+)",
-                   "mode":"regex",
-                   "fallback_value":"numero_no_encontrado"
-                },
-                {
-                   "name":"animal",
-                   "pattern":"'",
-                   "mode":"keyword",
-                   "secondary_pattern":"'",
-                   "fallback_value":"animal_no_encontrado"
-                }
-             ],
-             "output_filter":"all"
-          }
-       },
-       {
-          "type":"parse",
-          "parameters":{
              "text":"La 'perra' de la playa era muy rara. Tiene 3 -piernas-.\n La 'zorra' de la playa era muy rara. Tiene 3 -verdad-.",
              "rules":[
                 {
@@ -46,55 +24,42 @@
           }
        },
        {
-          "type":"generate",
+          "type":"verify",
           "parameters":{
-             "system_prompt":"Eres una {perra} que analiza textos y responde con un breve comentario.",
-             "user_prompt":"Genera un comentario divertido sobre {text}, {animal}, {parte cuerpo} y el {numero}.",
-             "num_sequences":1,
-             "max_tokens":10,
-             "temperature":0.7
-          },
-          "uses_reference":true,
-          "reference_step_numbers":[
-             0,
-             1
-          ]
-       },
-       {
-          "type":"parse",
-          "parameters":{
-             "rules":[
+             "methods":[
                 {
-                   "name":"texto_parseado",
-                   "pattern":"(.*)",
-                   "mode":"regex",
-                   "fallback_value":"sin texto"
+                   "mode":"cumulative",
+                   "name":"verify_parte_cuerpo",
+                   "system_prompt":"Analiza texto y comprueba si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
+                   "user_prompt":"Es la siguiente palabra una parte del cuerpo? {parte cuerpo}",
+                   "num_sequences": 3,
+                   "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
+                   "required_matches": 2,
+                   "max_tokens": 5,
+                   "temperature": 1.0
+                },
+                {
+                   "mode":"cumulative",
+                   "name":"verify_animal",
+                   "system_prompt":"Analiza texto y {text} si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
+                   "user_prompt":"Es la siguiente palabra un animal? {perra}",
+                   "num_sequences": 3,
+                   "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
+                   "required_matches": 2,
+                   "max_tokens": 5,
+                   "temperature": 1.0
                 }
              ],
-             "output_filter":"first_n",
-             "output_limit":1
+             "required_for_confirmed": 2,
+             "required_for_review": 1
           },
           "uses_reference":true,
           "reference_step_numbers":[
-             2
-          ]
-       },
-       {
-          "type":"generate",
-          "parameters":{
-             "system_prompt":"Analiza textos y responde con un breve comentario.",
-             "user_prompt":"Genera un comentario divertido sobre {texto_parseado}, {text}",
-             "num_sequences":1,
-             "max_tokens":10,
-             "temperature":0.7
-          },
-          "uses_reference":true,
-          "reference_step_numbers":[
-             3
+             0
           ]
        }
     ],
     "global_references":{
-       "text":"manzana"
+       "text":"comprueba"
     }
 }

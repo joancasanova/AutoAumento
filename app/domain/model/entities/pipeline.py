@@ -16,16 +16,12 @@ class PipelineStep:
     - type: Tipo de paso ('generate', 'parse', 'verify').
     - parameters: Parámetros específicos para el paso actual (especificados externamente).
     - uses_reference: Indica si este paso utiliza datos de referencia.
-    - uses_verification: Indica si este paso se ejecuta dependiendo del resultado de una verificación.
     - reference_step_number: Indica el orden de prioridad donde buscar los datos de referencia.
-    - verification_step_number: Indica el numero de un paso de verificación previo.
     """
     type: str
     parameters: Union[GenerateTextRequest, ParseRequest, VerifyRequest]
     uses_reference: bool = False
     reference_step_numbers: Optional[List[int]] = None
-    uses_verification: bool = False
-    verification_step_number: Optional[int] = None
 
 @dataclass
 class PipelineRequest:

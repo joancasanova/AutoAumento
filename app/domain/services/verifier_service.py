@@ -62,7 +62,7 @@ class VerifierService:
         logger.info(f"Verification results concluded with status '{final_status.status}'.")
         return VerificationSummary(
             results=results,
-            final_status=final_status.status,
+            final_status=final_status.status
         )
     
     def _verify_consensus(self, method: VerificationMethod) -> VerificationResult:
@@ -92,6 +92,8 @@ class VerifierService:
             max_tokens=10 
         )
 
+        generated_responses = [response.content for response in responses]
+
         positive_responses = sum(
             1 for r in responses
             if any(vr.lower() in r.content.strip().lower() for vr in method.valid_responses)
@@ -104,9 +106,7 @@ class VerifierService:
             passed=passed,
             score=positive_responses / len(responses) if responses else 0.0,
             details={
-                "total_responses": len(responses),
                 "positive_responses": positive_responses,
-                "valid_responses": method.valid_responses,
-                "required_matches": method.required_matches
+                "generated_responses": generated_responses,
             }
         )

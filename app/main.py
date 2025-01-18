@@ -179,15 +179,11 @@ def parse_rules_from_json(rules_data:List[Dict]) -> List[ParseRule]:
         rules.append(rule)
     return rules
 
-def parse_verification_methods_from_json(file_path: str) -> List[VerificationMethod]:
+def parse_verification_methods_from_json(methods_data:List[Dict]) -> List[VerificationMethod]:
     """
     Carga métodos de verificación desde un archivo JSON y los convierte en objetos VerificationMethod.
     """
     try:
-        methods_data = load_json_file(file_path)
-        if not isinstance(methods_data, list):
-            raise ValueError("El archivo de métodos debe contener una lista de métodos de verificación")
-
         methods = []
         for method_data in methods_data:
             try:
@@ -317,9 +313,7 @@ def main():
                         type=step_data["type"],
                         parameters=parameters,
                         uses_reference=step_data.get("uses_reference", False),
-                        reference_step_numbers=step_data.get("reference_step_numbers", []),
-                        uses_verification=step_data.get("uses_verification", False),
-                        verification_step_number=step_data.get("verification_step_number", 0)
+                        reference_step_numbers=step_data.get("reference_step_numbers", [])
                     )
                 )
 
@@ -338,7 +332,7 @@ def main():
             logger.warning("Comando benchmark no implementado todavía.")
 
     except ValueError as e:
-        logger.error("Ocurrió un error de validación al ejecutar el pipeline.")
+        logger.exception("Ocurrió un error de validación al ejecutar el pipeline.")
         print(f"Error de validación: {e}")
     except Exception as e:
         logger.exception("Ocurrió un error al ejecutar el comando.")

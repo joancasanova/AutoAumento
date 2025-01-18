@@ -28,7 +28,7 @@ class VerificationThresholds:
         """Check if 'value' is within the lower and upper bound range."""
         return self.lower_bound <= value <= self.upper_bound
 
-@dataclass(frozen=True)
+@dataclass
 class VerificationMethod:
     """
     Represents a single verification method or test that can be applied.
@@ -61,7 +61,7 @@ class VerificationResult:
     details: Optional[Dict[str, any]] = None
     timestamp: datetime = datetime.now()
 
-@dataclass(frozen=True)
+@dataclass
 class VerificationSummary:
     """
     Contains the results of running all verification methods plus a final status.
@@ -69,6 +69,7 @@ class VerificationSummary:
     """
     results: List[VerificationResult]
     final_status: str
+    reference_data: Optional[Dict[str, str]] = None
     
     @property
     def passed_methods(self) -> List[str]:

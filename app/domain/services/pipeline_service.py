@@ -3,11 +3,12 @@ import re
 import logging
 from datetime import datetime
 from copy import deepcopy
+import itertools
 
 from app.domain.model.entities.pipeline import PipelineStep
 from app.domain.model.entities.generation import GenerateTextRequest, GeneratedResult
 from app.domain.model.entities.parsing import ParseRequest, ParseResult, ParseRule, ParseMode
-from app.domain.model.entities.verification import VerificationSummary
+from app.domain.model.entities.verification import VerificationMethod, VerificationSummary, VerifyRequest
 
 from app.domain.services.parse_service import ParseService
 from app.domain.services.verifier_service import VerifierService
@@ -99,10 +100,7 @@ class PipelineService:
         """
         if step.uses_reference and not self._validate_references(step.reference_step_numbers, step_number):
             return []
-
-        if step.uses_verification and not self._validate_verification(step.verification_step_number, step_number):
-            return []
-
+        
         if step.type == "generate":
             return self._execute_generate(step, step_number)
         elif step.type == "parse":
@@ -146,31 +144,6 @@ class PipelineService:
             if not (0 <= ref_index < current_step_number and ref_index < len(self.results) and self.results[ref_index]):
                 return False
         return True
-
-    def _validate_verification(self, verification_step_number: int, current_step_number: int) -> bool:
-        """
-        Verifies that the verification step is of type 'verify' and its result is 'confirmed'.
-
-        Args:
-            verification_step_number: The index of the verification step.
-            current_step_number: The index of the current step.
-
-        Returns:
-            True if the verification is valid, False otherwise.
-        """
-        if not (0 <= verification_step_number < current_step_number and verification_step_number < len(self.results)):
-            return False
-
-        verification_data = self.results[verification_step_number]
-        if not verification_data:
-            return False
-
-        verify_type, verify_list = verification_data
-        if verify_type != "verify" or not verify_list:
-            return False
-
-        last_result = verify_list[-1]
-        return isinstance(last_result, VerificationSummary) and last_result.final_status == "confirmed"
 
     def _execute_generate(self, step: PipelineStep, step_number: int) -> List[GeneratedResult]:
         """
@@ -262,18 +235,183 @@ class PipelineService:
 
     def _execute_verify(self, step: PipelineStep, step_number: int) -> List[VerificationSummary]:
         """
-        Executes a 'verify' step.
+        Executes a 'verify' step, handling method variations based on references.
 
         Args:
             step: The PipelineStep object for the verify step.
             step_number: The index of the current step.
 
         Returns:
-            A list containing the VerificationSummary.
+            A list of VerificationSummary objects.
         """
-        request = step.parameters
-        return [self.verifier_service.verify(request)]
+        request: VerifyRequest = step.parameters
 
+        if not step.uses_reference:
+            verification_summary = self.verifier_service.verify(
+                methods=request.methods,
+                required_for_confirmed=request.required_for_confirmed,
+                required_for_review=request.required_for_review
+            )
+            return [verification_summary]
+
+        reference_data = self._get_reference_data(step.reference_step_numbers, step_number)
+
+        verify_requests_variations = self._create_methods_variations(request, reference_data)
+
+        all_results = []
+        for verify_request, reference_dict in verify_requests_variations:
+            result = self.verifier_service.verify(
+                methods=verify_request.methods,
+                required_for_confirmed=verify_request.required_for_confirmed,
+                required_for_review=verify_request.required_for_review
+            )
+            result.reference_data = reference_dict
+            all_results.append(result)
+        
+        return all_results
+    
+    def _create_methods_variations(
+        self,
+        original_request: VerifyRequest,
+        reference_data: List[Tuple[int, str, List[Any]]]
+    ) -> List[Tuple[VerifyRequest, Dict[str, str]]]:
+        """
+        Generates variations of VerifyRequests by combining variations of VerificationMethods.
+
+        Args:
+            original_request: The original VerifyRequest.
+            reference_data: Data from referenced steps.
+
+        Returns:
+            A list of tuples, each containing a new VerifyRequest with method variations and its reference data.
+        """
+        new_requests = []
+
+        # Generate variations for each method
+        methods_variations = [
+            self._generate_variations(
+                method.system_prompt,
+                method.user_prompt,
+                reference_data,
+                {
+                    "mode": method.mode,
+                    "name": method.name,
+                    "num_sequences": method.num_sequences,
+                    "valid_responses": method.valid_responses,
+                    "required_matches": method.required_matches,
+                    "max_tokens": method.max_tokens,
+                    "temperature": method.temperature
+                }
+            )
+            for method in original_request.methods
+        ]
+
+        # Combine method variations using itertools.product
+        for combination in itertools.product(*methods_variations):
+            new_methods = []
+            combined_reference_dict = {}
+            for method_variation, reference_dict in combination:
+                new_methods.append(method_variation)
+                combined_reference_dict.update(reference_dict)
+
+            new_request = VerifyRequest(
+                methods=new_methods,
+                required_for_confirmed=original_request.required_for_confirmed,
+                required_for_review=original_request.required_for_review
+            )
+            new_requests.append((new_request, combined_reference_dict))
+
+        return new_requests
+
+    def _generate_variations(
+        self,
+        system_prompt_template: str,
+        user_prompt_template: str,
+        reference_data: List[Tuple[int, str, List[Any]]],
+        other_attributes: Dict[str, Any] = None
+    ) -> List[Tuple[VerificationMethod, Dict[str, str]]]:
+        """
+        Generates variations of prompts or methods by filling placeholders with reference data.
+        Refactored to be used for both prompt and method variations.
+
+        Args:
+            system_prompt_template: The system prompt template.
+            user_prompt_template: The user prompt template.
+            reference_data: Data from referenced steps.
+            other_attributes: Other attributes to include in the generated object (for methods).
+
+        Returns:
+            A list of tuples, each containing a generated object (prompt or method) and its reference data.
+        """
+        variations = []
+
+        def generate_combinations(
+            index: int,
+            system_prompt: str,
+            user_prompt: str,
+            current_reference_dict: Dict[str, str]
+        ) -> None:
+            """
+            Recursive helper function to generate prompt/method combinations.
+            """
+            if not self._has_placeholders(system_prompt) and not self._has_placeholders(user_prompt):
+                if other_attributes:
+                    # Create a VerificationMethod object
+                    variations.append(
+                        (
+                            VerificationMethod(
+                                system_prompt=system_prompt,
+                                user_prompt=user_prompt,
+                                **other_attributes
+                            ),
+                            current_reference_dict
+                        )
+                    )
+                else:
+                    # Create a prompt tuple
+                    variations.append((system_prompt, user_prompt, current_reference_dict))
+                return
+
+            if index == len(reference_data):
+                system_prompt, user_prompt, current_reference_dict = self._process_placeholders(system_prompt, user_prompt, self.global_references, current_reference_dict)
+                if other_attributes:
+                    variations.append(
+                        (
+                            VerificationMethod(
+                                system_prompt=system_prompt,
+                                user_prompt=user_prompt,
+                                **other_attributes
+                            ),
+                            current_reference_dict
+                        )
+                    )
+                else:
+                    variations.append((system_prompt, user_prompt, current_reference_dict))
+                return
+
+            ref_index, step_type, step_results = reference_data[index]
+            if step_type == "generate":
+                for generated_result in step_results:
+                    content = f"content_{ref_index}"
+                    entry = {content: generated_result.content}
+                    new_system_prompt, new_user_prompt, new_reference_dict = self._process_placeholders(system_prompt, user_prompt, entry, current_reference_dict.copy())
+                    generate_combinations(index + 1, new_system_prompt, new_user_prompt, new_reference_dict)
+            elif step_type == "parse":
+                for parse_result in step_results:
+                    for entry in parse_result.entries:
+                        new_system_prompt, new_user_prompt, new_reference_dict = self._process_placeholders(system_prompt, user_prompt, entry, current_reference_dict.copy())
+                        generate_combinations(index + 1, new_system_prompt, new_user_prompt, new_reference_dict)
+            else:
+                generate_combinations(index + 1, system_prompt, user_prompt, current_reference_dict)
+
+        generate_combinations(
+            index=0,
+            system_prompt=system_prompt_template,
+            user_prompt=user_prompt_template,
+            current_reference_dict={}
+        )
+        return variations
+    
     def _create_prompt_variations(
         self,
         request: GenerateTextRequest,
