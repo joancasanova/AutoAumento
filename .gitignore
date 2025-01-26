@@ -11,3 +11,4 @@ dist/
 prompter.py
 AutoAumento.egg-info
 autoaumento-formatted-prompt.txt
+misclassified_*.json
