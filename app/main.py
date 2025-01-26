@@ -345,7 +345,7 @@ def handle_pipeline(args: argparse.Namespace):
             global_references=config.get("global_references", {})
         )
     )
-    
+
     # Guardar resultados
     pipeline_results = response.to_dict()
     verification_refs = response.verification_references
