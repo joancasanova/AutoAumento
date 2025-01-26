@@ -73,6 +73,18 @@ class BenchmarkService:
                 misclassified.append(result)
 
         total = len(results)
+
+            
+        # Manejar caso sin resultados
+        if total == 0:
+            return BenchmarkMetrics(
+                accuracy=0.0,
+                precision=0.0,
+                recall=0.0,
+                f1_score=0.0,
+                confusion_matrix=confusion_matrix,
+                misclassified=misclassified
+        )
         accuracy = (confusion_matrix["true_positive"] + confusion_matrix["true_negative"]) / total
         precision = confusion_matrix["true_positive"] / (confusion_matrix["true_positive"] + confusion_matrix["false_positive"] + 1e-10)
         recall = confusion_matrix["true_positive"] / (confusion_matrix["true_positive"] + confusion_matrix["false_negative"] + 1e-10)

@@ -18,6 +18,9 @@ class BenchmarkUseCase:
         for entry in entries:
             logger.debug(f"Running pipeline for entry: {entry.input_data}")
             pipeline_response = self.benchmark_service.execute_pipeline_for_entry(config, entry.input_data)
+
+            logger.debug(pipeline_response)
+            
             prediction = self._process_prediction(pipeline_response, entry)
             if prediction:
                 results.append(prediction)
