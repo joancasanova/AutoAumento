@@ -34,5 +34,42 @@
       "perra": "zorra",
       "text": "comprueba"
     }
-  ]
+  ],
+  [
+    {
+      "parte cuerpo": "verdad",
+      "perra": "perra",
+      "text": "checkea"
+    },
+    {
+      "parte cuerpo": "verdad",
+      "perra": "zorra",
+      "text": "checkea"
+    }
+  ],
+  {
+    "parte cuerpo": "verdad",
+    "perra": "zorra",
+    "text": "checkea"
+  },
+  {
+    "parte cuerpo": "piernas",
+    "perra": "zorra",
+    "text": "checkea"
+  },
+  {
+    "parte cuerpo": "verdad",
+    "perra": "zorra",
+    "text": "checkea"
+  },
+  {
+    "parte cuerpo": "verdad",
+    "perra": "perra",
+    "text": "comprueba"
+  },
+  {
+    "parte cuerpo": "verdad",
+    "perra": "zorra",
+    "text": "comprueba"
+  }
 ]

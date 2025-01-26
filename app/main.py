@@ -343,25 +343,43 @@ def handle_pipeline(args: argparse.Namespace):
     pipeline_steps = CommandProcessor.parse_pipeline_steps(config)
     
     reference_data_path = "config/pipeline/pipeline_reference_data.json"
-
-    response = PipelineUseCase(args.pipeline_generation_model_name, args.pipeline_verify_model_name).execute_with_references(
+    try:
+        with open(reference_data_path, 'r') as f:
+            reference_entries = json.load(f)
+    except Exception as e:
+        logger.error(f"Error loading reference data: {str(e)}")
+        raise
+    
+    response = PipelineUseCase(
+        args.pipeline_generation_model_name, 
+        args.pipeline_verify_model_name
+    ).execute_with_references(
         PipelineRequest(
             steps=pipeline_steps,
             global_references=config.get("global_references", {})
         ),
-        reference_data_path=reference_data_path
+        reference_entries=reference_entries  
     )
 
-    # Save results
-    pipeline_results = response.to_dict()
-    
-    # Pipeline results
-    FileRepository.save(
-        pipeline_results,
+    FileRepository.append(
+        data=response.step_results,
         output_dir="out/pipeline/results",
-        filename_prefix="pipeline_results"
+        filename="pipeline_results.json"
     )
     
+    for result_type in ['confirmed', 'to_verify']:
+        entries = response.verification_references.get(result_type, [])
+        if entries:
+            output_dir = f"out/pipeline/verification/{result_type}"
+            filename = f"{result_type}.json"
+            
+            for entry in entries:
+                FileRepository.append(
+                    data=entry,
+                    output_dir=output_dir,
+                    filename=filename
+                )
+
     OutputFormatter.print_pipeline_results(response)
 
 def handle_benchmark(args: argparse.Namespace):

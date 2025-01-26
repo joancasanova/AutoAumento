@@ -2,7 +2,6 @@
 
 import json
 import logging
-from datetime import datetime
 from typing import List
 
 from domain.model.entities.pipeline import PipelineRequest, PipelineResponse
@@ -69,37 +68,19 @@ class PipelineUseCase:
 
     def execute_with_references(self, 
                                request: PipelineRequest, 
-                               reference_data_path: str) -> PipelineResponse:
-        """
-        Executes pipeline for multiple reference entries from a file.
+                               reference_entries: List[dict]) -> PipelineResponse: 
         
-        Args:
-            request: Base pipeline configuration
-            reference_data_path: Path to JSON file with reference entries
-            
-        Returns:
-            PipelineResponse: Aggregated results from all executions
-        """
         logger.info("Starting multi-reference pipeline execution")
         
-        try:
-            with open(reference_data_path, 'r') as f:
-                reference_entries = json.load(f)
-        except Exception as e:
-            logger.error("Failed to load reference data: %s", str(e))
-            raise
-
         cumulative_response = PipelineResponse(step_results=[], verification_references={'confirmed': [], 'to_verify': []})
 
-        for idx, entry in enumerate(reference_entries):
+        for idx, entry in enumerate(reference_entries): 
             try:
                 logger.debug("Processing reference entry %d/%d", idx+1, len(reference_entries))
                 result = self._process_single_entry(request, entry)
                 cumulative_response.step_results.extend(result.step_results)
                 cumulative_response.verification_references['confirmed'].extend(result.verification_references['confirmed'])
                 cumulative_response.verification_references['to_verify'].extend(result.verification_references['to_verify'])
-                
-                self._save_incremental_results(result)
                 
             except Exception as e:
                 logger.warning("Failed processing entry %d: %s", idx+1, str(e))
@@ -126,31 +107,3 @@ class PipelineUseCase:
         )
         
         return self._execute(modified_request)
-
-    def _save_incremental_results(self, response: PipelineResponse):
-        """
-        Appends results to persistent storage incrementally.
-        
-        Args:
-            response: Pipeline results to append to files
-        """
-        try:
-            # Main results
-            self.file_repo.append(
-                data=response.step_results,
-                output_dir="out/pipeline/results",
-                filename="pipeline_results.json"
-            )
-            
-            # Verification results
-            for result_type in ['confirmed', 'to_verify']:
-                if response.verification_references[result_type]:
-                    self.file_repo.append(
-                        data=response.verification_references[result_type],
-                        output_dir=f"out/pipeline/verification/{result_type}",
-                        filename=f"{result_type}.json"
-                    )
-                    
-        except Exception as e:
-            logger.error("Failed saving incremental results: %s", str(e))
-            raise

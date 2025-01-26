@@ -29,7 +29,7 @@ class BenchmarkService:
             model_name: Name of the model being benchmarked
         """
         self.model_name = model_name
-        self.pipeline_service = PipelineService(model_name)
+        self.pipeline_service = PipelineService(model_name, model_name)
         self.results: List[BenchmarkResult] = []
 
     def execute_pipeline_for_entry(self, config: BenchmarkConfig, entry: Dict) -> Optional[List[Dict[str, Any]]]:

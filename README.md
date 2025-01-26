@@ -1,384 +1,481 @@
-# AutoAumento
+```markdown
+# AutoAumento: Guía de Uso
 
-**AutoAumento** es una aplicación de línea de comandos (CLI) en Python que ejecuta tres grandes tareas sobre textos usando un modelo de lenguaje (LLM):
-1. **Generar texto** (comando `generate`)
-2. **Parsear / Analizar texto** (comando `parse`)
-3. **Verificar texto** (comando `verify`)
-
-Además, existen otros dos comandos *placeholder* llamados `pipeline` y `benchmark` que no están implementados en su totalidad.
+**AutoAumento** es una aplicación de línea de comandos (CLI) en Python diseñada para realizar tareas avanzadas de procesamiento de texto utilizando modelos de lenguaje (LLMs). Esta guía se enfoca en la utilización de los comandos `pipeline` y `benchmark`, explicando cómo ejecutarlos paso a paso y cómo interpretar los archivos de salida.
 
 ## Tabla de Contenidos
-1. [Estructura del Proyecto](#estructura-del-proyecto)
+
+1. [Introducción](#introducción)
 2. [Instalación](#instalación)
-3. [Uso](#uso)
-   - [General](#general)
-   - [1) Generar Texto](#1-generar-texto)
-   - [2) Parsear Texto](#2-parsear-texto)
-   - [3) Verificar Texto](#3-verificar-texto)
-   - [Archivos JSON de Ejemplo](#archivos-json-de-ejemplo)
-4. [Pruebas](#pruebas)
-5. [Contribuir](#contribuir)
+3. [Comando `pipeline`](#comando-pipeline)
+    -   [Preparación](#preparación)
+    -   [Ejecución](#ejecución)
+    -   [Archivos de Configuración](#archivos-de-configuración)
+    -   [Interpretación de Resultados](#interpretación-de-resultados)
+4. [Comando `benchmark`](#comando-benchmark)
+    -   [Preparación](#preparación-1)
+    -   [Ejecución](#ejecución-1)
+    -   [Archivos de Configuración](#archivos-de-configuración-1)
+    -   [Interpretación de Resultados](#interpretación-de-resultados-1)
+5. [Conclusión](#conclusión)
 6. [Licencia](#licencia)
 
----
+## Introducción
 
-## Estructura del Proyecto
+AutoAumento ofrece una serie de comandos para interactuar con LLMs, entre ellos:
 
-La estructura es la siguiente:
+-   `generate`: Genera texto utilizando un LLM.
+-   `parse`: Analiza texto y extrae información estructurada.
+-   `verify`: Verifica la calidad del texto generado.
+-   `pipeline`: Ejecuta una secuencia de pasos que combinan `generate`, `parse` y `verify` para realizar tareas complejas.
+-   `benchmark`: Evalúa el rendimiento de un pipeline en un conjunto de datos de prueba.
 
-```
-├── app/
-│   ├── application/
-│   │   └── use_cases/
-│   │       ├── generate_text_use_case.py
-│   │       ├── parse_generated_output_use_case.py
-│   │       └── verify_use_case.py
-│   ├── domain/
-│   │   ├── model/
-│   │   │   └── entities/
-│   │   │       ├── generation.py
-│   │   │       ├── parsing.py
-│   │   │       └── verification.py
-│   │   ├── ports/
-│   │   │   └── llm_port.py
-│   │   └── services/
-│   │       ├── parse_service.py
-│   │       ├── placeholder_service.py
-│   │       └── verifier_service.py
-│   └── infrastructure/
-│       └── external/
-│           └── llm/
-│               └── instruct_model.py
-├── app/main.py
-├── pyproject.toml
-└── README.md
-```
-
-- **app/**: Contiene la lógica principal dividida en tres capas:
-  - **application/use_cases**: Casos de uso concretos (generate, parse, verify).
-  - **domain/**: Modelos de datos (entities), puertos (interfaces) y servicios.
-  - **infrastructure/**: Integraciones externas (p.ej. con Hugging Face).
-- **app/main.py**: Punto de entrada para la línea de comandos.
-- **pyproject.toml**: Administrador de dependencias y configuración general del proyecto.
-- **README.md**: Este archivo (documentación).
-
----
+Esta guía se centrará en los dos últimos comandos, `pipeline` y `benchmark`, proporcionando instrucciones detalladas para su uso.
 
 ## Instalación
 
 1. **Clonar el repositorio**:
-   ```bash
-   git clone https://github.com/tu-usuario/autoaumento.git
-   cd autoaumento
-   ```
+
+    ```bash
+    git clone https://github.com/tu-usuario/autoaumento.git
+    cd autoaumento
+    ```
 
 2. **Crear y activar un entorno virtual** (recomendable):
-   ```bash
-   python -m venv .venv
-   # Linux/Mac:
-   source .venv/bin/activate
-   # Windows:
-   .venv\Scripts\activate
-   ```
+
+    ```bash
+    python -m venv .venv
+    # Linux/Mac:
+    source .venv/bin/activate
+    # Windows:
+    .venv\Scripts\activate
+    ```
 
 3. **Instalar dependencias** usando `pyproject.toml`:
-   ```bash
-   pip install --upgrade pip
-   pip install -e ".[dev]"
-   ```
-   Esto instalará las librerías principales (transformers, typer, etc.) y las de desarrollo (pytest, black, pylint...).
 
----
-
-## Uso
-
-Una vez instalado, puedes ejecutar la herramienta desde la raíz del proyecto con:
-```bash
-python app/main.py <comando> [opciones]
-```
-
-### General
-
-Existen *subcomandos* principales:
-- `generate`: Genera texto llamando a un LLM de Hugging Face.
-- `parse`: Analiza un texto según reglas definidas.
-- `verify`: Verifica la corrección de salidas basándose en métodos de verificación.
-- `pipeline` y `benchmark`: Placeholder (no implementado).
-
-Para ver la ayuda de un subcomando (ej. `generate`):
-```bash
-python app/main.py generate --help
-```
-
----
-
-### 1) Generar Texto
-
-**Objetivo**: Llamar a un modelo de lenguaje (LLM) y obtener uno o varios textos generados.
-
-**Uso básico**:
-```bash
-python app/main.py generate \
-  --gen-model-name "Qwen/Qwen2.5-1.5B-Instruct" \
-  --system-prompt "Eres un asistente útil." \
-  --user-prompt "Explica la computación cuántica de forma sencilla." \
-  --num-sequences 2 \
-  --max-tokens 50 \
-  --temperature 0.9 \
-  --reference-data "reference.json"
-```
-
-**Parámetros principales**:
-- `--gen-model-name`: Nombre (ruta) del modelo a usar (por defecto "Qwen/Qwen2.5-1.5B-Instruct").
-- `--system-prompt`: Prompt “sistema” que da contexto general al LLM.
-- `--user-prompt`: Prompt del usuario (pregunta principal).
-- `--num-sequences`: Cuántas respuestas generar (p.ej. 2).
-- `--max-tokens`: Máximo de *tokens* generados por secuencia.
-- `--temperature`: Controla aleatoriedad (1.0 = normal, >1 = más creativo).
-- `--reference-data`: (Opcional) un archivo `.json` con datos para *placeholders*.
-
-**Placeholders**:
-- Si tus prompts contienen texto del tipo `"{nombre}"`, el programa los sustituirá si pasas un JSON de referencia.  
-- Ejemplo:  
-  - **Prompts**:
+    ```bash
+    pip install --upgrade pip
+    pip install -e ".[dev]"
     ```
-    system_prompt = "Eres un asistente experto en {tema}."
-    user_prompt = "¿Puedes explicar algo relacionado con {tema} y {subtema}?"
-    ```
-  - **reference.json**:
-    ```json
-    {
-      "tema": "astrofísica",
-      "subtema": "agujeros negros"
-    }
-    ```
-  - Al ejecutar `generate`, esos placeholders serán remplazados.  
-  - **Resultado**: `Eres un asistente experto en astrofísica.` etc.
 
----
+    Esto instalará las librerías principales (transformers, typer, etc.) y las de desarrollo (pytest, black, pylint...).
 
-### 2) Parsear Texto
+## Comando `pipeline`
 
-**Objetivo**: Analizar texto en busca de patrones (regex o “palabras clave”) y extraer información estructurada.
+El comando `pipeline` permite ejecutar una serie de pasos de procesamiento de texto definidos en un archivo de configuración. Estos pasos pueden incluir generación de texto, análisis y verificación, y pueden utilizar datos de referencia para personalizar el proceso.
 
-**Uso básico**:
+### Preparación
+
+Antes de ejecutar el comando `pipeline`, asegúrese de tener los siguientes archivos en la carpeta `config/pipeline`:
+
+-   `pipeline_config.json`: Define la secuencia de pasos a ejecutar.
+-   `pipeline_reference_data.json`: Contiene los datos de referencia que se utilizarán en los pasos del pipeline.
+
+### Ejecución
+
+Para ejecutar el pipeline, utilice el siguiente comando:
+
 ```bash
-python app/main.py parse \
-  --text "Usuario: Ana, Edad: 30. Usuario: Luis, Edad: 25." \
-  --rules "rules.json" \
-  --output-filter "all"
-```
-- `--text`: Cadena a analizar.
-- `--rules`: Archivo JSON que describe las reglas de parseo.
-- `--output-filter`: Cómo filtrar los resultados finales. Valores posibles:
-  - `all` (devuelve todos los parseos),
-  - `successful` (solo parseos completos, sin faltar campos),
-  - `first`,
-  - `first_n` (usa `--output-limit` para indicar cuántos).
-
-El comando devuelve en pantalla un **JSON** con las ocurrencias encontradas, según las reglas.
-
-#### Estructura de `rules.json`
-Cada regla puede ser **regex** o **keyword**:
-
-```json
-[
-  {
-    "name": "Usuario",
-    "mode": "keyword",
-    "pattern": "Usuario:",
-    "secondary_pattern": ", Edad:"
-  },
-  {
-    "name": "Edad",
-    "mode": "regex",
-    "pattern": "Edad:\\s*(\\d+)"
-    "fallback_value": "missing_edad"
-  }
-]
-```
-- `name`: Identificador único de la regla (ej. "Usuario").
-- `mode`: `"regex"` o `"keyword"`.
-- `pattern`: El patrón principal (si mode=regex, es una expresión regular; si mode=keyword, es la palabra clave que buscamos).
-- `secondary_pattern` (opcional): Si `mode` es `keyword`, define un *límite* hasta donde se extrae el texto.
-- `fallback_value` (opcional): Valor por defecto si no se encuentra coincidencia.
-
-Ejemplo de parseo:
-```
-Texto: "Usuario: Ana, Edad: 30. Usuario: Luis, Edad: 25."
-
-Reglas (simplificadas):
-- Usuario (keyword): "Usuario:", y secondary_pattern=", Edad:"
-- Edad (regex): "Edad:\s*(\d+)"
-
-Salida JSON:
-[
-  {
-    "Usuario": "Ana",
-    "Edad": "30"
-  },
-  {
-    "Usuario": "Luis",
-    "Edad": "25"
-  }
-]
+python app/main.py pipeline --config config/pipeline/pipeline_config.json --pipeline-generation-model-name <generation_model_name> --pipeline-verify-model-name <verify_model_name>
 ```
 
----
+-   `--config`: Ruta al archivo de configuración del pipeline (por defecto: `config/pipeline/pipeline_config.json`).
+-   `--pipeline-generation-model-name`: (Opcional) especifica el modelo a usar en los pasos de generación. Por defecto: `Qwen/Qwen2.5-1.5B-Instruct`.
+-   `--pipeline-verify-model-name`: (Opcional) especifica el modelo a usar en los pasos de verificación. Por defecto: `Qwen/Qwen2.5-1.5B-Instruct`.
 
-### 3) Verificar Texto
+**Ejemplo:**
 
-**Objetivo**: Realizar verificaciones sobre textos usando métodos LLM. Por ejemplo, comprobar si un LLM genera respuestas que contengan ciertas palabras clave o que cumplan algún criterio.
-
-**Uso básico**:
 ```bash
-python app/main.py verify \
-  --verify-model-name "Qwen/Qwen2.5-1.5B-Instruct" \
-  --methods "methods.json" \
-  --required-confirmed 2 \
-  --required-review 1 \
-  --reference-data "verify_data.json"
+python app/main.py pipeline --config config/pipeline/pipeline_config.json --pipeline-generation-model-name "mistralai/Mistral-7B-Instruct-v0.2" --pipeline-verify-model-name "Qwen/Qwen1.5-0.5B-Chat"
 ```
-- `--verify-model-name`: Modelo a usar en la verificación (similar a `generate`).
-- `--methods`: Archivo JSON con la definición de métodos de verificación (ver más abajo).
-- `--required-confirmed`: Número mínimo de “verificaciones positivas” para dar la verificación como *confirmada*.
-- `--required-review`: Número mínimo de “verificaciones positivas” para marcar como *revisión*.  
-  Si no se llega a este número, se descarta.  
-- `--reference-data`: (Opcional) Igual que en generate: placeholders sustituidos en prompts de verificación.
 
-#### Estructura de `methods.json`
-Ejemplo de `methods.json`:
-```json
-[
-  {
-    "mode": "cumulative",
-    "name": "CheckPalabraClave",
-    "system_prompt": "Eres un verificador que busca la palabra 'holaaa'.",
-    "user_prompt": "holaaa, como estáaaas??.",
-    "valid_responses": ["holaaa"],
-    "num_sequences": 3,
-    "required_matches": 2
-  },
-  {
-    "mode": "eliminatory",
-    "name": "CheckRespuestaFormal",
-    "system_prompt": "Eres un verificador estricto. Asegúrate que no se use lenguaje informal. ¿Tiene la siguiente frase un tono formal?",
-    "user_prompt": "Qué pasa, nos hacemos algo chulo o qué",
-    "valid_responses": ["Sí", "Si", "Yes"],
-    "num_sequences": 2,
-    "required_matches": 2
-  }
-]
-```
-**Campos principales**:
-- `mode`: `"eliminatory"` o `"cumulative"`.
-  - **eliminatory**: Si falla *una* de estas verificaciones, se descarta todo.
-  - **cumulative**: Suma a la cuenta de métodos pasados si funciona.
-- `name`: Nombre identificador de la verificación.
-- `system_prompt`: Prompt sistema que explica al LLM cómo verificar.
-- `user_prompt`: Prompt usuario o la pregunta concreta de verificación.
-- `valid_responses`: Lista de posibles frases que se consideran “respuesta válida”.
-- `num_sequences`: Cuántas secuencias genera el verificador para checar coincidencias.
-- `required_matches`: Cuántas secuencias deben cumplir la condición para pasar la verificación.
+Este comando ejecutará el pipeline definido en `pipeline_config.json`, utilizando `mistralai/Mistral-7B-Instruct-v0.2` para la generación de texto y `Qwen/Qwen1.5-0.5B-Chat` para la verificación. Los resultados se guardarán en la carpeta `out/pipeline`.
 
-Al final se imprime un JSON con el resumen de verificación:
+### Archivos de Configuración
+
+#### `pipeline_config.json`
+
+Este archivo define la secuencia de pasos del pipeline. Cada paso puede ser de tipo `generate`, `parse` o `verify`.
+
+**Ejemplo:**
+
 ```json
 {
-  "final_status": "discarded",
-  "success_rate": 0.5,
-  "execution_time": 1.2345,
-  "results": [
+    "steps": [
+        {
+            "type": "generate",
+            "parameters": {
+                "system_prompt": "Eres un asistente experto en {tema}.",
+                "user_prompt": "Genera una descripción de {subtema}.",
+                "num_sequences": 2,
+                "max_tokens": 100,
+                "temperature": 0.7
+            },
+            "uses_reference": true,
+            "reference_step_numbers": []
+        },
+        {
+            "type": "parse",
+            "parameters": {
+                "rules": [
+                    {
+                        "name": "Concepto",
+                        "mode": "KEYWORD",
+                        "pattern": "Concepto:",
+                        "secondary_pattern": "Explicación:"
+                    },
+                    {
+                        "name": "Explicacion",
+                        "mode": "REGEX",
+                        "pattern": "Explicación:\\s*(.+)",
+                        "fallback_value": "No se encontró explicación"
+                    }
+                ],
+                "output_filter": "successful"
+            },
+            "uses_reference": true,
+            "reference_step_numbers": [0]
+        },
+        {
+            "type": "verify",
+            "parameters": {
+                "methods": [
+                    {
+                        "mode": "CUMULATIVE",
+                        "name": "Verificar_Concepto",
+                        "system_prompt": "Eres un verificador de conceptos. ¿El siguiente texto contiene el concepto {Concepto}?",
+                        "user_prompt": "{content_0}",
+                        "valid_responses": ["{Concepto}"],
+                        "num_sequences": 3,
+                        "required_matches": 2
+                    }
+                ],
+                "required_for_confirmed": 1,
+                "required_for_review": 0
+            },
+            "uses_reference": true,
+            "reference_step_numbers": [0, 1]
+        }
+    ],
+    "global_references": {
+        "tema": "ciencia ficción",
+        "subtema": "viajes en el tiempo"
+    }
+}
+```
+
+**Explicación de los campos:**
+
+-   `steps`: Una lista de pasos a ejecutar.
+    -   `type`: El tipo de paso (`generate`, `parse` o `verify`).
+    -   `parameters`: Los parámetros específicos para cada tipo de paso (ver ejemplos en el `README.md` original).
+        -   `system_prompt`: (Solo en `generate` y `verify`) Define el contexto general para el LLM.
+        -   `user_prompt`: (Solo en `generate` y `verify`) Define la tarea específica para el LLM.
+        -   `num_sequences`: (Solo en `generate` y `verify`) Número de respuestas a generar.
+        -   `max_tokens`: (Solo en `generate` y `verify`) Longitud máxima de la respuesta.
+        -   `temperature`: (Solo en `generate` y `verify`) Controla la creatividad del LLM.
+        -   `rules`: (Solo en `parse`) Define las reglas de extracción de información.
+            -   `name`: Nombre de la regla.
+            -   `mode`: Tipo de regla (`REGEX` o `KEYWORD`).
+            -   `pattern`: Patrón de búsqueda.
+            -   `secondary_pattern`: (Opcional) Patrón de límite para `KEYWORD`.
+            -   `fallback_value`: (Opcional) Valor por defecto si no se encuentra el patrón.
+        -   `output_filter`: (Solo en `parse`) Filtro para los resultados del parseo (`all`, `successful`, `first`, `first_n`).
+        -   `output_limit`: (Solo en `parse`) Límite de resultados para `first_n`.
+        -   `methods`: (Solo en `verify`) Define los métodos de verificación.
+            -   `mode`: Modo de verificación (`CUMULATIVE` o `ELIMINATORY`).
+            -   `name`: Nombre del método de verificación.
+            -   `system_prompt`: Define el contexto para el LLM en la verificación.
+            -   `user_prompt`: Define la tarea específica de verificación para el LLM.
+            -   `valid_responses`: Lista de respuestas válidas.
+            -   `num_sequences`: Número de respuestas a generar para la verificación.
+            -   `required_matches`: Número mínimo de respuestas que deben coincidir con `valid_responses`.
+        -   `required_for_confirmed`: (Solo en `verify`) Número mínimo de métodos de verificación que deben pasar para considerar el resultado como confirmado.
+        -   `required_for_review`: (Solo en `verify`) Número mínimo de métodos de verificación que deben pasar para considerar el resultado como revisión.
+    -   `uses_reference`: Indica si el paso utiliza datos de referencia.
+    -   `reference_step_numbers`: Lista de números de paso (empezando desde 0) cuyos resultados se utilizarán como referencia.
+-   `global_references`: Un diccionario de datos de referencia que estarán disponibles para todos los pasos.
+
+#### `pipeline_reference_data.json`
+
+Este archivo contiene los datos de referencia que se utilizarán en los pasos del pipeline. Cada entrada en este archivo es un diccionario que se utilizará para sustituir los placeholders en los prompts de los pasos.
+
+**Ejemplo:**
+
+```json
+[
     {
-      "method_name": "CheckPalabraClave",
-      "mode": "cumulative",
-      "passed": true,
-      "score": 1.0,
-      "timestamp": "2024-01-01T12:00:00",
-      "details": {
-        "total_responses": 3,
-        "positive_responses": 3,
-        "valid_responses": ["holaaa"],
-        "required_matches": 2
-      }
+        "tema": "historia",
+        "subtema": "antiguo Egipto"
     },
     {
-      "method_name": "CheckRespuestaFormal",
-      "mode": "eliminatory",
-      "passed": false,
-      "score": 0.0,
-      "timestamp": "2024-01-01T12:00:01",
-      "details": {
-        "total_responses": 2,
-        "positive_responses": 0,
-        "valid_responses": ["Sí", "Si", "Yes"],
-        "required_matches": 2
-      }
+        "tema": "biología",
+        "subtema": "fotosíntesis"
     }
-  ]
-}
+]
 ```
-En este ejemplo, se obtuvo `final_status: "discarded"` porque la primera verificación *cumulative* pasó, pero la segunda *eliminatory* falló (eso lleva directamente a *discarded*).
 
----
+En este ejemplo, cada diccionario en la lista se usará en una ejecución separada del pipeline. En el primer paso `generate`, los placeholders `{tema}` y `{subtema}` se sustituirán por `"historia"` y `"antiguo Egipto"` respectivamente en la primera ejecución, y por `"biología"` y `"fotosíntesis"` en la segunda.
 
-### Archivos JSON de Ejemplo
+### Interpretación de Resultados
 
-**1) `reference.json`** (para placeholders en prompts):
+El comando `pipeline` genera los siguientes archivos de salida en la carpeta `out/pipeline`:
+
+-   `results/pipeline_results.json`: Contiene los resultados de cada paso del pipeline.
+-   `verification/confirmed/confirmed.json`: Contiene los datos de referencia de los resultados que fueron confirmados por el paso de verificación.
+-   `verification/to_verify/to_verify.json`: Contiene los datos de referencia de los resultados que requieren revisión manual.
+
+#### `results/pipeline_results.json`
+
+Este archivo contiene una lista de los resultados de cada paso. Cada entrada tiene la siguiente estructura:
+
 ```json
 {
-  "tema": "astrofísica",
-  "subtema": "agujeros negros"
+    "step_type": "generate",
+    "step_data": [
+        {
+            "content": "...",
+            "metadata": {
+                "model_name": "...",
+                "system_prompt": "...",
+                "user_prompt": "...",
+                "temperature": 1.0,
+                "tokens_used": 185,
+                "generation_time": 0.5123,
+                "timestamp": "2024-07-24T14:35:12.345678"
+            },
+            "reference_data": {
+                "tema": "ciencia ficción",
+                "subtema": "viajes en el tiempo"
+            }
+        },
+        // ... más resultados del paso ...
+    ]
 }
 ```
 
-**2) `rules.json`** (para `parse`):
+-   `step_type`: El tipo de paso (`generate`, `parse` o `verify`).
+-   `step_data`: Una lista de resultados. La estructura de cada resultado depende del tipo de paso.
+    -   Para `generate`:
+        -   `content`: El texto generado.
+        -   `metadata`: Metadatos de la generación, como el modelo utilizado, los prompts, la temperatura, el número de tokens utilizados y el tiempo de generación.
+        -   `reference_data`: Los datos de referencia utilizados en este paso.
+    -   Para `parse`:
+        -   `entries`: Una lista de diccionarios, donde cada diccionario representa una entidad extraída del texto. Las claves son los nombres de las reglas y los valores son los textos extraídos.
+    -   Para `verify`:
+        -   `final_status`: El estado final de la verificación (`confirmed`, `review` o `discarded`).
+        -   `success_rate`: La proporción de métodos de verificación que pasaron.
+        -   `reference_data`: Los datos de referencia utilizados en este paso.
+        -   `results`: Una lista de resultados de cada método de verificación.
+            -   `method_name`: El nombre del método de verificación.
+            -   `mode`: El modo del método de verificación.
+            -   `passed`: Indica si el método de verificación pasó o no.
+            -   `score`: La puntuación del método de verificación.
+            -   `timestamp`: La marca de tiempo de la verificación.
+            -   `details`: Detalles adicionales sobre la verificación.
+
+#### `verification/confirmed/confirmed.json`
+
+Este archivo contiene una lista de los datos de referencia de los resultados que fueron confirmados por el paso de verificación.
+
+**Ejemplo:**
+
 ```json
 [
-  {
-    "name": "Usuario",
-    "mode": "keyword",
-    "pattern": "Usuario:",
-    "secondary_pattern": ", Edad:"
-  },
-  {
-    "name": "Edad",
-    "mode": "regex",
-    "pattern": "Edad:\\s*(\\d+)",
-    "fallback_value": "desconocida"
-  }
+    {
+        "tema": "ciencia ficción",
+        "subtema": "viajes en el tiempo",
+        "Concepto": "Paradoja del abuelo",
+        "Explicacion": "Si viajas en el tiempo y matas a tu abuelo..."
+    },
+    // ... más datos de referencia confirmados ...
 ]
 ```
 
-**3) `methods.json`** (para `verify`):
+#### `verification/to_verify/to_verify.json`
+
+Este archivo contiene una lista de los datos de referencia de los resultados que requieren revisión manual.
+
+**Ejemplo:**
+
 ```json
 [
-  {
-    "mode": "cumulative",
-    "name": "CheckPalabraClave",
-    "system_prompt": "Eres un verificador que busca cierta palabra. ¿El texto contiene la palabra 'ejemplo'? Por favor, respóndelo claramente.",
-    "user_prompt": "Un ejemplo de adicción es el abuso del tabaco",
-    "valid_responses": ["ejemplo"],
-    "num_sequences": 3,
-    "required_matches": 2
-  },
-  {
-    "mode": "eliminatory",
-    "name": "CheckFormalidad",
-    "system_prompt": "Eres un verificador formal. Asegúrate que la respuesta sea formal",
-    "user_prompt": "Estimado alcalde, le escribo debido a los recientes acontecimientos...",
-    "valid_responses": ["Estimado", "Saludos cordiales"],
-    "num_sequences": 2,
-    "required_matches": 2
-  }
+    {
+        "tema": "biología",
+        "subtema": "fotosíntesis",
+        "Concepto": "Clorofila",
+        "Explicacion": "Pigmento verde que captura la luz solar..."
+    },
+    // ... más datos de referencia que necesitan revisión ...
 ]
 ```
 
----
+## Comando `benchmark`
 
-## Licencia
+El comando `benchmark` evalúa el rendimiento de un pipeline en un conjunto de datos de prueba. Permite medir la precisión, la exhaustividad y la puntuación F1 del pipeline, así como identificar los casos mal clasificados.
 
-Distribuido bajo la **MIT License**. Consulta el archivo `LICENSE` para más detalles.
+### Preparación
 
----
+Antes de ejecutar el comando `benchmark`, asegúrese de tener los siguientes archivos en la carpeta `config/benchmark`:
 
-> **¡Listo!** Esperamos que con estas instrucciones detalladas puedas utilizar **AutoAumento** sin complicaciones. Ante cualquier duda adicional, no dudes en abrir un *issue* en el repositorio o proponer mejoras.
+-   `benchmark_config.json`: Define el pipeline a evaluar y los parámetros de evaluación.
+-   `benchmark_entries.json`: Contiene el conjunto de datos de prueba.
+
+### Ejecución
+
+Para ejecutar el benchmark, utilice el siguiente comando:
+
+```bash
+python app/main.py benchmark --config config/benchmark/benchmark_config.json --entries config/benchmark/benchmark_entries.json
+```
+
+-   `--config`: Ruta al archivo de configuración del benchmark (por defecto: `config/benchmark/benchmark_config.json`).
+-   `--entries`: Ruta al archivo con los datos de prueba (por defecto: `config/benchmark/benchmark_entries.json`).
+
+**Ejemplo:**
+
+```bash
+python app/main.py benchmark --config config/benchmark/benchmark_config.json --entries config/benchmark/benchmark_entries.json
+```
+
+Este comando ejecutará el pipeline definido en `benchmark_config.json` en cada entrada del archivo `benchmark_entries.json` y calculará las métricas de rendimiento. Los resultados se guardarán en la carpeta `out/benchmark`.
+
+### Archivos de Configuración
+
+#### `benchmark_config.json`
+
+Este archivo define el pipeline a evaluar y los parámetros de evaluación.
+
+**Ejemplo:**
+
+```json
+{
+    "model_name": "mistralai/Mistral-7B-Instruct-v0.2",
+    "pipeline_steps": [
+        {
+            "type": "generate",
+            "parameters": {
+                "system_prompt": "Eres un clasificador de texto.",
+                "user_prompt": "Clasifica el siguiente texto como 'spam' o 'no spam': {text}",
+                "num_sequences": 1,
+                "max_tokens": 20,
+                "temperature": 0.1
+            },
+            "uses_reference": true,
+            "reference_step_numbers": []
+        },
+        {
+            "type": "verify",
+            "parameters": {
+                "methods": [
+                    {
+                        "mode": "ELIMINATORY",
+                        "name": "Verificar_Clasificacion",
+                        "system_prompt": "Eres un verificador de clasificación. ¿La clasificación '{prediction}' es correcta para el texto '{text}'?",
+                        "user_prompt": "El texto original es: {text}",
+                        "valid_responses": ["Sí", "Si", "yes", "Yes"],
+                        "num_sequences": 1,
+                        "required_matches": 1
+                    }
+                ],
+                "required_for_confirmed": 1,
+                "required_for_review": 0
+            },
+            "uses_reference": true,
+            "reference_step_numbers": [0]
+        }
+    ],
+    "label_key": "label",
+    "label_value": "spam"
+}
+```
+
+**Explicación de los campos:**
+
+-   `model_name`: El nombre del modelo de lenguaje a utilizar.
+-   `pipeline_steps`: La definición del pipeline a evaluar (ver la sección [Comando `pipeline`](#comando-pipeline) para más detalles).
+-   `label_key`: La clave en el archivo `benchmark_entries.json` que contiene la etiqueta real de cada entrada.
+-   `label_value`: El valor de la etiqueta que se considera como positivo.
+
+#### `benchmark_entries.json`
+
+Este archivo contiene el conjunto de datos de prueba. Cada entrada es un diccionario que contiene el texto a clasificar y su etiqueta real.
+
+**Ejemplo:**
+
+```json
+[
+    {
+        "text": "¡Gana un iPhone gratis! Haz clic aquí.",
+        "label": "spam"
+    },
+    {
+        "text": "Hola, ¿cómo estás? Te escribo para preguntarte...",
+        "label": "no spam"
+    },
+    {
+        "text": "Oferta especial: 50% de descuento en todos los productos.",
+        "label": "spam"
+    }
+]
+```
+
+En este ejemplo, cada diccionario en la lista tiene una clave `text` que contiene el texto a clasificar y una clave `label` que contiene la etiqueta real (`spam` o `no spam`).
+
+### Interpretación de Resultados
+
+El comando `benchmark` genera los siguientes archivos de salida en la carpeta `out/benchmark`:
+
+-   `results/benchmark_results.json`: Contiene las métricas de rendimiento del pipeline.
+-   `misclassified/misclassified_*.json`: Contiene los casos mal clasificados por el pipeline.
+
+#### `results/benchmark_results.json`
+
+Este archivo contiene las siguientes métricas de rendimiento:
+
+```json
+{
+    "accuracy": 0.85,
+    "precision": 0.82,
+    "recall": 0.88,
+    "f1_score": 0.85,
+    "confusion_matrix": {
+        "true_positive": 42,
+        "false_positive": 9,
+        "true_negative": 43,
+        "false_negative": 6
+    },
+    "misclassified_count": 15
+}
+```
+
+-   `accuracy`: Precisión general del pipeline.
+-   `precision`: Proporción de verdaderos positivos entre los casos clasificados como positivos.
+-   `recall`: Proporción de verdaderos positivos entre los casos que realmente son positivos.
+-   `f1_score`: Media armónica de precisión y exhaustividad.
+-   `confusion_matrix`: Matriz de confusión que muestra el número de verdaderos positivos, falsos positivos, verdaderos negativos y falsos negativos.
+-   `misclassified_count`: Número de casos mal clasificados.
+
+#### `misclassified/misclassified_*.json`
+
+Este archivo contiene una lista de los casos mal clasificados. Cada entrada tiene la siguiente estructura:
+
+```json
+{
+    "input_data": {
+        "text": "Este es un texto que fue mal clasificado."
+    },
+    "predicted_label": "spam",
+    "actual_label": "no spam",
+    "timestamp": "2024-07-24T14:35:12.345678"
+}
+```
+
+-   `input_data`: Los datos de entrada del caso mal clasificado.
+-   `predicted_label`: La etiqueta predicha por el pipeline.
+-   `actual_label`: La etiqueta real del caso.
+-   `timestamp`: La marca de tiempo de la predicción.
+
+## Conclusión
+
+Esta guía ha proporcionado una descripción detallada de cómo utilizar los comandos `pipeline` y `benchmark` de AutoAumento. Con esta información, podrá ejecutar pipelines de procesamiento de texto personalizados y evaluar su rendimiento en conjuntos de datos de prueba. Recuerde consultar el `README.md` original para obtener información sobre los comandos `generate`, `parse` y `verify`, así como sobre la estructura general del proyecto.

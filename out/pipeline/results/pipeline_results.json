@@ -698,5 +698,1063 @@
         }
       ]
     }
+  ],
+  [
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.0,
+              "details": {
+                "positive_responses": 0,
+                "generated_responses": [
+                  "No",
+                  "No",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 0.5
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 0.5
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:12:52.011318"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "No",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "No",
+                  "S\u00ed",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 0.5
+        }
+      ]
+    },
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:34:43.489368"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 0.5
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "checkea"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "S\u00ed",
+                  "No",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 0.6666666666666666,
+              "details": {
+                "positive_responses": 2,
+                "generated_responses": [
+                  "No",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "checkea"
+          },
+          "success_rate": 0.5
+        }
+      ]
+    },
+    {
+      "step_type": "parse",
+      "step_data": [
+        "ParseResult(entries=[{'perra': 'perra', 'parte cuerpo': 'piernas'}, {'perra': 'zorra', 'parte cuerpo': 'verdad'}])"
+      ]
+    },
+    {
+      "step_type": "verify",
+      "step_data": [
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "confirmed",
+          "reference_data": {
+            "parte cuerpo": "piernas",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 1.0
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "No",
+                  "No",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "perra",
+            "text": "comprueba"
+          },
+          "success_rate": 0.5
+        },
+        {
+          "results": [
+            {
+              "method_name": "verify_parte_cuerpo",
+              "mode": "cumulative",
+              "passed": false,
+              "score": 0.3333333333333333,
+              "details": {
+                "positive_responses": 1,
+                "generated_responses": [
+                  "No",
+                  "S\u00ed",
+                  "No"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            },
+            {
+              "method_name": "verify_animal",
+              "mode": "cumulative",
+              "passed": true,
+              "score": 1.0,
+              "details": {
+                "positive_responses": 3,
+                "generated_responses": [
+                  "S\u00ed",
+                  "S\u00ed",
+                  "S\u00ed"
+                ]
+              },
+              "timestamp": "2025-01-26T23:37:10.380241"
+            }
+          ],
+          "final_status": "review",
+          "reference_data": {
+            "parte cuerpo": "verdad",
+            "perra": "zorra",
+            "text": "comprueba"
+          },
+          "success_rate": 0.5
+        }
+      ]
+    }
   ]
 ]
