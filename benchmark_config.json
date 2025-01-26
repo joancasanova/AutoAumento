@@ -1,0 +1,84 @@
+{
+    "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+    "label_key": "expected_result",
+    "label_value": "correcto",
+    "steps": [
+        {
+            "type": "parse",
+            "parameters": {
+                "text": "La suma de {numero_1} y {numero_2} es igual a {numero_3}.",
+                "rules": [
+                    {
+                        "name": "numero_1_parse",
+                        "pattern": "de ",
+                        "mode": "keyword",
+                        "secondary_pattern": " y",
+                        "fallback_value": "numero_1_no_encontrado"
+                    },
+                    {
+                        "name": "numero_2_parse",
+                        "pattern": "y ",
+                        "mode": "keyword",
+                        "secondary_pattern": " es",
+                        "fallback_value": "numero_2_no_encontrado"
+                    },
+                    {
+                        "name": "numero_3_parse",
+                        "pattern": "a ",
+                        "mode": "keyword",
+                        "secondary_pattern": ".",
+                        "fallback_value": "numero_3_no_encontrado"
+                    }
+                ],
+                "output_filter": "successful"
+            }
+        },
+        {
+            "type": "verify",
+            "parameters": {
+                "methods": [
+                    {
+                        "mode": "cumulative",
+                        "name": "verify_numero",
+                        "system_prompt": "Respondes preguntas con sí o no, ajusntandote a la verdad",
+                        "user_prompt": "Son {numero_1_parse}, {numero_2_parse}, {numero_3_parse} numeros?",
+                        "num_sequences": 3,
+                        "valid_responses": [
+                            "Sí",
+                            "Yes",
+                            "Si",
+                            "si",
+                            "yes"
+                        ],
+                        "required_matches": 2,
+                        "max_tokens": 5,
+                        "temperature": 1.0
+                    },
+                    {
+                        "mode": "cumulative",
+                        "name": "verify_animal",
+                        "system_prompt": "Respondes preguntas de matemáticas con sí o no, ajusntandote a la verdad. Evalúa si una operación es correcta.",
+                        "user_prompt": "{numero_1_parse} + {numero_2_parse} = {numero_3_parse} ?",
+                        "num_sequences": 3,
+                        "valid_responses": [
+                            "Sí",
+                            "Yes",
+                            "Si",
+                            "si",
+                            "yes"
+                        ],
+                        "required_matches": 2,
+                        "max_tokens": 5,
+                        "temperature": 1.0
+                    }
+                ],
+                "required_for_confirmed": 2,
+                "required_for_review": 1
+            },
+            "uses_reference": true,
+            "reference_step_numbers": [
+                0
+            ]
+        }
+    ]
+}

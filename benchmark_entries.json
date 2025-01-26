@@ -1,0 +1,32 @@
+[
+    {
+        "numero_1": "1",
+        "numero_2": "1",
+        "numero_3": "2",
+        "expected_result": "correcto"
+    },
+    {
+        "numero_1": "1",
+        "numero_2": "1",
+        "numero_3": "3",
+        "expected_result": "incorrecto"
+    },
+    {
+        "numero_1": "1",
+        "numero_2": "2",
+        "numero_3": "3",
+        "expected_result": "correcto"
+    },
+    {
+        "numero_1": "1",
+        "numero_2": "2",
+        "numero_3": "45",
+        "expected_result": "incorrecto"
+    },
+    {
+        "numero_1": "15",
+        "numero_2": "10",
+        "numero_3": "25",
+        "expected_result": "correcto"
+    }
+]

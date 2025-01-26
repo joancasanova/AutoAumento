@@ -1,179 +1,256 @@
-from collections import defaultdict
-from typing import Any, Dict, List
-from app.application.use_cases.pipeline_use_case import PipelineUseCase
-from app.domain.model.entities.generation import GenerateTextRequest
-from app.domain.model.entities.parsing import ParseRequest
-from app.domain.model.entities.pipeline import PipelineRequest, PipelineStep
-from app.domain.model.entities.verification import VerifyRequest
-from app.main import load_json_file, parse_rules_from_json, parse_verification_methods_from_json, save_json_file
+from copy import deepcopy
+from typing import List, Dict, Any
+import json
+from datetime import datetime
+
+from domain.model.entities.pipeline import PipelineStep, PipelineRequest
+from domain.model.entities.generation import GenerateTextRequest
+from domain.model.entities.parsing import ParseRequest
+from domain.model.entities.verification import VerifyRequest, VerificationMethod
+from application.use_cases.pipeline_use_case import PipelineUseCase
 
 
 class BenchmarkUseCase:
     """
-    Clase que se encarga de ejecutar benchmarks para evaluar el rendimiento
-    del pipeline en un conjunto de datos de prueba.
+    Caso de uso para ejecutar benchmarks del pipeline con diferentes entradas
+    y calcular métricas de rendimiento.
     """
 
-    def __init__(self, model_name: str, config_path: str, entries_path: str):
+    def __init__(
+        self,
+        model_name: str,
+        pipeline_steps: List[PipelineStep],
+        benchmark_entries: List[Dict[str, Any]],
+        label_key: str,
+        label_value: str
+    ):
         """
-        Inicializa el evaluador de benchmarks.
-
         Args:
-            model_name (str): Nombre del modelo a utilizar para la generación de texto.
-            config_path (str): Ruta al archivo JSON con la configuración del pipeline.
-            entries_path (str): Ruta al archivo JSON con los datos de prueba.
+            model_name: Nombre del modelo a utilizar
+            pipeline_steps: Lista de pasos del pipeline configurado
+            benchmark_entries: Lista de entradas para el benchmark
+            label_key: Clave que identifica la etiqueta verdadera en los datos
+            label_value: Valor que se considera como clase positiva
         """
         self.model_name = model_name
-        self.pipeline_config = load_json_file(config_path)
-        self.benchmark_entries = load_json_file(entries_path)
+        self.original_steps = pipeline_steps
+        self.benchmark_entries = benchmark_entries
+        self.label_key = label_key
+        self.label_value = label_value
 
     def run_benchmark(self):
-        """
-        Ejecuta el benchmark y muestra los resultados.
-        """
-
+        """Ejecuta el benchmark completo y muestra los resultados."""
         results = []
+        
         for entry in self.benchmark_entries:
-            input_data = entry["input"]
-            expected_output = entry["output"]
-            label = entry["label"]
+            # Extraer datos de entrada y etiqueta verdadera
+            input_data = {k: v for k, v in entry.items() if k != self.label_key}
+            expected_label = entry.get(self.label_key, "")
 
-            # Ejecutar el pipeline con los datos de entrada
-            pipeline_steps = self._create_pipeline_steps(input_data)
-            pipeline_use_case = PipelineUseCase(self.model_name)
-            pipeline_request = PipelineRequest(
-                steps=pipeline_steps,
-                global_references=input_data.get("global_references", {})
+            # Configurar y ejecutar pipeline
+            pipeline_response = self._execute_pipeline_for_entry(input_data)
+            
+            # Procesar resultados
+            prediction_result = self._process_prediction(
+                pipeline_response, 
+                input_data,
+                expected_label
             )
-            pipeline_response = pipeline_use_case.execute(pipeline_request)
+            
+            if prediction_result:
+                results.append(prediction_result)
 
-            # Obtener el resultado de la verificación
-            verify_step_result = None
-            for step_result in pipeline_response.step_results:
-                if step_result["step_type"] == "verify":
-                    verify_step_result = step_result
-                    break
+        # Calcular y mostrar métricas
+        self._calculate_and_display_metrics(results)
 
-            if verify_step_result:
-                # Comparar el resultado con el valor esperado
-                verification_summary = verify_step_result["step_data"][-1]
-                predicted_label = "positive" if verification_summary["final_status"] == "confirmed" else "negative"
-
-                results.append({
-                    "input": input_data,
-                    "expected_output": expected_output,
-                    "predicted_label": predicted_label,
-                    "actual_label": label
-                })
-
-        # Calcular métricas de evaluación
-        self._calculate_metrics(results)
-
-    def _create_pipeline_steps(self, input_data: Dict[str, Any]) -> List[PipelineStep]:
-        """
-        Crea los pasos del pipeline a partir de la configuración y los datos de entrada.
-
-        Args:
-            input_data (Dict[str, Any]): Datos de entrada para el pipeline.
-
-        Returns:
-            List[PipelineStep]: Lista de pasos del pipeline.
-        """
-        pipeline_steps = []
-        for step_data in self.pipeline_config["steps"]:
-            if step_data["type"] == "generate":
-                # Reemplazar placeholders en los prompts
-                system_prompt = step_data["parameters"]["system_prompt"]
-                user_prompt = step_data["parameters"]["user_prompt"]
-                for key, value in input_data.items():
-                    system_prompt = system_prompt.replace(f"{{{key}}}", value)
-                    user_prompt = user_prompt.replace(f"{{{key}}}", value)
-
-                parameters = GenerateTextRequest(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    num_sequences=step_data["parameters"].get("num_sequences", 1),
-                    max_tokens=step_data["parameters"].get("max_tokens", 100),
-                    temperature=step_data["parameters"].get("temperature", 1.0)
-                )
-            elif step_data["type"] == "parse":
-                parameters = ParseRequest(
-                    text=step_data["parameters"].get("text", ""),
-                    rules=parse_rules_from_json(step_data["parameters"]["rules"]),
-                    output_filter=step_data["parameters"].get("output_filter", "all"),
-                    output_limit=step_data["parameters"].get("output_limit", None)
-                )
-            elif step_data["type"] == "verify":
-                methods = parse_verification_methods_from_json(step_data["parameters"]["methods"])
-                for method in methods:
-                    if isinstance(method.system_prompt, str):
-                        for key, value in input_data.items():
-                            method.system_prompt = method.system_prompt.replace(f"{{{key}}}", value)
-                    if isinstance(method.user_prompt, str):
-                        for key, value in input_data.items():
-                            method.user_prompt = method.user_prompt.replace(f"{{{key}}}", value)
-
-                parameters = VerifyRequest(
-                    methods=methods,
-                    required_for_confirmed=step_data["parameters"]["required_for_confirmed"],
-                    required_for_review=step_data["parameters"]["required_for_review"]
-                )
-            else:
-                raise ValueError(f"Unknown step type: {step_data['type']}")
-
-            pipeline_steps.append(
-                PipelineStep(
-                    type=step_data["type"],
-                    parameters=parameters,
-                    uses_reference=step_data.get("uses_reference", False),
-                    reference_step_numbers=step_data.get("reference_step_numbers", [])
+    def _execute_pipeline_for_entry(self, input_data: Dict) -> Any:
+        """Ejecuta el pipeline para una entrada específica."""
+        try:
+            # Clonar y configurar pasos
+            configured_steps = self._configure_pipeline_steps(input_data)
+            
+            # Ejecutar pipeline
+            pipeline = PipelineUseCase(self.model_name)
+            return pipeline.execute(
+                PipelineRequest(
+                    steps=configured_steps,
+                    global_references=input_data
                 )
             )
-        return pipeline_steps
+        except Exception as e:
+            print(f"Error ejecutando pipeline: {str(e)}")
+            return None
 
-    def _calculate_metrics(self, results: List[Dict[str, Any]]):
-        """
-        Calcula las métricas de evaluación del benchmark.
+    def _configure_pipeline_steps(self, entry_data: Dict) -> List[PipelineStep]:
+        """Clona y configura los pasos del pipeline con los datos de entrada."""
+        configured_steps = []
+        
+        for step in self.original_steps:
+            try:
+                # Clonar el paso para evitar modificar el original
+                cloned_step = deepcopy(step)
+                
+                # Sustituir placeholders en los parámetros
+                self._substitute_placeholders(
+                    cloned_step.parameters, 
+                    entry_data
+                )
+                
+                configured_steps.append(cloned_step)
+            except Exception as e:
+                print(f"Error configurando paso {step.step_type}: {str(e)}")
+        
+        return configured_steps
 
-        Args:
-            results (List[Dict[str, Any]]): Lista de resultados del benchmark.
-        """
-        correct_predictions = defaultdict(int)
-        total_predictions = defaultdict(int)
-        misclassified_cases = []
+    def _substitute_placeholders(self, parameters: Any, data: Dict):
+        """Reemplaza placeholders en los parámetros del paso."""
+        if isinstance(parameters, GenerateTextRequest):
+            parameters.system_prompt = self._replace_in_template(
+                parameters.system_prompt, 
+                data
+            )
+            parameters.user_prompt = self._replace_in_template(
+                parameters.user_prompt, 
+                data
+            )
+        
+        elif isinstance(parameters, ParseRequest):
+            parameters.text = self._replace_in_template(
+                parameters.text, 
+                data
+            )
+        
+        elif isinstance(parameters, VerifyRequest):
+            for method in parameters.methods:
+                method.system_prompt = self._replace_in_template(
+                    method.system_prompt, 
+                    data
+                )
+                method.user_prompt = self._replace_in_template(
+                    method.user_prompt, 
+                    data
+                )
 
-        for result in results:
-            actual_label = result["actual_label"]
-            predicted_label = result["predicted_label"]
+    def _replace_in_template(self, template: str, data: Dict) -> str:
+        """Reemplaza placeholders del tipo {key} en un template."""
+        if not template:
+            return template
+            
+        for key, value in data.items():
+            placeholder = f"{{{key}}}"
+            if placeholder in template:
+                template = template.replace(
+                    placeholder, 
+                    str(value)
+                )
+        return template
 
-            total_predictions[actual_label] += 1
-            if predicted_label == actual_label:
-                correct_predictions[actual_label] += 1
-            else:
-                misclassified_cases.append({
-                    "input": result["input"],
-                    "expected_output": result["expected_output"],
-                    "predicted_label": predicted_label,
-                    "actual_label": actual_label
-                })
+    def _process_prediction(
+        self, 
+        pipeline_response: Any,
+        input_data: Dict,
+        expected_label: str
+    ) -> Dict:
+        """Extrae y procesa los resultados de verificación."""
+        if not pipeline_response:
+            return None
 
-        # Calcular precisión por etiqueta
-        accuracy_per_label = {
-            label: (correct_predictions[label] / total_predictions[label]) if total_predictions[label] > 0 else 0
-            for label in total_predictions
+        # Buscar resultados de verificación
+        verify_step = next(
+            (s for s in pipeline_response.step_results 
+             if s["step_type"] == "verify"),
+            None
+        )
+        
+        if not verify_step or not verify_step["step_data"]:
+            return None
+
+        # Obtener resumen de verificación
+        verify_summary = verify_step["step_data"][-1]
+        
+        return {
+            "input": input_data,
+            "predicted_label": self._determine_label(verify_summary),
+            "actual_label": expected_label,
+            "timestamp": datetime.now().isoformat()
         }
 
-        # Calcular precisión general
-        total_correct = sum(correct_predictions.values())
-        total = sum(total_predictions.values())
-        overall_accuracy = (total_correct / total) if total > 0 else 0
+    def _determine_label(self, verify_summary: Dict) -> str:
+        """Determina la etiqueta predicha basada en el resumen de verificación."""
+        status = verify_summary.get("final_status", "").lower()
+        return "confirmed" if status == "confirmed" else "not_confirmed"
 
-        # Imprimir resultados
-        print(f"Precisión general: {overall_accuracy:.2%}")
-        for label, accuracy in accuracy_per_label.items():
-            print(f"- Precisión para '{label}': {accuracy:.2%}")
+    def _calculate_and_display_metrics(self, results: List[Dict]):
+        """Calcula y muestra las métricas principales."""
+        if not results:
+            print("No se obtuvieron resultados para calcular métricas")
+            return
 
-        # Guardar casos mal clasificados
-        if misclassified_cases:
-            save_json_file(misclassified_cases, "misclassified_cases.json")
-            print(f"Casos mal clasificados guardados en 'misclassified_cases.json'")
+        # Contadores iniciales
+        correct = 0
+        total = len(results)
+        confusion_matrix = {
+            "true_positive": 0,
+            "false_positive": 0,
+            "true_negative": 0,
+            "false_negative": 0
+        }
+
+        # Clasificar resultados
+        misclassified = []
+        for result in results:
+            actual = result["actual_label"]
+            predicted = result["predicted_label"]
+            
+            is_actual_positive = (actual == self.label_value)
+            is_predicted_positive = (predicted == "confirmed")
+
+            if is_actual_positive and is_predicted_positive:
+                confusion_matrix["true_positive"] += 1
+                correct += 1
+            elif not is_actual_positive and not is_predicted_positive:
+                confusion_matrix["true_negative"] += 1
+                correct += 1
+            elif is_actual_positive and not is_predicted_positive:
+                confusion_matrix["false_negative"] += 1
+                misclassified.append(result)
+            else:
+                confusion_matrix["false_positive"] += 1
+                misclassified.append(result)
+
+        # Calcular métricas
+        accuracy = correct / total
+        precision = confusion_matrix["true_positive"] / (
+            confusion_matrix["true_positive"] + confusion_matrix["false_positive"] + 1e-10
+        )
+        recall = confusion_matrix["true_positive"] / (
+            confusion_matrix["true_positive"] + confusion_matrix["false_negative"] + 1e-10
+        )
+        f1 = 2 * (precision * recall) / (precision + recall + 1e-10)
+
+        # Mostrar resultados
+        print("\n=== Resultados del Benchmark ===")
+        print(f"• Exactitud (Accuracy): {accuracy:.2%}")
+        print(f"• Precisión: {precision:.2%}")
+        print(f"• Sensibilidad (Recall): {recall:.2%}")
+        print(f"• F1-Score: {f1:.2%}")
+        print("\nMatriz de Confusión:")
+        print(f"Verdaderos Positivos: {confusion_matrix['true_positive']}")
+        print(f"Falsos Positivos: {confusion_matrix['false_positive']}")
+        print(f"Verdaderos Negativos: {confusion_matrix['true_negative']}")
+        print(f"Falsos Negativos: {confusion_matrix['false_negative']}")
+
+        # Guardar casos problemáticos
+        if misclassified:
+            self._save_misclassified(misclassified)
+
+    def _save_misclassified(self, cases: List[Dict]):
+        """Guarda casos mal clasificados en un archivo JSON."""
+        filename = f"misclassified_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        
+        try:
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(cases, f, indent=2, ensure_ascii=False)
+            print(f"\nSe guardaron {len(cases)} casos mal clasificados en {filename}")
+        except Exception as e:
+            print(f"\nError guardando casos mal clasificados: {str(e)}")

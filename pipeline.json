@@ -1,65 +1,65 @@
 {
-    "steps":[
-       {
-          "type":"parse",
-          "parameters":{
-             "text":"La 'perra' de la playa era muy rara. Tiene 3 -piernas-.\n La 'zorra' de la playa era muy rara. Tiene 3 -verdad-.",
-             "rules":[
-                {
-                   "name":"perra",
-                   "pattern":"'",
-                   "mode":"keyword",
-                   "secondary_pattern":"'",
-                   "fallback_value":"perra_no_encontrado"
-                },
-                {
-                   "name":"parte cuerpo",
-                   "pattern":"-",
-                   "mode":"keyword",
-                   "secondary_pattern":"-",
-                   "fallback_value":"parte_cuerpo_no_encontrado"
-                }
-             ],
-             "output_filter":"successful"
-          }
-       },
-       {
-          "type":"verify",
-          "parameters":{
-             "methods":[
-                {
-                   "mode":"cumulative",
-                   "name":"verify_parte_cuerpo",
-                   "system_prompt":"Analiza texto y comprueba si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
-                   "user_prompt":"Es la siguiente palabra una parte del cuerpo? {parte cuerpo}",
-                   "num_sequences": 3,
-                   "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
-                   "required_matches": 2,
-                   "max_tokens": 5,
-                   "temperature": 1.0
-                },
-                {
-                   "mode":"cumulative",
-                   "name":"verify_animal",
-                   "system_prompt":"Analiza texto y {text} si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
-                   "user_prompt":"Es la siguiente palabra un animal? {perra}",
-                   "num_sequences": 3,
-                   "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
-                   "required_matches": 2,
-                   "max_tokens": 5,
-                   "temperature": 1.0
-                }
-             ],
-             "required_for_confirmed": 2,
-             "required_for_review": 1
-          },
-          "uses_reference":true,
-          "reference_step_numbers":[
-             0
-          ]
-       }
-    ],
-    "global_references":{
-       "text":"comprueba"
-    }
+   "steps":[
+      {
+         "type":"parse",
+         "parameters":{
+            "text":"La 'perra' de la playa era muy rara. Tiene 3 -piernas-.\n La 'zorra' de la playa era muy rara. Tiene 3 -verdad-.",
+            "rules":[
+               {
+                  "name":"perra",
+                  "pattern":"'",
+                  "mode":"keyword",
+                  "secondary_pattern":"'",
+                  "fallback_value":"perra_no_encontrado"
+               },
+               {
+                  "name":"parte cuerpo",
+                  "pattern":"-",
+                  "mode":"keyword",
+                  "secondary_pattern":"-",
+                  "fallback_value":"parte_cuerpo_no_encontrado"
+               }
+            ],
+            "output_filter":"successful"
+         }
+      },
+      {
+         "type":"verify",
+         "parameters":{
+            "methods":[
+               {
+                  "mode":"cumulative",
+                  "name":"verify_parte_cuerpo",
+                  "system_prompt":"Analiza texto y comprueba si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
+                  "user_prompt":"Es la siguiente palabra una parte del cuerpo? {parte cuerpo}",
+                  "num_sequences": 3,
+                  "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
+                  "required_matches": 2,
+                  "max_tokens": 5,
+                  "temperature": 1.0
+               },
+               {
+                  "mode":"cumulative",
+                  "name":"verify_animal",
+                  "system_prompt":"Analiza texto y {text} si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
+                  "user_prompt":"Es la siguiente palabra un animal? {perra}",
+                  "num_sequences": 3,
+                  "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
+                  "required_matches": 2,
+                  "max_tokens": 5,
+                  "temperature": 1.0
+               }
+            ],
+            "required_for_confirmed": 2,
+            "required_for_review": 1
+         },
+         "uses_reference":true,
+         "reference_step_numbers":[
+            0
+         ]
+      }
+   ],
+   "global_references":{
+      "text":"comprueba"
+   }
 }

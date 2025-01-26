@@ -50,21 +50,7 @@ class PipelineUseCase:
 
             logger.info("Ejecución del pipeline finalizada.")
 
-            # Convert results to a serializable format
-            serializable_results = []
-            for result in self.service.get_results():
-                step_type, step_data = result
-                
-                # Convertimos los datos del paso a una lista de diccionarios
-                step_data_dicts = [
-                    item.to_dict() if hasattr(item, 'to_dict') else item
-                    for item in step_data
-                ]
-
-                serializable_results.append({
-                    "step_type": step_type,
-                    "step_data": step_data_dicts
-                })
+            serializable_results = self.service.get_results()
 
             # Devuelve los resultados completos del pipeline
             return PipelineResponse(

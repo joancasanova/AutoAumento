@@ -61,11 +61,28 @@ class PipelineService:
             logger.error(f"Pipeline execution failed at step {step_number}: {str(e)}")
             raise
 
-    def get_results(self) -> List[Tuple[str, List[Any]]]:
+    def get_results(self) -> List[Dict]:
         """
         Returns the accumulated results of all executed steps.
         """
-        return self.results  # type: ignore
+
+        # Convert results to a serializable format
+        serializable_results = []
+        for result in self.results:
+            step_type, step_data = result
+                
+            # Convertimos los datos del paso a una lista de diccionarios
+            step_data_dicts = [
+                item.to_dict() if hasattr(item, 'to_dict') else item
+                for item in step_data
+            ]
+
+            serializable_results.append({
+                "step_type": step_type,
+                "step_data": step_data_dicts
+            })
+
+        return serializable_results
     
     def _validate_step_references(self, step: PipelineStep, step_number: int) -> None:
         """
