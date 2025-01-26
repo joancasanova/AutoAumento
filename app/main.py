@@ -3,7 +3,8 @@ import json
 import logging
 from typing import Dict, Any, List, Callable
 
-from app.domain.model.entities.benchmark import BenchmarkConfig, BenchmarkEntry
+from app.domain.model.entities.benchmark import BenchmarkConfig, BenchmarkEntry, BenchmarkMetrics
+from app.infraestructure.file_repository import FileRepository
 
 # Configuración básica de logging
 logging.basicConfig(
@@ -181,6 +182,21 @@ class OutputFormatter:
             for key, value in entry.items():
                 print(f"      {key}: {value}")
 
+    @staticmethod
+    def print_benchmark_results(metrics: BenchmarkMetrics):
+        print("\n=== Resultados del Benchmark ===")
+        print(f"• Exactitud (Accuracy): {metrics.accuracy:.2%}")
+        print(f"• Precisión: {metrics.precision:.2%}")
+        print(f"• Sensibilidad (Recall): {metrics.recall:.2%}")
+        print(f"• F1-Score: {metrics.f1_score:.2%}")
+        print("\nMatriz de Confusión:")
+        print(f"Verdaderos Positivos: {metrics.confusion_matrix['true_positive']}")
+        print(f"Falsos Positivos: {metrics.confusion_matrix['false_positive']}")
+        print(f"Verdaderos Negativos: {metrics.confusion_matrix['true_negative']}")
+        print(f"Falsos Negativos: {metrics.confusion_matrix['false_negative']}")
+        print(f"Total de casos evaluados: {len(metrics.misclassified) + metrics.confusion_matrix['true_positive'] + metrics.confusion_matrix['false_positive'] + metrics.confusion_matrix['true_negative']}")
+        print(f"\nCasos mal clasificados guardados en: misclassified_*.json")
+
 def setup_arg_parser() -> argparse.ArgumentParser:
     """Configura el parser de argumentos de línea de comandos."""
     parser = argparse.ArgumentParser(description="Pipeline de Procesamiento de Texto")
@@ -330,6 +346,33 @@ def handle_pipeline(args: argparse.Namespace):
         )
     )
     
+    # Guardar resultados
+    pipeline_results = response.to_dict()
+    verification_refs = response.verification_references
+    
+    # Resultados del pipeline
+    FileRepository.save(
+        pipeline_results,
+        output_dir="out/pipeline/results",
+        filename_prefix="pipeline_results"
+    )
+    
+    # Referencias verificadas
+    if verification_refs['confirmed']:
+        FileRepository.save(
+            verification_refs['confirmed'],
+            output_dir="out/pipeline/verification/confirmed",
+            filename_prefix="confirmed"
+        )
+    
+    # Referencias a verificar
+    if verification_refs['to_verify']:
+        FileRepository.save(
+            verification_refs['to_verify'],
+            output_dir="out/pipeline/verification/to_verify",
+            filename_prefix="to_verify"
+        )
+    
     OutputFormatter.print_pipeline_results(response)
 
 def handle_benchmark(args: argparse.Namespace):
@@ -353,7 +396,23 @@ def handle_benchmark(args: argparse.Namespace):
     ]
     
     use_case = BenchmarkUseCase(benchmark_config.model_name)
-    use_case.run_benchmark(benchmark_config, benchmark_entries)
+    metrics = use_case.run_benchmark(benchmark_config, benchmark_entries)  # Capturar métricas
+    
+    # Guardar resultados
+    FileRepository.save(
+        metrics.to_dict(),
+        output_dir="out/benchmark/results",
+        filename_prefix="benchmark_results"
+    )
+    
+    if metrics.misclassified:
+        FileRepository.save(
+            [result.to_dict() for result in metrics.misclassified],
+            output_dir="out/benchmark/misclassified",
+            filename_prefix="misclassified"
+        )
+    
+    OutputFormatter.print_benchmark_results(metrics)
     
 def main():
     """Función principal del programa"""

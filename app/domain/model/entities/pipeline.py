@@ -41,10 +41,13 @@ class PipelineResponse:
 
     - step_results: Lista de diccionarios, donde cada diccionario contiene la información y
                     resultados de un paso del pipeline.
+    - verification_references: Diccionario de lista con casos confirmados y a verificar
     """
     step_results: List[Dict[str, Any]]    
+    verification_references: Dict[str, List]
     
     def to_dict(self):
         return {
-            "step_results": self.step_results
+            "step_results": self.step_results,
+            "verification_references": self.verification_references
         }

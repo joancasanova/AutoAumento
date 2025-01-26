@@ -66,7 +66,6 @@ class PipelineService:
                 step_result = self._execute_step(step, step_number)
                 self._store_result(step_number, step.type, step_result)
 
-            self._save_verification_references()  # Guardar referencias al final
         except Exception as e:
             logger.error(f"Pipeline execution failed at step {step_number}: {str(e)}")
             raise
@@ -584,27 +583,3 @@ class PipelineService:
                 logger.warning(f"Reference {ref_index} not found or invalid for step {current_step_number}. Returning empty result.")
                 return []
         return reference_data
-    
-    def _save_verification_references(self):
-        """Guarda referencias de verificaciones en sus respectivos directorios"""
-        # Para confirmed
-        if self.confirmed_references:
-            output_dir = os.path.join("out", "pipeline", "verification", "confirmed")
-            os.makedirs(output_dir, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"confirmed_{timestamp}.json"
-            file_path = os.path.join(output_dir, filename)
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(self.confirmed_references, f, indent=2)
-            logger.info(f"Referencias confirmadas guardadas en: {file_path}")
-        
-        # Para to_verify
-        if self.to_verify_references:
-            output_dir = os.path.join("out", "pipeline", "verification", "to_verify")
-            os.makedirs(output_dir, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"to_verify_{timestamp}.json"
-            file_path = os.path.join(output_dir, filename)
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(self.to_verify_references, f, indent=2)
-            logger.info(f"Referencias a revisar guardadas en: {file_path}")

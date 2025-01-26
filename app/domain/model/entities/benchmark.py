@@ -24,6 +24,14 @@ class BenchmarkResult:
     actual_label: str
     timestamp: datetime
 
+    def to_dict(self) -> dict:
+        return {
+            "input_data": self.input_data,
+            "predicted_label": self.predicted_label,
+            "actual_label": self.actual_label,
+            "timestamp": self.timestamp.isoformat()
+        }
+
 @dataclass
 class BenchmarkMetrics:
     accuracy: float
@@ -32,3 +40,13 @@ class BenchmarkMetrics:
     f1_score: float
     confusion_matrix: Dict[str, int]
     misclassified: List[BenchmarkResult]
+
+    def to_dict(self) -> dict:
+        return {
+            "accuracy": self.accuracy,
+            "precision": self.precision,
+            "recall": self.recall,
+            "f1_score": self.f1_score,
+            "confusion_matrix": self.confusion_matrix,
+            "misclassified_count": len(self.misclassified)
+        }

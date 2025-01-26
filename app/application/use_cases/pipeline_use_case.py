@@ -56,12 +56,13 @@ class PipelineUseCase:
             logger.info("Ejecución del pipeline finalizada.")
             serializable_results = self.service.get_results()
 
-            # Guardar resultados detallados del pipeline
-            self._save_pipeline_results(serializable_results)
-            
             # Devuelve los resultados completos del pipeline
             return PipelineResponse(
-                step_results=serializable_results
+                step_results=serializable_results,
+                verification_references={
+                    'confirmed': self.service.confirmed_references,
+                    'to_verify': self.service.to_verify_references
+                }
             )
 
         except ValueError as e:
@@ -70,17 +71,3 @@ class PipelineUseCase:
         except Exception as e:
             logger.error(f"Error al ejecutar el pipeline: {e}")
             raise  # Re-lanzar otras excepciones
-
-    def _save_pipeline_results(self, results: List[Dict]):
-        """Guarda los resultados detallados del pipeline en formato JSON"""
-        output_dir = os.path.join("out", "pipeline", "results")
-        os.makedirs(output_dir, exist_ok=True)
-        
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"pipeline_results_{timestamp}.json"
-        file_path = os.path.join(output_dir, filename)
-        
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=2, default=str)
-            
-        logger.info(f"Resultados detallados del pipeline guardados en: {file_path}")
