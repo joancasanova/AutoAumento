@@ -3,6 +3,8 @@ import json
 import logging
 from typing import Dict, Any, List, Callable
 
+from app.domain.model.entities.benchmark import BenchmarkConfig, BenchmarkEntry
+
 # Configuración básica de logging
 logging.basicConfig(
     level=logging.DEBUG,
@@ -321,18 +323,28 @@ def handle_pipeline(args: argparse.Namespace):
     OutputFormatter.print_pipeline_results(response)
 
 def handle_benchmark(args: argparse.Namespace):
-    """Manejador para el comando benchmark"""
-    config = CommandProcessor.load_json_file(args.config)
-    entries = CommandProcessor.load_json_file(args.entries)
+    config_data = CommandProcessor.load_json_file(args.config)
+    entries_data = CommandProcessor.load_json_file(args.entries)
     
-    BenchmarkUseCase(
-        model_name=config.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct"),
-        pipeline_steps=CommandProcessor.parse_pipeline_steps(config),
-        benchmark_entries=entries,
-        label_key=config["label_key"],
-        label_value=config["label_value"]
-    ).run_benchmark()
-
+    # Convertir a entidades
+    benchmark_config = BenchmarkConfig(
+        model_name=config_data.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct"),
+        pipeline_steps=CommandProcessor.parse_pipeline_steps(config_data),
+        label_key=config_data["label_key"],
+        label_value=config_data["label_value"]
+    )
+    
+    benchmark_entries = [
+        BenchmarkEntry(
+            input_data={k: v for k, v in entry.items() if k != benchmark_config.label_key},
+            expected_label=entry.get(benchmark_config.label_key, "")
+        )
+        for entry in entries_data
+    ]
+    
+    use_case = BenchmarkUseCase(benchmark_config.model_name)
+    use_case.run_benchmark(benchmark_config, benchmark_entries)
+    
 def main():
     """Función principal del programa"""
     command_handlers: Dict[str, CommandHandler] = {
