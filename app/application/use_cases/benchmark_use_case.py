@@ -28,6 +28,9 @@ class BenchmarkUseCase:
         metrics = self.benchmark_service.calculate_metrics(results, config.label_value)
         self._display_results(metrics)
 
+        
+        self.benchmark_service.save_benchmark_results(metrics)
+
         if metrics.misclassified: # Save misclassified only if there are any
             self.benchmark_service.save_misclassified(metrics.misclassified)
         else:

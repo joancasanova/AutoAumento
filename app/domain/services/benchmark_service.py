@@ -2,6 +2,7 @@
 
 import logging
 import json
+import os
 from copy import deepcopy
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -13,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 class BenchmarkService:
     def __init__(self, model_name: str):
+        self.model_name = model_name
         self.pipeline_service = PipelineService(model_name)
         self.results: List[BenchmarkResult] = []
 
@@ -100,8 +102,50 @@ class BenchmarkService:
             confusion_matrix=confusion_matrix,
             misclassified=misclassified
         )
-
+    
     def save_misclassified(self, misclassified: List[BenchmarkResult]):
+        # Definir la ruta de guardado
+        output_dir = os.path.join("out", "benchmark", "misclassified")
+        
+        # Crear directorios si no existen
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Generar nombre de archivo
         filename = f"misclassified_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        with open(filename, "w", encoding="utf-8") as f:
+        file_path = os.path.join(output_dir, filename)
+        
+        # Guardar archivo
+        with open(file_path, "w", encoding="utf-8") as f:
             json.dump([vars(result) for result in misclassified], f, indent=2, default=str)
+            
+        logger.info(f"Archivo de mal clasificados guardado en: {file_path}")
+        
+    def save_benchmark_results(self, metrics: BenchmarkMetrics):
+        """Guarda los resultados completos del benchmark en formato JSON"""
+        output_dir = os.path.join("out", "benchmark", "results")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"benchmark_results_{timestamp}.json"
+        file_path = os.path.join(output_dir, filename)
+        
+        result_data = {
+            "metadata": {
+                "model_name": self.model_name,
+                "execution_date": datetime.now().isoformat()
+            },
+            "metrics": {
+                "accuracy": metrics.accuracy,
+                "precision": metrics.precision,
+                "recall": metrics.recall,
+                "f1_score": metrics.f1_score,
+                "confusion_matrix": metrics.confusion_matrix,
+                "total_cases": sum(metrics.confusion_matrix.values()),
+                "misclassified_count": len(metrics.misclassified)
+            }
+        }
+        
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(result_data, f, indent=2, default=str)
+            
+        logger.info(f"Resultados completos del benchmark guardados en: {file_path}")

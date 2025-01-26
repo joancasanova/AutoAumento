@@ -7,7 +7,7 @@ from app.domain.model.entities.benchmark import BenchmarkConfig, BenchmarkEntry
 
 # Configuración básica de logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
@@ -162,7 +162,7 @@ class OutputFormatter:
         print(f"  Resultado de verificación {index}:")
         print(f"    Estado final: {item['final_status']}")
         print(f"    Tasa de éxito: {item['success_rate']:.2f}")
-        print(f"    Tiempo de ejecución: {item['execution_time']:.2f} segundos")
+        print(f"    Datos de referencia: {item['reference_data']}")
         print("    Resultados:")
         for result in item['results']:
             print(f"      Método: {result['method_name']}")
@@ -217,7 +217,9 @@ def setup_generate_parser(parser: argparse.ArgumentParser):
 def setup_parse_parser(parser: argparse.ArgumentParser):
     """Configura el parser para el comando parse"""
     parser.add_argument("--text", required=True)
-    parser.add_argument("--rules", required=True)
+    parser.add_argument("--rules",
+                      default="config/parse/parse_rules.json",
+                      help="Ruta al archivo de reglas de parsing")
     parser.add_argument(
         "--output-filter", 
         choices=["all", "successful", "first", "first_n"], 
@@ -231,13 +233,17 @@ def setup_verify_parser(parser: argparse.ArgumentParser):
         "--verify-model-name",
         default="Qwen/Qwen2.5-1.5B-Instruct"
     )
-    parser.add_argument("--methods", required=True)
+    parser.add_argument("--methods",
+                      default="config/parse/verify_methods.json",
+                      help="Ruta al archivo de métodos de verificación")
     parser.add_argument("--required-confirmed", type=int, required=True)
     parser.add_argument("--required-review", type=int, required=True)
 
 def setup_pipeline_parser(parser: argparse.ArgumentParser):
     """Configura el parser para el comando pipeline"""
-    parser.add_argument("--config", required=True)
+    parser.add_argument("--config",
+                      default="config/pipeline/pipeline_config.json",
+                      help="Ruta al archivo de configuración del pipeline")
     parser.add_argument(
         "--pipeline-model-name", 
         default="Qwen/Qwen2.5-1.5B-Instruct"
@@ -245,8 +251,12 @@ def setup_pipeline_parser(parser: argparse.ArgumentParser):
 
 def setup_benchmark_parser(parser: argparse.ArgumentParser):
     """Configura el parser para el comando benchmark"""
-    parser.add_argument("--config", required=True)
-    parser.add_argument("--entries", required=True)
+    parser.add_argument("--config", 
+                      default="config/benchmark/benchmark_config.json",
+                      help="Ruta al archivo de configuración del benchmark")
+    parser.add_argument("--entries",
+                      default="config/benchmark/benchmark_entries.json",
+                      help="Ruta al archivo de entradas del benchmark")
 
 def handle_generate(args: argparse.Namespace):
     """Manejador para el comando generate"""
