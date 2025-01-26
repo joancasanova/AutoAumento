@@ -1,4 +1,3 @@
-```markdown
 # AutoAumento: Guía de Uso
 
 **AutoAumento** es una aplicación de línea de comandos (CLI) en Python diseñada para realizar tareas avanzadas de procesamiento de texto utilizando modelos de lenguaje (LLMs). Esta guía se enfoca en la utilización de los comandos `pipeline` y `benchmark`, explicando cómo ejecutarlos paso a paso y cómo interpretar los archivos de salida.
