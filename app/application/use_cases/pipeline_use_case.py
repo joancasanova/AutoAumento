@@ -1,5 +1,6 @@
-import logging
+# application/use_cases/parsing/pipeline_use_case.py
 
+import logging
 from app.domain.model.entities.pipeline import (
     PipelineRequest,
     PipelineResponse,
