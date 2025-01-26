@@ -61,6 +61,16 @@ class VerificationResult:
     details: Optional[Dict[str, any]] = None
     timestamp: datetime = datetime.now()
 
+    def to_dict(self):
+        return {
+            "method_name": self.method.name,
+            "mode": self.method.mode.value,
+            "passed": self.passed,
+            "score": self.score,
+            "details": self.details,
+            "timestamp": self.timestamp.isoformat()
+        }
+
 @dataclass
 class VerificationSummary:
     """
@@ -71,6 +81,14 @@ class VerificationSummary:
     final_status: str
     reference_data: Optional[Dict[str, str]] = None
     
+    def to_dict(self):
+        return {
+            "results": [result.to_dict() for result in self.results],
+            "final_status": self.final_status,
+            "reference_data": self.reference_data,
+            "success_rate": self.success_rate
+        }
+
     @property
     def passed_methods(self) -> List[str]:
         """Returns the names of the methods that passed."""

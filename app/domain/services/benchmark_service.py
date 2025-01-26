@@ -79,9 +79,9 @@ class BenchmarkService:
         f1 = 2 * (precision * recall) / (precision + recall + 1e-10)
 
         return BenchmarkMetrics(
-            accuracy=accuracy,
-            precision=precision,
-            recall=recall,
+            accuracy=accuracy if total > 0 else 0.0,
+            precision=precision if total > 0 else 0.0,
+            recall=recall if total > 0 else 0.0,
             f1_score=f1,
             confusion_matrix=confusion_matrix,
             misclassified=misclassified

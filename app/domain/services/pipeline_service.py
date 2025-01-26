@@ -73,7 +73,11 @@ class PipelineService:
                 
             # Convertimos los datos del paso a una lista de diccionarios
             step_data_dicts = [
-                item.to_dict() if hasattr(item, 'to_dict') else item
+                item.to_dict() if hasattr(item, 'to_dict')
+                else (item.verification_summary.to_dict() if step_type == 'verify' and hasattr(item, 'verification_summary')
+                      else (item.parse_result.to_list_of_dicts() if step_type == 'parse' and hasattr(item, 'parse_result')
+                            else (item.to_dict() if hasattr(item, 'to_dict') else item)
+                           ))
                 for item in step_data
             ]
 
