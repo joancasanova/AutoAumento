@@ -1,6 +1,10 @@
 # application/use_cases/parsing/pipeline_use_case.py
 
+from datetime import datetime
+import os
+import json
 import logging
+from typing import Dict, List
 from app.domain.model.entities.pipeline import (
     PipelineRequest,
     PipelineResponse,
@@ -50,9 +54,11 @@ class PipelineUseCase:
             self.service.run_pipeline(request.steps)
 
             logger.info("Ejecución del pipeline finalizada.")
-
             serializable_results = self.service.get_results()
 
+            # Guardar resultados detallados del pipeline
+            self._save_pipeline_results(serializable_results)
+            
             # Devuelve los resultados completos del pipeline
             return PipelineResponse(
                 step_results=serializable_results
@@ -64,3 +70,17 @@ class PipelineUseCase:
         except Exception as e:
             logger.error(f"Error al ejecutar el pipeline: {e}")
             raise  # Re-lanzar otras excepciones
+
+    def _save_pipeline_results(self, results: List[Dict]):
+        """Guarda los resultados detallados del pipeline en formato JSON"""
+        output_dir = os.path.join("out", "pipeline", "results")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"pipeline_results_{timestamp}.json"
+        file_path = os.path.join(output_dir, filename)
+        
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2, default=str)
+            
+        logger.info(f"Resultados detallados del pipeline guardados en: {file_path}")

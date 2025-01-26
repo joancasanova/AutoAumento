@@ -1,10 +1,11 @@
 # domain/services/pipeline_service.py
 
+from datetime import datetime
+import json
+import os
 from typing import Any, Dict, List, Optional, Set, Tuple
 import re
 import logging
-from datetime import datetime
-from copy import deepcopy
 import itertools
 
 from app.domain.model.entities.pipeline import PipelineStep
@@ -45,6 +46,9 @@ class PipelineService:
 
         self.results: List[Optional[Tuple[str, List[Any]]]] = []  # Stores results of each step: (step_type, list_of_results)
         self.global_references: Dict[str, str] = {}  # Global references usable across all steps
+        
+        self.confirmed_references = []
+        self.to_verify_references = []
 
     def run_pipeline(self, steps: List[PipelineStep]) -> None:
         """
@@ -54,11 +58,15 @@ class PipelineService:
             steps: A list of PipelineStep objects defining the pipeline's steps.
         """
         self.results = []  # Clear previous results
+        self.confirmed_references = []
+        self.to_verify_references = []
         try:
             for step_number, step in enumerate(steps):
                 self._validate_step_references(step, step_number)
                 step_result = self._execute_step(step, step_number)
                 self._store_result(step_number, step.type, step_result)
+
+            self._save_verification_references()  # Guardar referencias al final
         except Exception as e:
             logger.error(f"Pipeline execution failed at step {step_number}: {str(e)}")
             raise
@@ -290,6 +298,12 @@ class PipelineService:
             )
             result.reference_data = reference_dict
             all_results.append(result)
+        
+            # Capturar referencias según estado
+            if result.final_status == "confirmed":
+                self.confirmed_references.append(reference_dict)
+            elif result.final_status == "review":
+                self.to_verify_references.append(reference_dict)
         
         return all_results
     
@@ -570,3 +584,27 @@ class PipelineService:
                 logger.warning(f"Reference {ref_index} not found or invalid for step {current_step_number}. Returning empty result.")
                 return []
         return reference_data
+    
+    def _save_verification_references(self):
+        """Guarda referencias de verificaciones en sus respectivos directorios"""
+        # Para confirmed
+        if self.confirmed_references:
+            output_dir = os.path.join("out", "pipeline", "verification", "confirmed")
+            os.makedirs(output_dir, exist_ok=True)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"confirmed_{timestamp}.json"
+            file_path = os.path.join(output_dir, filename)
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(self.confirmed_references, f, indent=2)
+            logger.info(f"Referencias confirmadas guardadas en: {file_path}")
+        
+        # Para to_verify
+        if self.to_verify_references:
+            output_dir = os.path.join("out", "pipeline", "verification", "to_verify")
+            os.makedirs(output_dir, exist_ok=True)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"to_verify_{timestamp}.json"
+            file_path = os.path.join(output_dir, filename)
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(self.to_verify_references, f, indent=2)
+            logger.info(f"Referencias a revisar guardadas en: {file_path}")
