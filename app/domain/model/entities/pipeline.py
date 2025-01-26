@@ -1,22 +1,30 @@
 # app/domain/model/entities/pipeline.py
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple, Union
-from enum import Enum
+from typing import Any, Dict, List, Optional, Union
 
-from app.domain.model.entities.generation import GenerateTextRequest
-from app.domain.model.entities.parsing import ParseRequest
-from app.domain.model.entities.verification import VerifyRequest
+from domain.model.entities.generation import GenerateTextRequest
+from domain.model.entities.parsing import ParseRequest
+from domain.model.entities.verification import VerifyRequest
 
 @dataclass
 class PipelineStep:
     """
-    Define un solo paso en el pipeline.
+    Represents a single step in the processing pipeline.
 
-    - type: Tipo de paso ('generate', 'parse', 'verify').
-    - parameters: Parámetros específicos para el paso actual (especificados externamente).
-    - uses_reference: Indica si este paso utiliza datos de referencia.
-    - reference_step_number: Indica el orden de prioridad donde buscar los datos de referencia.
+    Attributes:
+        type: The type of processing step. Valid values:
+              - 'generate': Text generation step
+              - 'parse': Text parsing step
+              - 'verify': Result verification step
+        parameters: Configuration specific to the step type. Must match:
+                   - GenerateTextRequest for 'generate' steps
+                   - ParseRequest for 'parse' steps
+                   - VerifyRequest for 'verify' steps
+        uses_reference: Flag indicating if this step uses reference data 
+                       from previous steps
+        reference_step_numbers: List of step indices (0-based) providing 
+                               reference data. Ordered by priority.
     """
     type: str
     parameters: Union[GenerateTextRequest, ParseRequest, VerifyRequest]
@@ -26,10 +34,13 @@ class PipelineStep:
 @dataclass
 class PipelineRequest:
     """
-    Describe el pipeline completo a ejecutar.
+    Complete configuration for executing a processing pipeline.
 
-    - steps: Lista de PipelineStep indicando el orden y el tipo de cada paso.
-    - global_references: Diccionario opcional con datos globales para placeholders.
+    Attributes:
+        steps: Ordered list of PipelineStep objects defining the 
+              processing workflow
+        global_references: Optional shared reference data available 
+                          to all steps through {placeholder} syntax
     """
     steps: List[PipelineStep]
     global_references: Optional[Dict[str, str]] = None
@@ -37,16 +48,28 @@ class PipelineRequest:
 @dataclass
 class PipelineResponse:
     """
-    Respuesta final del pipeline, con los resultados agregados de todos los pasos.
+    Aggregated results from executing a processing pipeline.
 
-    - step_results: Lista de diccionarios, donde cada diccionario contiene la información y
-                    resultados de un paso del pipeline.
-    - verification_references: Diccionario de lista con casos confirmados y a verificar
+    Attributes:
+        step_results: List of dictionaries containing raw outputs 
+                     from each step, preserving execution order
+        verification_references: Categorized references from 
+                                verification steps with keys:
+                                - 'confirmed': Verified valid results
+                                - 'to_verify': Results needing manual review
     """
     step_results: List[Dict[str, Any]]    
     verification_references: Dict[str, List]
     
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Serializes the pipeline response to a dictionary format.
+        
+        Returns:
+            Dictionary with keys:
+            - step_results: Serialized step outputs
+            - verification_references: Direct reference to verification categories
+        """
         return {
             "step_results": self.step_results,
             "verification_references": self.verification_references

@@ -1,0 +1,38 @@
+[
+  [
+    {
+      "parte cuerpo": "verdad",
+      "perra": "zorra"
+    }
+  ],
+  [
+    {
+      "parte cuerpo": "verdad",
+      "perra": "perra"
+    }
+  ],
+  [
+    {
+      "parte cuerpo": "verdad",
+      "perra": "perra",
+      "text": "checkea"
+    },
+    {
+      "parte cuerpo": "verdad",
+      "perra": "zorra",
+      "text": "checkea"
+    }
+  ],
+  [
+    {
+      "parte cuerpo": "verdad",
+      "perra": "perra",
+      "text": "comprueba"
+    },
+    {
+      "parte cuerpo": "verdad",
+      "perra": "zorra",
+      "text": "comprueba"
+    }
+  ]
+]

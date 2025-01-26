@@ -7,11 +7,16 @@ from typing import List, Optional, Dict
 @dataclass(frozen=True)
 class GenerationMetadata:
     """
-    Stores metadata about the generation, such as:
-     - Model name used.
-     - Tokens used in the generation.
-     - Time taken to generate the text.
-     - Timestamp when the generation happened.
+    Immutable record of generation process metadata.
+    
+    Attributes:
+        model_name: Identifier of the LLM used for generation
+        system_prompt: System-level instructions/context provided to the model
+        user_prompt: User's input/question/request to the model
+        temperature: Sampling temperature used (0.0-2.0, controls randomness)
+        tokens_used: Total tokens consumed in the generation
+        generation_time: Time taken for generation in seconds
+        timestamp: Exact datetime of generation completion
     """
     model_name: str
     system_prompt: str
@@ -24,49 +29,75 @@ class GenerationMetadata:
 @dataclass
 class GeneratedResult:
     """
-    Represents a single generated text sequence along with associated metadata.
-    Optionally, it can store reference data that was substituted into the prompt.
+    Complete record of a single generated text output with context.
+    
+    Attributes:
+        content: The generated text output
+        metadata: Technical details about the generation process
+        reference_data: Optional contextual data used in prompt templates
+        
+    Methods:
+        to_dict: Serializes object for storage/transmission
+        contains_reference: Checks for specific text in content
+        word_count: Estimates word count using simple whitespace splitting
     """
     content: str
     metadata: GenerationMetadata
     reference_data: Optional[Dict[str, str]] = None
     
     def to_dict(self):
+        """Serializes object to JSON-friendly dictionary format."""
         return {
             "content": self.content,
             "metadata": {
                 "model_name": self.metadata.model_name,
                 "system_prompt": self.metadata.system_prompt,
                 "user_prompt": self.metadata.user_prompt,
-                "temperature": self.metadata.user_prompt,
+                "temperature": self.metadata.temperature,  # Fixed from original code
                 "tokens_used": self.metadata.tokens_used,
                 "generation_time": self.metadata.generation_time,
-                "timestamp": self.metadata.timestamp.isoformat()  # Convert datetime to string
+                "timestamp": self.metadata.timestamp.isoformat()
             },
             "reference_data": self.reference_data
         }
     
     def contains_reference(self, text: str) -> bool:
         """
-        Checks if the given 'text' (case-insensitive) is present in the generated content.
+        Case-insensitive check for text presence in generated content.
+        
+        Args:
+            text: Substring to search for in content
+            
+        Returns:
+            bool: True if text found in content (case-insensitive)
         """
         return text.lower() in self.content.lower()
     
     def word_count(self) -> int:
         """
-        Returns the word count of the generated content by splitting on whitespace.
+        Estimates word count using whitespace splitting.
+        
+        Note: This is a simple heuristic and might not handle:
+        - Multiple whitespace characters
+        - Hyphenated words
+        - Non-English languages
+        
+        Returns:
+            int: Number of whitespace-separated tokens
         """
         return len(self.content.split())
 
 @dataclass
 class GenerateTextRequest:
     """
-    Input data required to generate text:
-     - system_prompt: The system-level instructions or context for the model.
-     - user_prompt: The user's question or input prompt.
-     - num_sequences: How many different responses should be generated.
-     - max_tokens: Max tokens in the output.
-     - temperature: Sampling temperature to control creativity.
+    Parameters for controlling text generation process.
+    
+    Attributes:
+        system_prompt: High-level instructions/context for the model
+        user_prompt: Specific input/question to generate response for
+        num_sequences: Number of variations to generate (1-10 typical)
+        max_tokens: Maximum length of generated text (1-4096 typical)
+        temperature: Sampling temperature (0.0=deterministic, 1.0=default, 2.0=creative)
     """
     system_prompt: str
     user_prompt: str
@@ -77,11 +108,13 @@ class GenerateTextRequest:
 @dataclass
 class GenerateTextResponse:
     """
-    Output data returned from a text generation request:
-     - generated_texts: A list of GeneratedResult items.
-     - total_tokens: The sum of tokens used across all generated sequences.
-     - generation_time: The total time taken to generate the text(s).
-     - model_name: Name of the model used (from the first sequence, if available).
+    Complete output of a text generation request.
+    
+    Attributes:
+        generated_texts: List of generated results with metadata
+        total_tokens: Sum of tokens used across all generations
+        generation_time: Total wall-clock time for all generations
+        model_name: Name of model used (from first result if available)
     """
     generated_texts: List[GeneratedResult]
     total_tokens: int
@@ -89,9 +122,11 @@ class GenerateTextResponse:
     model_name: str
 
     def to_dict(self):
+        """Serializes response to API-friendly format."""
         return {
             "generated_texts": [result.to_dict() for result in self.generated_texts],
             "total_tokens": self.total_tokens,
             "generation_time": self.generation_time,
-            "model_name": self.model_name
+            # Handle empty results case safely
+            "model_name": self.generated_texts[0].metadata.model_name if self.generated_texts else "unknown"
         }

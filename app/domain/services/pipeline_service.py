@@ -1,21 +1,18 @@
 # domain/services/pipeline_service.py
 
-from datetime import datetime
-import json
-import os
 from typing import Any, Dict, List, Optional, Set, Tuple
 import re
 import logging
 import itertools
 
-from app.domain.model.entities.pipeline import PipelineStep
-from app.domain.model.entities.generation import GenerateTextRequest, GeneratedResult
-from app.domain.model.entities.parsing import ParseRequest, ParseResult, ParseRule, ParseMode
-from app.domain.model.entities.verification import VerificationMethod, VerificationSummary, VerifyRequest
+from domain.model.entities.pipeline import PipelineStep
+from domain.model.entities.generation import GenerateTextRequest, GeneratedResult
+from domain.model.entities.parsing import ParseRequest, ParseResult
+from domain.model.entities.verification import VerificationMethod, VerificationSummary, VerifyRequest
 
-from app.domain.services.parse_service import ParseService
-from app.domain.services.verifier_service import VerifierService
-from app.domain.services.generate_service import GenerateService
+from domain.services.parse_service import ParseService
+from domain.services.verifier_service import VerifierService
+from domain.services.generate_service import GenerateService
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +30,7 @@ class PipelineService:
     and storing their results. It integrates parsing, generation, and verification services.
     """
 
-    def __init__(self, model_name: str):
+    def __init__(self, generation_model_name: str, verify_model_name: str):
         """
         Initializes the PipelineService with parsing, generation, and verification services.
 
@@ -41,8 +38,12 @@ class PipelineService:
             model_name: The name of the language model to be used for text generation.
         """
         self.parse_service = ParseService()
-        self.generate_service = GenerateService(model_name)
-        self.verifier_service = VerifierService(self.generate_service)
+        self.generate_service = GenerateService(generation_model_name)
+        
+        if generation_model_name == verify_model_name:
+            self.verifier_service = VerifierService(generate_service = self.generate_service)
+        else:
+            self.verifier_service = VerifierService(model_name = verify_model_name)
 
         self.results: List[Optional[Tuple[str, List[Any]]]] = []  # Stores results of each step: (step_type, list_of_results)
         self.global_references: Dict[str, str] = {}  # Global references usable across all steps

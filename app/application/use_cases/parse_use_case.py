@@ -1,51 +1,84 @@
-# application/use_cases/parsing/parse_use_case.py
+# application/use_cases/parse_use_case.py
 
 import logging
-from domain.model.entities.parsing import ParseRequest, ParseResponse, ParseRule
+from domain.model.entities.parsing import ParseRequest, ParseResponse
 from domain.services.parse_service import ParseService
 
 logger = logging.getLogger(__name__)
 
 class ParseRequestValidationError(Exception):
     """
-    Custom exception to indicate invalid parse request parameters.
+    Specialized exception for invalid parsing requests.
+    
+    Raised when request parameters fail validation checks, containing
+    specific details about the validation failure.
     """
     pass
 
 class ParseUseCase:
     """
-    Use case that parses text according to a set of rules (ParseRule objects).
-    It also supports filtering the parsed output (e.g., keep only successful parse entries).
+    Orchestrates text parsing operations using configured parsing rules.
+    
+    Responsibilities:
+    1. Validate input parameters for parsing operations
+    2. Coordinate parsing workflow through ParseService
+    3. Apply output filtering based on request parameters
+    4. Handle error conditions and error reporting
     """
+
     def __init__(self):
         """
-        Constructor requires an instance of ParseService which encapsulates 
-        the text parsing logic (regex, keyword scanning, etc.).
+        Initializes parser components with dependency injection.
+        
+        Creates a ParseService instance to handle core parsing logic,
+        allowing for different parser implementations while maintaining
+        consistent interface.
         """
         self.parse_service = ParseService()
 
     def execute(self, request: ParseRequest) -> ParseResponse:
         """
-        Execute the parse workflow:
-         1) Validate the request input (text, rules).
-         2) Parse the text using the parse service.
-         3) Filter the parsed results based on requested criteria.
-         4) Return a ParseResponse object containing the final parse result.
+        Executes complete parsing workflow with validation and filtering.
+        
+        Process Flow:
+        1. Validate request parameters
+        2. Execute text parsing using configured rules
+        3. Apply requested output filtering
+        4. Package results with success metrics
+        
+        Args:
+            request: Contains parsing parameters including:
+                    - text: Input text to parse
+                    - rules: List of ParseRule configurations
+                    - output_filter: Result filtering strategy
+                    - output_limit: Maximum results to return
+        
+        Returns:
+            ParseResponse: Contains filtered parsing results
+            
+        Raises:
+            ParseRequestValidationError: For invalid request parameters
+            Exception: Propagates any errors from parsing implementation
         """
-        logger.info("Executing ParseGeneratedOutputUseCase")
+        logger.info("Starting parsing workflow execution")
         try:
+            # Primary validation of request parameters
             self._validate_request(request)
         except ValueError as e:
-            logger.error(f"Invalid parse request: {e}")
-            raise ParseRequestValidationError(f"Invalid parse request: {e}")
+            # Convert generic ValueError to domain-specific exception
+            logger.error(f"Request validation failed: {str(e)}")
+            raise ParseRequestValidationError(f"Invalid parse request: {e}") from e
 
         try:
-            logger.debug("Parsing the provided text with specified rules.")
+            # Core parsing operation
+            logger.debug("Initiating text parsing with %d rules", len(request.rules))
             parse_result = self.parse_service.parse_text(
                 text=request.text,
                 rules=request.rules
             )
-            logger.debug("Filtering parse results as per request output filter.")
+            
+            # Result post-processing
+            logger.debug("Applying %s filter to results", request.output_filter)
             filtered_result = self.parse_service.filter_entries(
                 parse_result,
                 request.output_filter,
@@ -53,26 +86,38 @@ class ParseUseCase:
                 request.rules
             )
 
-            logger.info(f"Parsed {len(filtered_result.entries)} entry/entries successfully.")
-            return ParseResponse(
-                parse_result=filtered_result
-            )
+            logger.info("Parsing completed with %d valid entries", len(filtered_result.entries))
+            return ParseResponse(parse_result=filtered_result)
 
         except Exception as e:
-            logger.exception("Error during parsing.")
+            logger.error("Critical error during parsing operations")
+            # Preserve original exception context while re-raising
             raise e
 
     def _validate_request(self, request: ParseRequest) -> None:
         """
-        Checks basic validity:
-         - Text should not be empty.
-         - The rules list must not be empty.
-         - Each rule must have a pattern.
+        Ensures request meets minimum validity requirements.
+        
+        Validation Criteria:
+        1. Input text must contain non-whitespace content
+        2. At least one parsing rule must be provided
+        3. All rules must have non-empty pattern definitions
+        
+        Args:
+            request: Parse request to validate
+            
+        Raises:
+            ValueError: With detailed message about validation failure
         """
+        # Validate input text presence
         if not request.text.strip():
-            raise ValueError("Text cannot be empty or whitespace.")
+            raise ValueError("Text input cannot be empty or whitespace")
+            
+        # Validate rules existence
         if not request.rules:
-            raise ValueError("Rules list cannot be empty.")
+            raise ValueError("At least one parsing rule must be provided")
+            
+        # Validate individual rule completeness
         for rule in request.rules:
             if not rule.pattern:
-                raise ValueError(f"Rule '{rule.name}' must have a pattern.")
+                raise ValueError(f"Rule '{rule.name}' missing required pattern")

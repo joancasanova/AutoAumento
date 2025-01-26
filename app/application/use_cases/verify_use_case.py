@@ -1,8 +1,7 @@
-# application/use_cases/verification/verify_text_use_case.py
+# application/use_cases/verify_use_case.py
 
 import logging
 from datetime import datetime
-from app.domain.services.generate_service import GenerateService
 from domain.model.entities.verification import VerifyRequest, VerifyResponse
 from domain.services.verifier_service import VerifierService
 
@@ -10,36 +9,74 @@ logger = logging.getLogger(__name__)
 
 class VerifyUseCase:
     """
-    Use case for verifying text or data using one or more verification methods.
-    These methods rely on LLM-based checks (consensus checks, placeholders, etc.).
+    Orchestrates verification processes using multiple validation methods.
+    
+    Responsibilities:
+    - Validates verification request parameters
+    - Coordinates verification workflow through VerifierService
+    - Calculates performance metrics and success rates
+    - Handles error propagation and logging
+    
+    Uses LLM-based checks to perform:
+    - Consensus validation between multiple generations
+    - Placeholder verification
+    - Semantic consistency checks
     """
+
     def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct"):
-        self.verifier_service = VerifierService(GenerateService(model_name))
+        """
+        Initializes verification components with specified LLM.
+        
+        Args:
+            model_name: Identifier for LLM used in verification generation.
+                        Defaults to Qwen2.5-1.5B-Instruct model.
+        """
+        # Initialize verification service with text generation capability
+        self.verifier_service = VerifierService(model_name = model_name)
 
     def execute(self, request: VerifyRequest) -> VerifyResponse:
         """
-        Execute the verification:
-         1) Validate the request input.
-         2) Perform the verification process via the VerifierService.
-         3) Return the final verification response and summary.
-        """
-        logger.info("Executing VerifyUseCase")
-        self._validate_request(request)
+        Executes complete verification workflow.
         
-        start_time = datetime.now()
+        Process Flow:
+        1. Validate request parameters
+        2. Execute verification methods through service
+        3. Calculate performance metrics
+        4. Package results with quality indicators
+        
+        Args:
+            request: Contains verification configuration including:
+                    - methods: List of verification methods to apply
+                    - required_for_confirmed: Threshold for confirmed status
+                    - required_for_review: Threshold for review status
+        
+        Returns:
+            VerifyResponse: Contains verification summary and metrics
+            
+        Raises:
+            ValueError: For invalid request parameters
+            Exception: Propagates any verification execution errors
+        """
+        logger.info("Starting verification workflow")
+        self._validate_request(request)  # Primary validation
+        
+        start_time = datetime.now()  # Precision timing started
         
         try:
-            logger.debug("Invoking the verifier service.")
+            logger.debug("Executing %d verification methods", len(request.methods))
             verification_summary = self.verifier_service.verify(
                 methods=request.methods,
                 required_for_confirmed=request.required_for_confirmed,
                 required_for_review=request.required_for_review
             )
             
+            # Calculate performance metrics
             execution_time = (datetime.now() - start_time).total_seconds()
             success_rate = verification_summary.success_rate
             
-            logger.info(f"Verification completed in {execution_time:.4f}s with success rate {success_rate:.2f}")
+            logger.info("Verification completed in %.4fs (success rate: %.2f)", 
+                       execution_time, success_rate)
+            
             return VerifyResponse(
                 verification_summary=verification_summary,
                 execution_time=execution_time,
@@ -47,43 +84,55 @@ class VerifyUseCase:
             )
             
         except Exception as e:
-            logger.exception("Error during verification.")
+            logger.error("Critical error during verification process")
+            # Preserve stack trace while propagating error
             raise e
-        
+
     def _validate_request(self, request: VerifyRequest) -> None:
         """
-        Validates the verification request:
-         - Must provide at least one verification method.
-         - The threshold required_for_confirmed must be > 0.
-         - The threshold required_for_review must be > 0.
-         - required_for_confirmed must be strictly greater than required_for_review.
-         - Each verification method's required_matches must be positive and not exceed num_sequences.
+        Ensures verification request meets operational constraints.
+        
+        Validation Rules:
+        1. At least one verification method required
+        2. Confirmed threshold must be positive
+        3. Review threshold must be positive
+        4. Confirmed threshold > Review threshold
+        5. Method-level validation:
+           - Required matches must be positive
+           - Required matches <= num_sequences
+        
+        Args:
+            request: Verification request to validate
+            
+        Raises:
+            ValueError: With detailed message about validation failure
         """
-        logger.debug("Validating verify request parameters.")
+        logger.debug("Validating verification request parameters")
+        
+        # Global parameter validation
         if not request.methods:
-            logger.error("At least one verification method must be provided.")
-            raise ValueError("At least one verification method must be provided.")
+            logger.error("Missing verification methods")
+            raise ValueError("At least one verification method required")
+            
         if request.required_for_confirmed <= 0:
-            logger.error("required_for_confirmed must be positive.")
-            raise ValueError("required_for_confirmed must be positive.")
+            raise ValueError("Confirmed threshold must be positive")
+            
         if request.required_for_review <= 0:
-            logger.error("required_for_review must be positive.")
-            raise ValueError("required_for_review must be positive.")
+            raise ValueError("Review threshold must be positive")
+            
         if request.required_for_confirmed <= request.required_for_review:
-            logger.error("required_for_confirmed must be greater than required_for_review.")
-            raise ValueError("required_for_confirmed must be greater than required_for_review")
+            raise ValueError("Confirmed threshold must exceed review threshold")
 
+        # Per-method validation
         for method in request.methods:
-            if method.required_matches is not None:
-                if method.required_matches <= 0:
-                    logger.error(f"Method '{method.name}': required_matches must be positive.")
-                    raise ValueError(f"Method '{method.name}': required_matches must be positive")
-                if method.required_matches > method.num_sequences:
-                    logger.error(
-                        f"Method '{method.name}': required_matches ({method.required_matches}) "
-                        f"cannot be greater than num_sequences ({method.num_sequences})"
-                    )
-                    raise ValueError(
-                        f"Method '{method.name}': required_matches ({method.required_matches}) "
-                        f"cannot be greater than num_sequences ({method.num_sequences})"
-                    )
+            if method.required_matches is None:
+                continue
+                
+            if method.required_matches <= 0:
+                raise ValueError(f"{method.name}: Required matches must be positive")
+                
+            if method.required_matches > method.num_sequences:
+                raise ValueError(
+                    f"{method.name}: Required matches ({method.required_matches}) "
+                    f"exceed available sequences ({method.num_sequences})"
+                )

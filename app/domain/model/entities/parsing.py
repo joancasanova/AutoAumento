@@ -6,9 +6,11 @@ from enum import Enum
 
 class ParseMode(Enum):
     """
-    Defines the mode of parsing:
-     - REGEX: Use regular expressions.
-     - KEYWORD: Use a keyword-based approach with optional secondary patterns.
+    Defines parsing strategies for text extraction.
+    
+    Options:
+        REGEX: Uses regular expressions for pattern matching. Ideal for structured text patterns.
+        KEYWORD: Uses keyword search with boundary detection. Effective for free-form text extraction.
     """
     REGEX = "regex"
     KEYWORD = "keyword"
@@ -16,8 +18,11 @@ class ParseMode(Enum):
 @dataclass(frozen=True)
 class ParseMatch:
     """
-    Represents a single parse match, storing the rule name and the extracted value.
-    This might be used to link matched text to a specific parse rule.
+    Represents a single successful match from a parsing rule.
+    
+    Attributes:
+        rule_name: Identifier of the rule that produced this match
+        value: Extracted text value. May contain fallback value if rule failed
     """
     rule_name: str
     value: str
@@ -25,37 +30,49 @@ class ParseMatch:
 @dataclass
 class ParseResult:
     """
-    Represents the entire result of parsing an input string.
-    It stores a list of parsed entries as dictionaries where each dictionary
-    associates rule names with their matched values (or fallback).
+    Contains complete results from parsing operation with structured access methods.
+    
+    Attributes:
+        entries: List of dictionaries mapping rule names to extracted values.
+                 Each dictionary represents one parsed entity/segment.
     """
     entries: List[Dict[str, str]]
 
     def to_list_of_dicts(self) -> List[Dict[str, str]]:
         """
-        Converts the internal storage to a list of dictionaries for easy JSON serialization.
+        Serializes results for easy JSON conversion.
+        
+        Returns:
+            List of entries in native dictionary format
         """
         return self.entries
 
     def get_all_matches_for_rule(self, rule_name: str) -> List[str]:
         """
-        Retrieves all matched strings for a specific rule name across all entries.
+        Aggregates all values extracted by a specific rule across all entries.
+        
+        Args:
+            rule_name: Target rule identifier to collect values for
+            
+        Returns:
+            List of extracted values (strings). Empty list if no matches found.
         """
-        matches = []
-        for entry in self.entries:
-            if rule_name in entry:
-                matches.append(entry[rule_name])
-        return matches
+        return [entry[rule_name] for entry in self.entries if rule_name in entry]
 
 @dataclass(frozen=True)
 class ParseRule:
     """
-    Defines a parsing rule:
-     - name: Identifier for the rule.
-     - pattern: Regex or keyword pattern to match in the text.
-     - mode: The parsing mode (ParseMode.REGEX or ParseMode.KEYWORD).
-     - secondary_pattern: In KEYWORD mode, indicates a substring boundary or stopping pattern.
-     - fallback_value: If a rule doesn't match, fallback_value will be used.
+    Configuration for a single text parsing pattern.
+    
+    Attributes:
+        name: Unique identifier for the rule
+        pattern: Primary search pattern (regex or keyword)
+        mode: ParseMode determining interpretation of pattern
+        secondary_pattern: Optional boundary marker for KEYWORD mode 
+            (defines substring end point)
+        fallback_value: Default value if pattern matching fails
+        
+    Immutable to ensure consistent parsing behavior
     """
     name: str
     pattern: str
@@ -66,11 +83,17 @@ class ParseRule:
 @dataclass
 class ParseRequest:
     """
-    Input object for parsing:
-     - text: The string to parse.
-     - rules: The list of parse rules (ParseRule objects).
-     - output_filter: How to filter the parsing results (all, successful, first_n).
-     - output_limit: Limit for 'first_n' filter.
+    Parameters for text parsing operation.
+    
+    Attributes:
+        text: Input text to parse
+        rules: Ordered collection of ParseRules to apply
+        output_filter: Result filtering strategy:
+            - 'all': Return all parsed entries
+            - 'successful': Only entries where all rules matched successfully
+            - 'first_n': Return first N entries meeting criteria
+        output_limit: Required when filter='first_n' 
+            (maximum number of entries to return)
     """
     text: str
     rules: List[ParseRule]
@@ -80,6 +103,10 @@ class ParseRequest:
 @dataclass
 class ParseResponse:
     """
-    Represents the final parse response after applying the parse rules and filtering.
+    Final output of parsing operation after applying filters.
+    
+    Attributes:
+        parse_result: Processed results containing only entries that 
+            match the requested filter criteria
     """
     parse_result: ParseResult

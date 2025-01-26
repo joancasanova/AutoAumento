@@ -12,3 +12,7 @@ prompter.py
 AutoAumento.egg-info
 autoaumento-formatted-prompt.txt
 misclassified_*.json
+benchmark_results_*.json
+pipeline_results_*.json
+confirmed_*.json
+to_verify_*.json

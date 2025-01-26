@@ -15,8 +15,11 @@ class VerifierService:
     Service that performs verification checks on text/data by leveraging
     a provided LLM. Supports both ELIMINATORY and CUMULATIVE verification modes.
     """
-    def __init__(self, generate_service: GenerateService):
-        self.generate_service = generate_service
+    def __init__(self, model_name: str = "Qwen/Qwen2.5-1.5B-Instruct", generate_service: GenerateService = None):
+        if generate_service:
+            self.generate_service = generate_service
+        else:
+            self.generate_service = GenerateService(model_name)
 
     def verify(
         self,

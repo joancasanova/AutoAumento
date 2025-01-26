@@ -7,9 +7,11 @@ from datetime import datetime
 
 class VerificationMode(Enum):
     """
-    Defines how verification results are interpreted:
-     - ELIMINATORY: If a method fails, the entire verification fails (discarded).
-     - CUMULATIVE: Each successful method contributes to a success count toward final status.
+    Determines how verification method outcomes affect final status.
+    
+    Options:
+        ELIMINATORY: Fails entire verification if any method fails (all-or-nothing)
+        CUMULATIVE: Allows partial successes contributing to final score
     """
     ELIMINATORY = "eliminatory"
     CUMULATIVE = "cumulative"
@@ -17,25 +19,36 @@ class VerificationMode(Enum):
 @dataclass(frozen=True)
 class VerificationThresholds:
     """
-    Holds boundary values for a certain metric (e.g. success rate),
-    optionally holding a target value that might be used by the verification logic.
+    Defines acceptable ranges for verification metrics.
+    
+    Attributes:
+        lower_bound: Minimum acceptable value (inclusive)
+        upper_bound: Maximum acceptable value (inclusive)
+        target_value: Optional ideal value for optimization purposes
     """
     lower_bound: float
     upper_bound: float
     target_value: Optional[float] = None
 
     def is_within_bounds(self, value: float) -> bool:
-        """Check if 'value' is within the lower and upper bound range."""
+        """Validates if value falls within defined range."""
         return self.lower_bound <= value <= self.upper_bound
 
 @dataclass
 class VerificationMethod:
     """
-    Represents a single verification method or test that can be applied.
-    For instance, it might define:
-     - The system prompt, user prompt, valid responses, etc.
-     - The number of sequences to generate from an LLM and the required_matches threshold.
-     - The mode: ELIMINATORY or CUMULATIVE.
+    Configuration for a single verification technique.
+    
+    Attributes:
+        mode: Verification strategy type (ELIMINATORY/CUMULATIVE)
+        name: Unique identifier for the method
+        system_prompt: LLM context/instructions for verification
+        user_prompt: Specific question/request to verify
+        num_sequences: Number of LLM responses to generate
+        valid_responses: Acceptable answer patterns
+        required_matches: Minimum valid responses needed
+        max_tokens: Limit for LLM response length
+        temperature: Sampling creativity control (0.0-2.0)
     """
     mode: VerificationMode
     name: str
@@ -50,10 +63,14 @@ class VerificationMethod:
 @dataclass(frozen=True)
 class VerificationResult:
     """
-    Describes the outcome of a single verification method:
-     - Whether the method passed or failed.
-     - An optional score, for instance ratio of positive responses.
-     - Additional details, if needed.
+    Record of verification method execution outcome.
+    
+    Attributes:
+        method: Reference to VerificationMethod configuration
+        passed: Success/failure status
+        score: Optional quantitative measure (e.g., 0.75 = 75% match)
+        details: Raw data supporting the result
+        timestamp: Execution completion time
     """
     method: VerificationMethod
     passed: bool
@@ -62,6 +79,7 @@ class VerificationResult:
     timestamp: datetime = datetime.now()
 
     def to_dict(self):
+        """Serializes result for storage/analysis."""
         return {
             "method_name": self.method.name,
             "mode": self.method.mode.value,
@@ -74,14 +92,19 @@ class VerificationResult:
 @dataclass
 class VerificationSummary:
     """
-    Contains the results of running all verification methods plus a final status.
-    The final status can be 'confirmed', 'review', or 'discarded'.
+    Aggregated results of multiple verification methods.
+    
+    Attributes:
+        results: All method execution outcomes
+        final_status: Overall verification conclusion
+        reference_data: Contextual data used during verification
     """
     results: List[VerificationResult]
     final_status: str
     reference_data: Optional[Dict[str, str]] = None
     
     def to_dict(self):
+        """Serializes summary with computed success rate."""
         return {
             "results": [result.to_dict() for result in self.results],
             "final_status": self.final_status,
@@ -91,35 +114,33 @@ class VerificationSummary:
 
     @property
     def passed_methods(self) -> List[str]:
-        """Returns the names of the methods that passed."""
+        """Names of successful verification methods."""
         return [result.method.name for result in self.results if result.passed]
     
     @property
     def failed_methods(self) -> List[str]:
-        """Returns the names of the methods that failed."""
+        """Names of failed verification methods."""
         return [result.method.name for result in self.results if not result.passed]
     
     @property
     def success_rate(self) -> float:
-        """Calculates the fraction of passed methods to total methods."""
-        if not self.results:
-            return 0.0
-        return len(self.passed_methods) / len(self.results)
+        """Ratio of passed methods to total methods (0.0-1.0)."""
+        return len(self.passed_methods) / len(self.results) if self.results else 0.0
 
     @property
     def scores(self) -> List[Optional[float]]:
-        """
-        Collects the 'score' field from each verification result 
-        and returns them as a list (useful for diagnostics).
-        """
+        """Collection of individual method scores for analysis."""
         return [result.score for result in self.results]
 
 @dataclass
 class VerifyRequest:
     """
-    Describes what needs to be verified:
-     - A list of VerificationMethods.
-     - Thresholds for 'confirmed' or 'review'.
+    Request to execute verification workflow.
+    
+    Attributes:
+        methods: Verification techniques to apply
+        required_for_confirmed: Minimum successes needed for 'confirmed' status
+        required_for_review: Minimum successes needed for 'review' status
     """
     methods: List[VerificationMethod]
     required_for_confirmed: int
@@ -128,9 +149,12 @@ class VerifyRequest:
 @dataclass
 class VerifyResponse:
     """
-    Represents the final verification output, including:
-     - VerificationSummary (with final_status).
-     - Execution time and success rate stats.
+    Final output of verification process.
+    
+    Attributes:
+        verification_summary: Aggregated results and status
+        execution_time: Total processing time in seconds
+        success_rate: Overall success percentage
     """
     verification_summary: VerificationSummary
     execution_time: float
@@ -139,10 +163,15 @@ class VerifyResponse:
 @dataclass(frozen=True)
 class VerificationStatus:
     """
-    Helper dataclass to identify final statuses like 'confirmed', 'discarded', 'review'.
+    Standardized verification status container.
+    
+    Provides factory methods for common statuses:
+    - confirmed: Successful verification
+    - discarded: Failed verification
+    - review: Requires human evaluation
     """
-    id: str
-    status: str
+    id: str  # Unique status identifier
+    status: str  # Human-readable status
 
     @classmethod
     def confirmed(cls):
@@ -158,26 +187,18 @@ class VerificationStatus:
     
     @classmethod
     def from_string(cls, status: str) -> Optional['VerificationStatus']:
-        """
-        Instantiates a VerificationStatus from a string identifier (if valid).
-        """
+        """Creates status from string (case-insensitive)."""
         status = status.lower()
-        if status == 'confirmed':
-            return cls.confirmed()
-        elif status == 'discarded':
-             return cls.discarded()
-        elif status == 'review':
-            return cls.review()
-        return None
+        return {
+            'confirmed': cls.confirmed(),
+            'discarded': cls.discarded(),
+            'review': cls.review()
+        }.get(status)
         
     def is_final(self) -> bool:
-        """
-        Checks if the current status is 'confirmed' or 'discarded' (non-review).
-        """
+        """Determines if status is terminal (no further action needed)."""
         return self in [self.confirmed(), self.discarded()]
 
     def requires_review(self) -> bool:
-        """
-        Checks if the current status is 'review'.
-        """
+        """Checks if status requires human intervention."""
         return self == self.review()
