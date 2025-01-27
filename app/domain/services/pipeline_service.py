@@ -189,10 +189,6 @@ class PipelineService:
         """
         request: GenerateTextRequest = step.parameters
 
-        if not step.uses_reference:
-            # Execute without references
-            return self.generate_service.generate(**request.dict())
-
         reference_data = self._get_reference_data(step.reference_step_numbers, step_number)
 
         prompt_variations = self._create_prompt_variations(request, reference_data)

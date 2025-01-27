@@ -105,6 +105,16 @@ class GenerateTextRequest:
     max_tokens: int = 100
     temperature: float = 1.0
 
+    def to_dict(self):
+        """Serializes to API-friendly format."""
+        return {
+            "system_prompt": self.system_prompt,
+            "user_prompt": self.user_prompt,
+            "num_sequences": self.num_sequences,
+            "max_tokens": self.max_tokens,
+            "temperature": self.temperature
+        }
+
 @dataclass
 class GenerateTextResponse:
     """

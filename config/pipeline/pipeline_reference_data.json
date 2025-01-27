@@ -1,8 +1,17 @@
 [
     {
-        "text": "checkea"
+        "tema": "astrofísica"
     },
     {
-        "text": "comprueba"
+        "tema": "informática"
+    },
+    {
+        "tema": "computación"
+    },
+    {
+        "tema": "programación"
+    },
+    {
+        "tema": "arquitectura"
     }
 ]

@@ -35,7 +35,7 @@ class FileRepository:
         filepath = os.path.join(output_dir, filename)
         
         with open(filepath, 'w') as f:
-            json.dump(data, f, indent=2, default=str)
+            json.dump(data, f, indent=2, default=str, ensure_ascii=False)
             
         return filepath
     
@@ -80,6 +80,6 @@ class FileRepository:
         
         # Atomic write operation
         with open(filepath, 'w') as f:
-            json.dump(existing_data, f, indent=2, default=str)
+            json.dump(existing_data, f, indent=2, default=str, ensure_ascii=False)
             
         return filepath

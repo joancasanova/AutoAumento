@@ -1,27 +1,32 @@
 {
    "steps":[
       {
+          "type": "generate",
+          "parameters": {
+              "system_prompt": "Eres un asistente experto en {tema}. Tus respuestas siempre están estructuradas del siguiente modo: Contenido: 'contenido'\nPor ejemplo:\nContenido: 'Este {tema} es complejo'",
+              "user_prompt": "Genera una descripción de {tema} siguiendo el formato indicado.",
+              "num_sequences": 2,
+              "max_tokens": 100,
+              "temperature": 0.7
+          },
+          "uses_reference": true
+      },
+      {
          "type":"parse",
          "parameters":{
-            "text":"La 'perra' de la playa era muy rara. Tiene 3 -piernas-.\n La 'zorra' de la playa era muy rara. Tiene 3 -verdad-.",
             "rules":[
                {
-                  "name":"perra",
-                  "pattern":"'",
-                  "mode":"keyword",
-                  "secondary_pattern":"'",
-                  "fallback_value":"perra_no_encontrado"
-               },
-               {
-                  "name":"parte cuerpo",
-                  "pattern":"-",
-                  "mode":"keyword",
-                  "secondary_pattern":"-",
-                  "fallback_value":"parte_cuerpo_no_encontrado"
+                  "name":"contenido",
+                  "mode":"KEYWORD",
+                  "pattern":"Contenido:",
+                  "secondary_pattern":".",
+                  "fallback_value":"contenido_no_encontrado"
                }
             ],
             "output_filter":"successful"
-         }
+         },
+         "uses_reference": true,
+         "reference_step_numbers": [0]
       },
       {
          "type":"verify",
@@ -29,20 +34,9 @@
             "methods":[
                {
                   "mode":"cumulative",
-                  "name":"verify_parte_cuerpo",
-                  "system_prompt":"Analiza texto y comprueba si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
-                  "user_prompt":"Es la siguiente palabra una parte del cuerpo? {parte cuerpo}",
-                  "num_sequences": 3,
-                  "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
-                  "required_matches": 2,
-                  "max_tokens": 5,
-                  "temperature": 1.0
-               },
-               {
-                  "mode":"cumulative",
-                  "name":"verify_animal",
-                  "system_prompt":"Analiza texto y {text} si una palabra tiene un determinado significado. Responde solo 'Sí' o 'No'",
-                  "user_prompt":"Es la siguiente palabra un animal? {perra}",
+                  "name":"verify_tema",
+                  "system_prompt":"Analiza texto y responde a la pregunta. Responde solo 'Yes' o 'No'",
+                  "user_prompt":"Es la siguiente frase una descripción de {tema}? {contenido}",
                   "num_sequences": 3,
                   "valid_responses": ["Sí", "Yes", "Si", "si", "yes"],
                   "required_matches": 2,
@@ -50,16 +44,11 @@
                   "temperature": 1.0
                }
             ],
-            "required_for_confirmed": 2,
-            "required_for_review": 1
+            "required_for_confirmed": 1,
+            "required_for_review": 0
          },
          "uses_reference":true,
-         "reference_step_numbers":[
-            0
-         ]
+         "reference_step_numbers": [1]
       }
-   ],
-   "global_references":{
-      "text":"comprueba"
-   }
+   ]
 }
